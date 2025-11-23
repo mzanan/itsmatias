@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react"
 import { useInView } from "framer-motion"
 
-export const useProjectShowcase = () => {
+export const useProjectShowcase = (videoRef: React.RefObject<HTMLVideoElement | null>) => {
   const ref = useRef<HTMLElement>(null)
   const isInView = useInView(ref, { margin: "-20% 0px", once: false })
   const [scrollDirection, setScrollDirection] = useState<"up" | "down">("down")
@@ -26,6 +26,37 @@ export const useProjectShowcase = () => {
       mainElement.removeEventListener("scroll", updateScrollDirection)
     }
   }, [])
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        video.pause()
+      } else {
+        video.play()
+      }
+    }
+
+    const handleBlur = () => {
+      video.pause()
+    }
+
+    const handleFocus = () => {
+      video.play()
+    }
+
+    document.addEventListener("visibilitychange", handleVisibilityChange)
+    window.addEventListener("blur", handleBlur)
+    window.addEventListener("focus", handleFocus)
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange)
+      window.removeEventListener("blur", handleBlur)
+      window.removeEventListener("focus", handleFocus)
+    }
+  }, [videoRef])
 
   const videoVariants = {
     hiddenEnter: { opacity: 0, x: -100, scale: 0.9 },

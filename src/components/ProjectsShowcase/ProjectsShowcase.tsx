@@ -1,6 +1,6 @@
 "use client"
 
-import { useProjects } from "@/hooks/useProjects"
+import { useProjects } from "./useProjects"
 import { ProjectShowcase } from "../ProjectShowcase/ProjectShowcase"
 
 export const ProjectsShowcase = () => {

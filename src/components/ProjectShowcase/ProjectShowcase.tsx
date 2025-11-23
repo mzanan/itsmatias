@@ -3,8 +3,9 @@
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { FaExternalLinkAlt, FaGithub } from "react-icons/fa"
-import type { Project } from "@/hooks/useProjects"
+import type { Project } from "../ProjectsShowcase/useProjects"
 import { useProjectShowcase } from "./useProjectShowcase"
+import { useRef } from "react"
 
 type ProjectShowcaseProps = {
   project: Project
@@ -12,8 +13,9 @@ type ProjectShowcaseProps = {
 }
 
 export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcaseProps) => {
+  const videoRef = useRef<HTMLVideoElement>(null)
   const { ref, videoVariants, textVariants, getVideoAnimation, getTextAnimation } =
-    useProjectShowcase()
+    useProjectShowcase(videoRef)
 
   return (
     <section
@@ -29,9 +31,30 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="relative w-full h-[400px] sm:h-[500px] md:h-[600px]"
         >
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-500/20 via-blue-500/10 to-purple-600/20 blur-xl opacity-75" />
+          <div className="absolute inset-0 rounded-2xl bg-linear-to-br from-cyan-500/20 via-blue-500/10 to-purple-600/20 blur-xl opacity-75" />
           <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-primary/30 bg-black">
-            <video src={project.video} autoPlay muted loop playsInline className="object-cover w-full h-full" />
+            <video
+              ref={videoRef}
+              src={project.video}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              className="object-cover w-full h-full"
+              onError={(e) => {
+                const video = e.currentTarget;
+                video.style.display = "none";
+                console.warn("Video failed to load:", project.video);
+              }}
+              onLoadedMetadata={() => {
+                if (videoRef.current) {
+                  videoRef.current.play().catch(() => {
+                    console.warn("Video autoplay prevented");
+                  });
+                }
+              }}
+            />
           </div>
         </motion.div>
 
@@ -46,7 +69,7 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
             <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">
               <span className="gradient-text">{project.title}</span>
             </h2>
-            <div className="h-1 w-12 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full" />
+            <div className="h-1 w-12 bg-linear-to-r from-cyan-400 to-purple-600 rounded-full" />
           </div>
 
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">{project.benefit}</p>
