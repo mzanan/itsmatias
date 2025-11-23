@@ -14,22 +14,22 @@ export const useProjects = () => {
     () => [
       {
         id: "1",
-        title: "Noire E-commerce",
+        title: "Demo Project E-commerce",
         benefit:
           "Boost sales with a fast, elegant and conversion-focused fashion store.",
         url: "https://ecommerce-six-peach-14.vercel.app/",
         video:
-          "https://assets.mixkit.co/videos/preview/mixkit-ecommerce-website-scroll-3529-large.mp4",
+          "/videos/demo-infideli.mp4",
         tags: ["Next.js", "E-commerce", "Animations", "Responsive"],
       },
       {
         id: "2",
-        title: "GVT Devs Landing",
+        title: "E-commerce Landing",
         benefit:
           "Get more customers with a professional landing built to convert visitors into clients.",
         url: "https://ecommerce-landing-kappa.vercel.app/",
         video:
-          "https://assets.mixkit.co/videos/preview/mixkit-man-working-on-laptop-at-desk-2326-large.mp4",
+          "/videos/demo-landing.mp4",
         tags: ["Next.js", "Landing Page", "Marketing", "UI/UX"],
       },
       {
@@ -48,3 +48,4 @@ export const useProjects = () => {
 
   return { projects };
 };
+
