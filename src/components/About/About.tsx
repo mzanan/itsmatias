@@ -10,7 +10,6 @@ export const About = () => {
     about,
     scrollToContact,
     ref,
-    isInView,
     getIcon,
     leftVariants,
     rightVariants,
@@ -37,7 +36,7 @@ export const About = () => {
               <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">
                 <span className="gradient-text">About Me</span>
               </h2>
-              <div className="h-1 w-12 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full" />
+              <div className="h-1 w-12 bg-linear-to-r from-cyan-400 to-purple-600 rounded-full" />
             </div>
 
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">{about.description}</p>
@@ -70,7 +69,7 @@ export const About = () => {
               variant="outline"
               className="text-base px-6 group mt-4 bg-transparent"
             >
-              Let's Collaborate
+              Let&apos;s Collaborate
               <FaArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </motion.div>
@@ -85,7 +84,7 @@ export const About = () => {
             {about.techStack.map((tech, index) => (
               <motion.div
                 key={index}
-                className="px-4 lg:px-6 py-3 lg:py-4 bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/30 rounded-lg text-sm font-medium text-primary hover:from-primary/20 hover:to-secondary/20 transition-all cursor-default"
+                className="px-4 lg:px-6 py-3 lg:py-4 bg-linear-to-br from-primary/10 to-secondary/10 border border-primary/30 rounded-lg text-sm font-medium text-primary hover:from-primary/20 hover:to-secondary/20 transition-all cursor-default"
                 whileHover={{ scale: 1.05, y: -2 }}
                 variants={{ hiddenEnter: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
               >

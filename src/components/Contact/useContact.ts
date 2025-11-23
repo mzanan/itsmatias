@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useInView } from "framer-motion";
 import { FaTelegram, FaTwitter, FaWhatsapp } from "react-icons/fa";
 import { IconType } from "react-icons";
 
@@ -89,7 +90,7 @@ export const useContact = () => {
       } else {
         setSubmitStatus("error");
       }
-    } catch (error) {
+    } catch {
       setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
@@ -102,6 +103,22 @@ export const useContact = () => {
     setFormData({ name: "", email: "", message: "" });
   };
 
+  const ref = useRef<HTMLElement>(null);
+  const isInView = useInView(ref, { margin: "-20% 0px", once: false });
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15, delayChildren: 0.1 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  };
+
   return {
     contact,
     showForm,
@@ -112,5 +129,9 @@ export const useContact = () => {
     submitStatus,
     handleSubmit,
     closeForm,
+    ref,
+    isInView,
+    containerVariants,
+    itemVariants,
   };
 };
