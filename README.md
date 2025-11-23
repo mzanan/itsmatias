@@ -5,6 +5,7 @@ A modern, premium portfolio website built with Next.js, featuring smooth animati
 ## Features
 
 - **Modern Design**: Clean, minimal interface with premium aesthetics
+- **Interactive Background**: Vanta.js Waves animated background on hero section
 - **Smooth Animations**: Scroll-triggered animations using Framer Motion
 - **Snap Scroll**: Section-based snap scrolling for better UX
 - **Responsive**: Fully responsive design for all devices
@@ -17,6 +18,8 @@ A modern, premium portfolio website built with Next.js, featuring smooth animati
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **Animations**: Framer Motion
+- **Background Effects**: Vanta.js (Waves)
+- **3D Graphics**: Three.js
 - **Icons**: React Icons
 - **UI Components**: ShadCN UI
 - **Form Handling**: Formspree
@@ -30,16 +33,15 @@ src/
 │   ├── layout.tsx          # Root layout
 │   └── page.tsx            # Home page
 ├── components/             # React components
-│   ├── About/              # About section
-│   ├── Contact/            # Contact section with form
-│   ├── Header/             # Navigation header
-│   ├── Hero/               # Hero section
-│   ├── ProjectShowcase/    # Individual project showcase
-│   ├── ProjectsShowcase/   # Projects container
+│   ├── About/              # About section (component + hook)
+│   ├── Contact/            # Contact section with form (component + hook)
+│   ├── Header/             # Navigation header (component + hook)
+│   ├── Hero/               # Hero section with Vanta.js background (component + hook)
+│   ├── ProjectShowcase/    # Individual project showcase (component + hook)
+│   ├── ProjectsShowcase/   # Projects container (component + hook)
 │   └── ui/                 # UI components (ShadCN)
-├── hooks/                  # Custom React hooks
-│   ├── useHeader.ts        # Header navigation logic
-│   └── useProjects.ts      # Projects data
+├── types/                  # TypeScript type definitions
+│   └── vanta.d.ts          # Vanta.js type definitions
 └── lib/                    # Utility functions
     └── utils.ts            # Helper functions
 ```
@@ -110,11 +112,12 @@ This separation ensures:
 
 ### Custom Hooks
 
+Each component has its own hook file located in the same directory:
 - `useHeader`: Manages header scroll state and navigation
-- `useHero`: Provides hero section data and scroll functionality
+- `useHero`: Initializes Vanta.js Waves background and manages hero animations
 - `useAbout`: Manages about section data, animations, and scroll
 - `useContact`: Handles contact form state and submission
-- `useProjectShowcase`: Manages project showcase animations
+- `useProjectShowcase`: Manages project showcase animations and video controls
 - `useProjects`: Provides project data
 
 ## Styling
