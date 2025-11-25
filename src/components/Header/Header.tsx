@@ -1,6 +1,7 @@
 "use client"
 
 import { useHeader } from "./useHeader"
+import { Share } from "@/components/Share/Share"
 
 export const Header = () => {
   const { scrollToSection, isScrolled, isInHero } = useHeader()
@@ -38,6 +39,7 @@ export const Header = () => {
               </button>
             );
           })}
+          <Share isInHero={isInHero} />
         </div>
       </nav>
     </header>
