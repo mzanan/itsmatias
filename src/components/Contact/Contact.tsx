@@ -26,7 +26,7 @@ export const Contact = () => {
     <section
       ref={ref}
       id="contact"
-      className="snap-start min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-24 relative overflow-hidden"
+      className="snap-start min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-24 relative overflow-hidden w-full"
     >
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-20 right-20 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl mix-blend-screen" />

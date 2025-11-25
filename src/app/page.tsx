@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="snap-y snap-mandatory overflow-y-scroll h-screen">
+      <main className="snap-y snap-mandatory overflow-y-scroll overflow-x-hidden h-[100dvh] w-full">
         <Hero />
         <ProjectsShowcase />
         <About />

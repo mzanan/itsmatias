@@ -16,23 +16,23 @@ export const Hero = () => {
   } = useHero(vantaRef)
 
   return (
-    <section className="relative h-screen flex flex-col justify-center items-center text-center snap-start overflow-hidden">
+    <section className="relative h-dvh flex flex-col justify-center items-center text-center snap-start overflow-hidden w-full max-w-full">
       <div ref={vantaRef} className="absolute inset-0 z-0 w-full h-full" />
       <motion.div
-        className="relative z-10 max-w-4xl px-4 flex flex-col gap-10 w-full h-full justify-center"
+        className="relative z-10 max-w-4xl px-4 flex flex-col gap-6 md:gap-10 w-full h-full justify-center py-8 overflow-hidden"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
         <motion.h1
-          className="text-6xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight leading-tight"
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-4 md:mb-6 tracking-tight leading-tight"
           variants={itemVariants}
         >
           <div className="relative h-[1.2em] flex items-center justify-center overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.span
                 key={currentWordIndex}
-                className="absolute bg-linear-to-t from-purple-700 to-purple-400 bg-clip-text text-transparent shadow-black drop-shadow-md"
+                className="absolute bg-linear-to-b from-sky-400 to-pink-400 bg-clip-text text-transparent shadow-black drop-shadow-md"
                 initial="enter"
                 animate="center"
                 exit="exit"
@@ -46,12 +46,12 @@ export const Hero = () => {
       </motion.div>
 
       <motion.div
-        className="flex flex-col justify-end pb-24"
+        className="absolute bottom-4 md:bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
         animate={scrollIndicatorVariants.animate}
         transition={scrollIndicatorVariants.transition}
       >
         <div className="flex flex-col items-center">
-          <span className="tracking-widest">Scroll</span>
+          <span className="text-xs md:text-sm tracking-widest">Scroll</span>
           <svg
             className="w-12 h-16 text-white"
             fill="none"
