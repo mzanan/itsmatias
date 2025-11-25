@@ -126,7 +126,7 @@ export const useHero = (vantaRef: React.RefObject<HTMLDivElement | null>) => {
     }, 2000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [words.length]);
 
   const wordVariants = useMemo(
     () => ({

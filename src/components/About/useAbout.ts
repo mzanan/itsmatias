@@ -77,7 +77,7 @@ export const useAbout = () => {
     };
 
     fetchInstagramImages();
-  }, []);
+  }, [getRandomImages]);
 
   useEffect(() => {
     if (instagramImages.length === 0) return;

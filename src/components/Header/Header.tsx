@@ -3,7 +3,7 @@
 import { useHeader } from "./useHeader"
 
 export const Header = () => {
-  const { scrollToSection, isScrolled } = useHeader()
+  const { scrollToSection, isScrolled, isInHero } = useHeader()
 
   return (
     <header
@@ -31,7 +31,8 @@ export const Header = () => {
               <button
                 key={idx}
                 onClick={() => scrollToSection(getSectionId())}
-                className="text-sm font-medium text-muted-foreground transition-all duration-300 hover:text-primary hover:scale-105"
+                className={`text-sm font-medium transition-all duration-300 hover:text-primary hover:scale-105 ${isInHero ? "text-white" : "text-muted-foreground"
+                  }`}
               >
                 {item}
               </button>

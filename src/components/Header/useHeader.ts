@@ -3,6 +3,7 @@ import { useScrollToSection } from "@/hooks/useScrollToSection";
 
 export const useHeader = () => {
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isInHero, setIsInHero] = useState(true);
     const { scrollToSection } = useScrollToSection();
 
     useEffect(() => {
@@ -10,13 +11,21 @@ export const useHeader = () => {
         if (!mainElement) return;
 
         const handleScroll = () => {
-            setIsScrolled(mainElement.scrollTop > 50);
+            const scrollTop = mainElement.scrollTop;
+            setIsScrolled(scrollTop > 50);
+
+            const heroSection = mainElement.firstElementChild;
+            if (heroSection) {
+                const heroHeight = heroSection.clientHeight;
+                setIsInHero(scrollTop < heroHeight * 0.5);
+            }
         };
 
+        handleScroll();
         mainElement.addEventListener("scroll", handleScroll);
         return () => mainElement.removeEventListener("scroll", handleScroll);
     }, []);
 
-    return { scrollToSection, isScrolled };
+    return { scrollToSection, isScrolled, isInHero };
 };
 
