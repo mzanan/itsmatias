@@ -29,14 +29,14 @@ export const Header = () => {
             };
 
             return (
-              <button
-                key={idx}
+            <button
+              key={idx}
                 onClick={() => scrollToSection(getSectionId())}
                 className={`text-sm font-medium transition-all duration-300 hover:text-primary hover:scale-105 ${isInHero ? "text-white" : "text-muted-foreground"
                   }`}
-              >
-                {item}
-              </button>
+            >
+              {item}
+            </button>
             );
           })}
           <Share isInHero={isInHero} />

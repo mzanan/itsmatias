@@ -92,27 +92,27 @@ export const useHero = (vantaRef: React.RefObject<HTMLDivElement | null>) => {
 
   const containerVariants = useMemo(
     () => ({
-      hidden: { opacity: 0 },
-      visible: {
-        opacity: 1,
-        transition: { staggerChildren: 0.2, delayChildren: 0.1 },
-      },
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2, delayChildren: 0.1 },
+    },
     }),
     []
   );
 
   const itemVariants = useMemo(
     () => ({
-      hidden: { opacity: 0, y: 20 },
-      visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
     }),
     []
   );
 
   const scrollIndicatorVariants = useMemo(
     () => ({
-      animate: { y: [0, 10, 0] },
-      transition: { duration: 2, repeat: Number.POSITIVE_INFINITY },
+    animate: { y: [0, 10, 0] },
+    transition: { duration: 2, repeat: Number.POSITIVE_INFINITY },
     }),
     []
   );
@@ -130,24 +130,24 @@ export const useHero = (vantaRef: React.RefObject<HTMLDivElement | null>) => {
 
   const wordVariants = useMemo(
     () => ({
-      enter: {
-        y: 50,
-        opacity: 0,
+    enter: {
+      y: 50,
+      opacity: 0,
+    },
+    center: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
       },
-      center: {
-        y: 0,
-        opacity: 1,
-        transition: {
-          duration: 0.5,
-        },
+    },
+    exit: {
+      y: -50,
+      opacity: 0,
+      transition: {
+        duration: 0.3,
       },
-      exit: {
-        y: -50,
-        opacity: 0,
-        transition: {
-          duration: 0.3,
-        },
-      },
+    },
     }),
     []
   );
