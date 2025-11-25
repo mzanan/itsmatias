@@ -14,33 +14,30 @@ export const useProjects = () => {
     () => [
       {
         id: "1",
-        title: "Demo Project E-commerce",
+        title: "E-commerce with Admin Panel",
         benefit:
           "Boost sales with a fast, elegant and conversion-focused fashion store.",
         url: "https://ecommerce-six-peach-14.vercel.app/",
-        video:
-          "/videos/demo-infideli.mp4",
+        video: "/videos/demo-infideli.mp4",
         tags: ["Next.js", "E-commerce", "Animations", "Responsive"],
       },
       {
         id: "2",
-        title: "E-commerce Landing",
+        title: "E-commerce Landing Page",
         benefit:
-          "Get more customers with a professional landing built to convert visitors into clients.",
+          "A conversion-focused landing page designed to promote and drive traffic to the e-commerce store.",
         url: "https://ecommerce-landing-kappa.vercel.app/",
-        video:
-          "/videos/demo-landing.mp4",
+        video: "/videos/demo-landing.mp4",
         tags: ["Next.js", "Landing Page", "Marketing", "UI/UX"],
       },
       {
         id: "3",
-        title: "Personal Portfolio",
+        title: "My Social Links",
         benefit:
-          "Stand out as a developer with a dynamic portfolio, analytics, and live integrations.",
+          "A modern, dynamic, and fast custom link-in-bio page to centralize all your social media links.",
         url: "https://mzanan.vercel.app/",
-        video:
-          "https://assets.mixkit.co/videos/preview/mixkit-mobile-app-scroll-on-smartphone-3558-large.mp4",
-        tags: ["Next.js", "Portfolio", "Social Integration", "Analytics"],
+        video: "/videos/demo-links.mp4",
+        tags: ["Next.js", "Social Links", "Custom Design", "Link-in-Bio"],
       },
     ],
     []
