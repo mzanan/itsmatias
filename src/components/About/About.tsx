@@ -49,7 +49,7 @@ export const About = () => {
               variant="outline"
               className="text-base px-6 group mt-4 bg-transparent"
             >
-              Let&apos;s Collaborate
+              Let&apos;s team up
               <FaArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </motion.div>

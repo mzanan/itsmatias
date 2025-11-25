@@ -105,7 +105,7 @@ export const useAbout = () => {
   const about: AboutData = useMemo(
     () => ({
       description:
-        "Hi, I'm Matias. I create websites that look good, feel smooth, and help businesses grow online.\nI believe a website shouldn't just exist, it should actually do something for you: bring clients, show your work, or sell what you offer.\n\nI work remotely while traveling, which inspires my creativity and keeps me curious. Every project here was designed and developed entirely by me, with care and attention to detail.\nIf you're looking for someone who listens, understands what you need, and builds something that truly works, let's team up.",
+        "Hi, I'm Matias. I create websites that look good, feel smooth, and help businesses grow online.\nI believe a website shouldn't just exist, it should actually do something for you: bring clients, show your work, or sell what you offer.\n\nI work remotely while traveling, which inspires my creativity and keeps me curious. Every project here was designed and developed entirely by me, with care and attention to detail.",
       techStack: [
         "Next.js",
         "TypeScript",

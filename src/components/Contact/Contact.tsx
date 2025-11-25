@@ -3,19 +3,16 @@
 import { motion } from "framer-motion";
 import { useContact } from "./useContact";
 import { Button } from "@/components/ui/button";
-import { FaCheckCircle, FaPaperPlane, FaTimes } from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
 
 export const Contact = () => {
   const {
     contact,
-    showForm,
-    setShowForm,
     formData,
     setFormData,
     isSubmitting,
     submitStatus,
     handleSubmit,
-    closeForm,
     ref,
     isInView,
     containerVariants,
@@ -41,7 +38,7 @@ export const Contact = () => {
       >
         <motion.div variants={itemVariants} className="mb-8">
           <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">
-            <span className="gradient-text">Let&apos;s Connect</span>
+            <span className="gradient-text">Send me an email</span>
           </h2>
           <div className="h-1 w-12 bg-linear-to-r from-cyan-400 to-purple-600 rounded-full mx-auto" />
         </motion.div>
@@ -54,47 +51,72 @@ export const Contact = () => {
         </motion.p>
 
         <motion.div
-          className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
-          variants={containerVariants}
+          variants={itemVariants}
+          className="bg-card border-2 border-primary/20 rounded-lg p-8 max-w-md w-full mx-auto shadow-2xl backdrop-blur-sm"
         >
-          {contact.methods.map((method, index) => {
-            const Icon = method.Icon;
+          <form onSubmit={handleSubmit} className="space-y-4 text-left">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium mb-2 text-foreground">
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                required
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className="w-full px-4 py-2 border-2 border-primary/20 rounded-md bg-input text-foreground focus:outline-none focus:ring focus:ring-primary focus:border-primary"
+              />
+            </div>
 
-            return (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                whileHover={{ scale: 1.05, y: -4 }}
-              >
-                <a
-                  href={method.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-3 px-6 py-4 border border-primary/50 rounded-lg hover:border-primary hover:bg-primary/10 transition-all duration-300 group"
-                >
-                  <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                    <Icon className="h-5 w-5 text-primary" />
-                  </div>
-                  <span className="font-medium">{method.label}</span>
-                </a>
-              </motion.div>
-            );
-          })}
-        </motion.div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium mb-2 text-foreground">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                required
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                className="w-full px-4 py-2 border-2 border-primary/20 rounded-md bg-input text-foreground focus:outline-none focus:ring focus:ring-primary focus:border-primary"
+              />
+            </div>
 
-        <motion.div variants={itemVariants}>
-          <Button
-            size="lg"
-            className="text-base px-8 py-6 group mb-8"
-            onClick={() => setShowForm(true)}
-          >
-            {contact.ctaText}
-            <FaPaperPlane className="ml-2 h-5 w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-          </Button>
+            <div>
+              <label htmlFor="message" className="block text-sm font-medium mb-2 text-foreground">
+                Message
+              </label>
+              <textarea
+                id="message"
+                required
+                rows={4}
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                className="w-full px-4 py-2 border-2 border-primary/20 rounded-md bg-input text-foreground focus:outline-none focus:ring focus:ring-primary focus:border-primary resize-none"
+              />
+            </div>
+
+            {submitStatus === "success" && (
+              <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-md text-green-600 text-sm">
+                Message sent successfully! I&apos;ll get back to you soon.
+              </div>
+            )}
+
+            {submitStatus === "error" && (
+              <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-md text-red-600 text-sm">
+                Something went wrong. Please try again.
+              </div>
+            )}
+
+            <Button type="submit" disabled={isSubmitting} className="w-full">
+              {isSubmitting ? "Sending..." : "Send Message"}
+            </Button>
+          </form>
         </motion.div>
 
         <motion.div
-          className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground"
+          className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground mt-8"
           variants={containerVariants}
         >
           {contact.reassurances.map((reassurance, index) => (
@@ -109,94 +131,6 @@ export const Contact = () => {
           ))}
         </motion.div>
       </motion.div>
-
-      {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="relative bg-background border border-border rounded-lg p-8 max-w-md w-full mx-4 shadow-xl"
-          >
-            <button
-              onClick={closeForm}
-              className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <FaTimes className="h-5 w-5" />
-            </button>
-
-            <h3 className="text-2xl font-bold mb-4">Get in Touch</h3>
-            <p className="text-muted-foreground mb-6">
-              Fill out the form below and I&apos;ll get back to you as soon as possible.
-            </p>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  required
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-2 border border-border rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-primary"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-2 border border-border rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-primary"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  required
-                  rows={4}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full px-4 py-2 border border-border rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-primary resize-none"
-                />
-              </div>
-
-              {submitStatus === "success" && (
-                <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-md text-green-600 text-sm">
-                  Message sent successfully! I&apos;ll get back to you soon.
-                </div>
-              )}
-
-              {submitStatus === "error" && (
-                <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-md text-red-600 text-sm">
-                  Something went wrong. Please try again or use one of the contact methods above.
-                </div>
-              )}
-
-              <div className="flex gap-3">
-                <Button type="button" variant="outline" onClick={closeForm} className="flex-1">
-                  Cancel
-                </Button>
-                <Button type="submit" disabled={isSubmitting} className="flex-1">
-                  {isSubmitting ? "Sending..." : "Send Message"}
-                </Button>
-              </div>
-            </form>
-          </motion.div>
-        </div>
-      )}
     </section>
   );
 };

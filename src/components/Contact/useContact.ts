@@ -1,19 +1,8 @@
 import { useState, useRef, useMemo } from "react";
 import { useInView } from "framer-motion";
-import { FaTelegram, FaTwitter, FaWhatsapp } from "react-icons/fa";
-import { IconType } from "react-icons";
-
-type ContactMethod = {
-  type: string;
-  label: string;
-  url: string;
-  Icon: IconType;
-};
 
 type ContactData = {
   description: string;
-  methods: ContactMethod[];
-  ctaText: string;
   reassurances: string[];
 };
 
@@ -24,7 +13,6 @@ type FormData = {
 };
 
 export const useContact = () => {
-  const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState<FormData>({ name: "", email: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
@@ -32,28 +20,7 @@ export const useContact = () => {
   const contact: ContactData = useMemo(
     () => ({
       description:
-        "Have a project in mind or want to discuss opportunities? I'd love to hear from you. Reach out through any of these channels.",
-      methods: [
-        {
-          type: "whatsapp",
-          label: "WhatsApp",
-          url: "https://wa.me/+5491157567049",
-          Icon: FaWhatsapp,
-        },
-        {
-          type: "telegram",
-          label: "Telegram",
-          url: "https://t.me/mzanan",
-          Icon: FaTelegram,
-        },
-        {
-          type: "twitter",
-          label: "X",
-          url: "https://twitter.com/mzanan",
-          Icon: FaTwitter,
-        },
-      ],
-      ctaText: "Send me an email",
+        "Have a project in mind or want to discuss opportunities? I'd love to hear from you. Fill out the form below and I'll get back to you as soon as possible.",
       reassurances: [
         "Fast replies",
         "100% tailored solutions",
@@ -87,9 +54,8 @@ export const useContact = () => {
         setSubmitStatus("success");
         setFormData({ name: "", email: "", message: "" });
         setTimeout(() => {
-          setShowForm(false);
           setSubmitStatus("idle");
-        }, 2000);
+        }, 3000);
       } else {
         setSubmitStatus("error");
       }
@@ -100,11 +66,6 @@ export const useContact = () => {
     }
   };
 
-  const closeForm = () => {
-    setShowForm(false);
-    setSubmitStatus("idle");
-    setFormData({ name: "", email: "", message: "" });
-  };
 
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { margin: "-20% 0px", once: false });
@@ -130,14 +91,11 @@ export const useContact = () => {
 
   return {
     contact,
-    showForm,
-    setShowForm,
     formData,
     setFormData,
     isSubmitting,
     submitStatus,
     handleSubmit,
-    closeForm,
     ref,
     isInView,
     containerVariants,

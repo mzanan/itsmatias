@@ -20,15 +20,23 @@ export const Header = () => {
           MZ
         </button>
         <div className="flex items-center gap-8">
-          {["Work", "About", "Contact"].map((item, idx) => (
-            <button
-              key={idx}
-              onClick={() => scrollToSection(item.toLowerCase() === "work" ? "projects" : item.toLowerCase())}
-              className="text-sm font-medium text-muted-foreground transition-all duration-300 hover:text-primary hover:scale-105"
-            >
-              {item}
-            </button>
-          ))}
+          {["Home", "Work", "About", "Contact"].map((item, idx) => {
+            const getSectionId = () => {
+              if (item === "Home") return "hero";
+              if (item === "Work") return "projects";
+              return item.toLowerCase();
+            };
+
+            return (
+              <button
+                key={idx}
+                onClick={() => scrollToSection(getSectionId())}
+                className="text-sm font-medium text-muted-foreground transition-all duration-300 hover:text-primary hover:scale-105"
+              >
+                {item}
+              </button>
+            );
+          })}
         </div>
       </nav>
     </header>
