@@ -65,7 +65,9 @@ export const useShare = () => {
         url,
       });
     } catch (error) {
-      console.error("Error sharing:", error);
+      if ((error as Error).name !== "AbortError") {
+        console.error("Error sharing:", error);
+      }
     }
   }, [title, url]);
 
