@@ -60,20 +60,23 @@ export const Hero = () => {
             strokeWidth="1.5"
           >
             <rect x="9" y="3" width="6" height="18" rx="3" />
-            <motion.circle
-              cx="12"
-              cy="7"
-              r="1"
-              fill="currentColor"
+            <motion.g
               animate={{
-                cy: [7, 17, 7],
+                y: [0, 10, 0],
               }}
               transition={{
                 duration: 2,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
-            />
+            >
+              <circle
+                cx="12"
+                cy="7"
+                r="1"
+                fill="currentColor"
+              />
+            </motion.g>
           </svg>
         </div>
       </motion.div>
