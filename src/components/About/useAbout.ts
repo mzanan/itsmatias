@@ -1,17 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useInView } from "framer-motion";
-import { FaShoppingCart, FaRocket, FaCode } from "react-icons/fa";
-import { IconType } from "react-icons";
-
-type Capability = {
-  icon: string;
-  title: string;
-  description: string;
-};
 
 type AboutData = {
   description: string;
-  capabilities: Capability[];
   techStack: string[];
 };
 
@@ -20,6 +11,48 @@ export const useAbout = () => {
   const isInView = useInView(ref, { margin: "-20% 0px", once: false });
   const [scrollDirection, setScrollDirection] = useState<"up" | "down">("down");
   const lastY = useRef(0);
+  const [instagramImages, setInstagramImages] = useState<string[]>([]);
+  const [displayedImages, setDisplayedImages] = useState<string[]>([]);
+  const [usedImages, setUsedImages] = useState<Set<string>>(new Set());
+  const [imageDataCache, setImageDataCache] = useState<Record<string, string>>({});
+
+  const getProxyImageUrl = (imageUrl: string): string => {
+    if (imageDataCache[imageUrl]) {
+      return imageDataCache[imageUrl];
+    }
+    return `/api/instagram/image?url=${encodeURIComponent(imageUrl)}`;
+  };
+
+  const getRandomImages = (
+    images: string[],
+    count: number,
+    exclude: Set<string>,
+    currentImages: string[]
+  ): { newImages: string[]; shouldReset: boolean } => {
+    const available = images.filter((img) => !exclude.has(img));
+
+    if (available.length === 0) {
+      const shuffled = [...images].sort(() => 0.5 - Math.random());
+      return { newImages: shuffled.slice(0, count), shouldReset: true };
+    }
+
+    const keepCount = Math.floor(count / 2);
+    const keepImages = currentImages.slice(0, keepCount);
+    const newCount = count - keepImages.length;
+
+    if (newCount <= 0) {
+      const shuffled = [...currentImages].sort(() => 0.5 - Math.random());
+      return { newImages: shuffled.slice(0, count), shouldReset: false };
+    }
+
+    const shuffled = [...available]
+      .filter((img) => !keepImages.includes(img))
+      .sort(() => 0.5 - Math.random());
+    const newImages = shuffled.slice(0, newCount);
+
+    const result = [...keepImages, ...newImages].sort(() => 0.5 - Math.random());
+    return { newImages: result, shouldReset: false };
+  };
 
   useEffect(() => {
     const mainElement = document.querySelector("main");
@@ -41,29 +74,58 @@ export const useAbout = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const fetchInstagramImages = async () => {
+      try {
+        const response = await fetch("/api/instagram");
+        const data = await response.json();
+        if (data.images && data.images.length > 0) {
+          setInstagramImages(data.images);
+          if (data.imageData) {
+            setImageDataCache(data.imageData);
+          }
+          const { newImages } = getRandomImages(data.images, 4, new Set(), []);
+          setDisplayedImages(newImages);
+          setUsedImages(new Set(newImages));
+        }
+      } catch (error) {
+        console.error("Error fetching Instagram images:", error);
+      }
+    };
+
+    fetchInstagramImages();
+  }, []);
+
+  useEffect(() => {
+    if (instagramImages.length === 0) return;
+
+    const interval = setInterval(() => {
+      setDisplayedImages((current) => {
+        const { newImages, shouldReset } = getRandomImages(
+          instagramImages,
+          4,
+          usedImages,
+          current
+        );
+        if (shouldReset) {
+          setUsedImages(new Set());
+        } else {
+          setUsedImages((prev) => {
+            const updated = new Set(prev);
+            newImages.forEach((img) => updated.add(img));
+            return updated;
+          });
+        }
+        return newImages;
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [instagramImages, usedImages]);
+
   const about: AboutData = {
     description:
-      "I help brands, creators, and entrepreneurs build powerful online presence through modern web solutions. Every project is tailored to drive real business results.",
-    capabilities: [
-      {
-        icon: "shopping-cart",
-        title: "Conversion-Focused E-commerce",
-        description:
-          "Building platforms that turn visitors into customers with optimized checkout flows and seamless payment integration.",
-      },
-      {
-        icon: "rocket",
-        title: "Lead Generation Landing Pages",
-        description:
-          "Crafting modern landing pages designed to capture leads and convert visitors into clients.",
-      },
-      {
-        icon: "code",
-        title: "Scalable Full-Stack Applications",
-        description:
-          "Developing optimized and scalable applications that grow with your business needs.",
-      },
-    ],
+      "Hi, I'm Matias. I create websites that look good, feel smooth, and help businesses grow online.\nI believe a website shouldn't just exist, it should actually do something for you: bring clients, show your work, or sell what you offer.\n\nI work remotely while traveling, which inspires my creativity and keeps me curious. Every project here was designed and developed entirely by me, with care and attention to detail.\nIf you're looking for someone who listens, understands what you need, and builds something that truly works, let's team up.",
     techStack: [
       "Next.js",
       "TypeScript",
@@ -72,10 +134,6 @@ export const useAbout = () => {
       "Supabase",
       "Stripe",
     ],
-  };
-
-  const getIcon = (icon: string): IconType => {
-    return icon === "shopping-cart" ? FaShoppingCart : icon === "rocket" ? FaRocket : FaCode;
   };
 
   const leftVariants = {
@@ -125,10 +183,11 @@ export const useAbout = () => {
     ref,
     isInView,
     scrollDirection,
-    getIcon,
     leftVariants,
     rightVariants,
     getLeftAnimation,
     getRightAnimation,
+    displayedImages,
+    getProxyImageUrl,
   };
 };

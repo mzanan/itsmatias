@@ -20,7 +20,7 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
       ref={ref}
       id={isFirst ? "projects" : undefined}
       className="snap-start min-h-screen flex items-center justify-center py-24 overflow-hidden"
-    >
+        >
       <div className="flex flex-col max-w-7xl w-full items-center">
         <motion.div
           variants={textVariants}
@@ -29,9 +29,9 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="space-y-8"
         >
-          <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">
-            <span className="gradient-text">{project.title}</span>
-          </h2>
+            <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">
+              <span className="gradient-text">{project.title}</span>
+            </h2>
 
           {/* <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">{project.benefit}</p> */}
 
@@ -48,10 +48,10 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
           </div> */}
 
           {/* <Button asChild size="lg" className="text-base px-6 group">
-            <a href={project.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center">
-              Visit Project
-              <FaExternalLinkAlt className="ml-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-            </a>
+              <a href={project.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center">
+                Visit Project
+                <FaExternalLinkAlt className="ml-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+              </a>
           </Button> */}
         </motion.div>
 

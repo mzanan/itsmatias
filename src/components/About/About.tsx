@@ -4,17 +4,19 @@ import { motion } from "framer-motion"
 import { useAbout } from "./useAbout"
 import { Button } from "@/components/ui/button"
 import { FaArrowRight } from "react-icons/fa"
+import Image from "next/image"
 
 export const About = () => {
   const {
     about,
     scrollToContact,
     ref,
-    getIcon,
     leftVariants,
     rightVariants,
     getLeftAnimation,
     getRightAnimation,
+    displayedImages,
+    getProxyImageUrl,
   } = useAbout()
 
   return (
@@ -39,29 +41,7 @@ export const About = () => {
               <div className="h-1 w-12 bg-linear-to-r from-cyan-400 to-purple-600 rounded-full" />
             </div>
 
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">{about.description}</p>
-
-            <div className="space-y-6 pt-4">
-              {about.capabilities.map((capability, index) => {
-                const Icon = getIcon(capability.icon);
-
-                return (
-                  <motion.div key={index} className="flex gap-4 group" whileHover={{ x: 10 }}>
-                    <div className="flex-shrink-0">
-                      <div className="p-2 rounded-lg bg-primary/20 group-hover:bg-primary/30 transition-colors">
-                        <Icon className="h-5 w-5 text-primary" />
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold mb-1 group-hover:text-primary transition-colors">
-                        {capability.title}
-                      </h3>
-                      <p className="text-muted-foreground leading-relaxed">{capability.description}</p>
-                    </div>
-                  </motion.div>
-                )
-              })}
-            </div>
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed whitespace-pre-line">{about.description}</p>
 
             <Button
               onClick={scrollToContact}
@@ -81,16 +61,39 @@ export const About = () => {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="grid grid-cols-2 gap-3 lg:gap-4"
           >
-            {about.techStack.map((tech, index) => (
-              <motion.div
-                key={index}
-                className="px-4 lg:px-6 py-3 lg:py-4 bg-linear-to-br from-primary/10 to-secondary/10 border border-primary/30 rounded-lg text-sm font-medium text-primary hover:from-primary/20 hover:to-secondary/20 transition-all cursor-default"
-                whileHover={{ scale: 1.05, y: -2 }}
-                variants={{ hiddenEnter: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-              >
-                {tech}
-              </motion.div>
-            ))}
+            {displayedImages.length > 0 ? (
+              displayedImages.map((image) => (
+                <motion.div
+                  key={image}
+                  layout
+                  transition={{
+                    type: "spring",
+                    damping: 20,
+                    stiffness: 300,
+                  }}
+                  className="relative aspect-square rounded-lg overflow-hidden border border-primary/30"
+                >
+                  <Image
+                    src={getProxyImageUrl(image)}
+                    alt={`Instagram post`}
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
+                </motion.div>
+              ))
+            ) : (
+              about.techStack.map((tech, index) => (
+                <motion.div
+                  key={index}
+                  className="px-4 lg:px-6 py-3 lg:py-4 bg-linear-to-br from-primary/10 to-secondary/10 border border-primary/30 rounded-lg text-sm font-medium text-primary hover:from-primary/20 hover:to-secondary/20 transition-all cursor-default"
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  variants={{ hiddenEnter: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+                >
+                  {tech}
+                </motion.div>
+              ))
+            )}
           </motion.div>
         </div>
       </div>
