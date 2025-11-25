@@ -12,7 +12,7 @@ export const Header = () => {
         : "border-b border-transparent bg-transparent"
         }`}
     >
-      <nav className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8 bg-red">
+      <nav className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         <button
           onClick={() => scrollToSection("hero")}
           className="text-lg font-bold gradient-text transition-all hover:opacity-80"

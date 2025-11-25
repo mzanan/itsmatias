@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { useInView } from "framer-motion";
 import { FaTelegram, FaTwitter, FaWhatsapp } from "react-icons/fa";
 import { IconType } from "react-icons";
@@ -29,36 +29,39 @@ export const useContact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
-  const contact: ContactData = {
-    description:
-      "Have a project in mind or want to discuss opportunities? I'd love to hear from you. Reach out through any of these channels.",
-    methods: [
-      {
-        type: "whatsapp",
-        label: "WhatsApp",
-        url: "https://wa.me/+5491157567049",
-        Icon: FaWhatsapp,
-      },
-      {
-        type: "telegram",
-        label: "Telegram",
-        url: "https://t.me/mzanan",
-        Icon: FaTelegram,
-      },
-      {
-        type: "twitter",
-        label: "X",
-        url: "https://twitter.com/mzanan",
-        Icon: FaTwitter,
-      },
-    ],
-    ctaText: "Send me an email",
-    reassurances: [
-      "Fast replies",
-      "100% tailored solutions",
-      "Secure payment integration available",
-    ],
-  };
+  const contact: ContactData = useMemo(
+    () => ({
+      description:
+        "Have a project in mind or want to discuss opportunities? I'd love to hear from you. Reach out through any of these channels.",
+      methods: [
+        {
+          type: "whatsapp",
+          label: "WhatsApp",
+          url: "https://wa.me/+5491157567049",
+          Icon: FaWhatsapp,
+        },
+        {
+          type: "telegram",
+          label: "Telegram",
+          url: "https://t.me/mzanan",
+          Icon: FaTelegram,
+        },
+        {
+          type: "twitter",
+          label: "X",
+          url: "https://twitter.com/mzanan",
+          Icon: FaTwitter,
+        },
+      ],
+      ctaText: "Send me an email",
+      reassurances: [
+        "Fast replies",
+        "100% tailored solutions",
+        "Secure payment integration available",
+      ],
+    }),
+    []
+  );
 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -106,18 +109,24 @@ export const useContact = () => {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { margin: "-20% 0px", once: false });
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.1 },
-    },
-  };
+  const containerVariants = useMemo(
+    () => ({
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: { staggerChildren: 0.15, delayChildren: 0.1 },
+      },
+    }),
+    []
+  );
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  };
+  const itemVariants = useMemo(
+    () => ({
+      hidden: { opacity: 0, y: 20 },
+      visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+    }),
+    []
+  );
 
   return {
     contact,

@@ -1,5 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { useInView } from "framer-motion";
+import { useScrollDirection } from "@/hooks/useScrollDirection";
+import { useScrollToSection } from "@/hooks/useScrollToSection";
 
 type AboutData = {
   description: string;
@@ -9,21 +11,21 @@ type AboutData = {
 export const useAbout = () => {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { margin: "-20% 0px", once: false });
-  const [scrollDirection, setScrollDirection] = useState<"up" | "down">("down");
-  const lastY = useRef(0);
+  const { scrollDirection } = useScrollDirection();
+  const { scrollToSection } = useScrollToSection();
   const [instagramImages, setInstagramImages] = useState<string[]>([]);
   const [displayedImages, setDisplayedImages] = useState<string[]>([]);
-  const [usedImages, setUsedImages] = useState<Set<string>>(new Set());
+  const usedImagesRef = useRef<Set<string>>(new Set());
   const [imageDataCache, setImageDataCache] = useState<Record<string, string>>({});
 
-  const getProxyImageUrl = (imageUrl: string): string => {
+  const getProxyImageUrl = useCallback((imageUrl: string): string => {
     if (imageDataCache[imageUrl]) {
       return imageDataCache[imageUrl];
     }
     return `/api/instagram/image?url=${encodeURIComponent(imageUrl)}`;
-  };
+  }, [imageDataCache]);
 
-  const getRandomImages = (
+  const getRandomImages = useCallback((
     images: string[],
     count: number,
     exclude: Set<string>,
@@ -52,27 +54,8 @@ export const useAbout = () => {
 
     const result = [...keepImages, ...newImages].sort(() => 0.5 - Math.random());
     return { newImages: result, shouldReset: false };
-  };
-
-  useEffect(() => {
-    const mainElement = document.querySelector("main");
-    if (!mainElement) return;
-
-    const updateScrollDirection = () => {
-      const scrollTop = mainElement.scrollTop;
-      if (scrollTop > lastY.current) {
-        setScrollDirection("down");
-      } else if (scrollTop < lastY.current) {
-        setScrollDirection("up");
-      }
-      lastY.current = scrollTop;
-    };
-
-    mainElement.addEventListener("scroll", updateScrollDirection);
-    return () => {
-      mainElement.removeEventListener("scroll", updateScrollDirection);
-    };
   }, []);
+
 
   useEffect(() => {
     const fetchInstagramImages = async () => {
@@ -86,7 +69,7 @@ export const useAbout = () => {
           }
           const { newImages } = getRandomImages(data.images, 4, new Set(), []);
           setDisplayedImages(newImages);
-          setUsedImages(new Set(newImages));
+          usedImagesRef.current = new Set(newImages);
         }
       } catch (error) {
         console.error("Error fetching Instagram images:", error);
@@ -104,78 +87,70 @@ export const useAbout = () => {
         const { newImages, shouldReset } = getRandomImages(
           instagramImages,
           4,
-          usedImages,
+          usedImagesRef.current,
           current
         );
         if (shouldReset) {
-          setUsedImages(new Set());
+          usedImagesRef.current = new Set();
         } else {
-          setUsedImages((prev) => {
-            const updated = new Set(prev);
-            newImages.forEach((img) => updated.add(img));
-            return updated;
-          });
+          newImages.forEach((img) => usedImagesRef.current.add(img));
         }
         return newImages;
       });
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [instagramImages, usedImages]);
+  }, [instagramImages, getRandomImages]);
 
-  const about: AboutData = {
-    description:
-      "Hi, I'm Matias. I create websites that look good, feel smooth, and help businesses grow online.\nI believe a website shouldn't just exist, it should actually do something for you: bring clients, show your work, or sell what you offer.\n\nI work remotely while traveling, which inspires my creativity and keeps me curious. Every project here was designed and developed entirely by me, with care and attention to detail.\nIf you're looking for someone who listens, understands what you need, and builds something that truly works, let's team up.",
-    techStack: [
-      "Next.js",
-      "TypeScript",
-      "React",
-      "Tailwind CSS",
-      "Supabase",
-      "Stripe",
-    ],
-  };
+  const about: AboutData = useMemo(
+    () => ({
+      description:
+        "Hi, I'm Matias. I create websites that look good, feel smooth, and help businesses grow online.\nI believe a website shouldn't just exist, it should actually do something for you: bring clients, show your work, or sell what you offer.\n\nI work remotely while traveling, which inspires my creativity and keeps me curious. Every project here was designed and developed entirely by me, with care and attention to detail.\nIf you're looking for someone who listens, understands what you need, and builds something that truly works, let's team up.",
+      techStack: [
+        "Next.js",
+        "TypeScript",
+        "React",
+        "Tailwind CSS",
+        "Supabase",
+        "Stripe",
+      ],
+    }),
+    []
+  );
 
-  const leftVariants = {
-    hiddenEnter: { opacity: 0, x: -100 },
-    visible: { opacity: 1, x: 0 },
-    hiddenExit: { opacity: 0, x: -100 },
-  };
+  const leftVariants = useMemo(
+    () => ({
+      hiddenEnter: { opacity: 0, x: -100 },
+      visible: { opacity: 1, x: 0 },
+      hiddenExit: { opacity: 0, x: -100 },
+    }),
+    []
+  );
 
-  const rightVariants = {
-    hiddenEnter: { opacity: 0, x: 100, y: 20 },
-    visible: { opacity: 1, x: 0, y: 0, transition: { staggerChildren: 0.1 } },
-    hiddenExit: { opacity: 0, x: 100 },
-  };
+  const rightVariants = useMemo(
+    () => ({
+      hiddenEnter: { opacity: 0, x: 100, y: 20 },
+      visible: { opacity: 1, x: 0, y: 0, transition: { staggerChildren: 0.1 } },
+      hiddenExit: { opacity: 0, x: 100 },
+    }),
+    []
+  );
 
-  const getLeftAnimation = () => {
+  const getLeftAnimation = useCallback(() => {
     if (isInView) return "visible";
     if (scrollDirection === "down") return "hiddenEnter";
     return "hiddenExit";
-  };
+  }, [isInView, scrollDirection]);
 
-  const getRightAnimation = () => {
+  const getRightAnimation = useCallback(() => {
     if (isInView) return "visible";
     if (scrollDirection === "down") return "hiddenEnter";
     return "hiddenExit";
-  };
+  }, [isInView, scrollDirection]);
 
-  const scrollToContact = () => {
-    const element = document.getElementById("contact");
-    const mainElement = document.querySelector("main");
-
-    if (element && mainElement) {
-      const headerHeight = 64;
-      const elementPosition = element.getBoundingClientRect().top;
-      const mainScrollTop = mainElement.scrollTop;
-      const offsetPosition = elementPosition + mainScrollTop - headerHeight;
-
-      mainElement.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
-  };
+  const scrollToContact = useCallback(() => {
+    scrollToSection("contact");
+  }, [scrollToSection]);
 
   return {
     about,

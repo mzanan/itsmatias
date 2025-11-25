@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 type VantaEffect = {
   destroy: () => void;
@@ -90,23 +90,32 @@ export const useHero = (vantaRef: React.RefObject<HTMLDivElement | null>) => {
     };
   }, [vantaRef]);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2, delayChildren: 0.1 },
-    },
-  };
+  const containerVariants = useMemo(
+    () => ({
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: { staggerChildren: 0.2, delayChildren: 0.1 },
+      },
+    }),
+    []
+  );
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
-  };
+  const itemVariants = useMemo(
+    () => ({
+      hidden: { opacity: 0, y: 20 },
+      visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+    }),
+    []
+  );
 
-  const scrollIndicatorVariants = {
-    animate: { y: [0, 10, 0] },
-    transition: { duration: 2, repeat: Number.POSITIVE_INFINITY },
-  };
+  const scrollIndicatorVariants = useMemo(
+    () => ({
+      animate: { y: [0, 10, 0] },
+      transition: { duration: 2, repeat: Number.POSITIVE_INFINITY },
+    }),
+    []
+  );
 
   const words = ["Build.", "Create.", "Deploy."];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -117,28 +126,31 @@ export const useHero = (vantaRef: React.RefObject<HTMLDivElement | null>) => {
     }, 2000);
 
     return () => clearInterval(interval);
-  }, [words.length]);
+  }, []);
 
-  const wordVariants = {
-    enter: {
-      y: 50,
-      opacity: 0,
-    },
-    center: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
+  const wordVariants = useMemo(
+    () => ({
+      enter: {
+        y: 50,
+        opacity: 0,
       },
-    },
-    exit: {
-      y: -50,
-      opacity: 0,
-      transition: {
-        duration: 0.3,
+      center: {
+        y: 0,
+        opacity: 1,
+        transition: {
+          duration: 0.5,
+        },
       },
-    },
-  };
+      exit: {
+        y: -50,
+        opacity: 0,
+        transition: {
+          duration: 0.3,
+        },
+      },
+    }),
+    []
+  );
 
   return {
     containerVariants,
