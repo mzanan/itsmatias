@@ -104,34 +104,34 @@ export const useAbout = () => {
 
   const about: AboutData = useMemo(
     () => ({
-      description:
+    description:
         "Hi, I'm Matias. I create websites that look good, feel smooth, and help businesses grow online.\nI believe a website shouldn't just exist, it should actually do something for you: bring clients, show your work, or sell what you offer.\n\nI work remotely while traveling, which inspires my creativity and keeps me curious. Every project here was designed and developed entirely by me, with care and attention to detail.",
-      techStack: [
-        "Next.js",
-        "TypeScript",
-        "React",
-        "Tailwind CSS",
-        "Supabase",
-        "Stripe",
-      ],
+    techStack: [
+      "Next.js",
+      "TypeScript",
+      "React",
+      "Tailwind CSS",
+      "Supabase",
+      "Stripe",
+    ],
     }),
     []
   );
 
   const leftVariants = useMemo(
     () => ({
-      hiddenEnter: { opacity: 0, x: -100 },
-      visible: { opacity: 1, x: 0 },
-      hiddenExit: { opacity: 0, x: -100 },
+    hiddenEnter: { opacity: 0, x: -100 },
+    visible: { opacity: 1, x: 0 },
+    hiddenExit: { opacity: 0, x: -100 },
     }),
     []
   );
 
   const rightVariants = useMemo(
     () => ({
-      hiddenEnter: { opacity: 0, x: 100, y: 20 },
-      visible: { opacity: 1, x: 0, y: 0, transition: { staggerChildren: 0.1 } },
-      hiddenExit: { opacity: 0, x: 100 },
+    hiddenEnter: { opacity: 0, x: 100, y: 20 },
+    visible: { opacity: 1, x: 0, y: 0, transition: { staggerChildren: 0.1 } },
+    hiddenExit: { opacity: 0, x: 100 },
     }),
     []
   );

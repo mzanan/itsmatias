@@ -43,18 +43,18 @@ export const useProjectShowcase = (videoRef: React.RefObject<HTMLVideoElement | 
 
   const videoVariants = useMemo(
     () => ({
-      hiddenEnter: { opacity: 0, x: -100, scale: 0.9 },
-      visible: { opacity: 1, x: 0, scale: 1 },
-      hiddenExit: { opacity: 0, x: -100, scale: 0.9 },
+    hiddenEnter: { opacity: 0, x: -100, scale: 0.9 },
+    visible: { opacity: 1, x: 0, scale: 1 },
+    hiddenExit: { opacity: 0, x: -100, scale: 0.9 },
     }),
     []
   )
 
   const textVariants = useMemo(
     () => ({
-      hiddenEnter: { opacity: 0, x: 100 },
-      visible: { opacity: 1, x: 0 },
-      hiddenExit: { opacity: 0, x: 100 },
+    hiddenEnter: { opacity: 0, x: 100 },
+    visible: { opacity: 1, x: 0 },
+    hiddenExit: { opacity: 0, x: 100 },
     }),
     []
   )
