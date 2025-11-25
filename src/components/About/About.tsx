@@ -45,15 +45,15 @@ export const About = () => {
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed whitespace-pre-line">{about.description}</p>
 
             <div className="flex flex-wrap gap-4 mt-4">
-              <Button
-                onClick={scrollToContact}
-                size="lg"
-                variant="outline"
+            <Button
+              onClick={scrollToContact}
+              size="lg"
+              variant="outline"
                 className="text-base px-6 group bg-transparent"
-              >
+            >
                 Let&apos;s connect
-                <FaArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              <FaArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
               <Share label="Tell a friend" asButton />
             </div>
           </motion.div>

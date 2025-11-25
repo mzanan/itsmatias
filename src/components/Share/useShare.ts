@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 
 type Platform = {
   isMobile: boolean;
@@ -11,6 +11,7 @@ type Platform = {
 
 export const useShare = () => {
   const [copied, setCopied] = useState(false);
+  const isSharingRef = useRef(false);
 
   const platform: Platform = useMemo(() => {
     if (typeof window === "undefined") {
@@ -51,23 +52,32 @@ export const useShare = () => {
     () => ({
       whatsapp: `https://api.whatsapp.com/send?text=${encodeURIComponent(url)}`,
       telegram: `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
-      twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
-      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
-      email: `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(url)}`,
     }),
     [url, title]
   );
 
   const handleNativeShare = useCallback(async () => {
+    if (typeof navigator === "undefined" || typeof navigator.share === "undefined") {
+      return;
+    }
+
+    if (isSharingRef.current) {
+      return;
+    }
+
+    isSharingRef.current = true;
+
     try {
       await navigator.share({
         title,
         url,
       });
     } catch (error) {
-      if ((error as Error).name !== "AbortError") {
+      if ((error as Error).name !== "AbortError" && (error as Error).name !== "InvalidStateError") {
         console.error("Error sharing:", error);
       }
+    } finally {
+      isSharingRef.current = false;
     }
   }, [title, url]);
 
@@ -86,11 +96,6 @@ export const useShare = () => {
       if (e) {
         e.preventDefault();
         e.stopPropagation();
-      }
-      
-      if (method === "email") {
-        window.location.href = shareLinks.email;
-        return;
       }
       window.open(shareLinks[method], "_blank", "noopener,noreferrer");
     },

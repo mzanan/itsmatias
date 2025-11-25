@@ -75,7 +75,7 @@ export const Hero = () => {
                 cy="7"
                 r="1"
                 fill="currentColor"
-              />
+            />
             </motion.g>
           </svg>
         </div>
