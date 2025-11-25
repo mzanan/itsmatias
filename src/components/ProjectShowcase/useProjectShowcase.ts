@@ -31,6 +31,9 @@ export const useProjectShowcase = (videoRef: React.RefObject<HTMLVideoElement | 
     const video = videoRef.current
     if (!video) return
 
+    video.playbackRate = 1.5
+    video.defaultPlaybackRate = 1.5
+
     const handleVisibilityChange = () => {
       if (document.hidden) {
         video.pause()
