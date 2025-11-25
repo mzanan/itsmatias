@@ -29,7 +29,7 @@ export const useHero = (vantaRef: React.RefObject<HTMLDivElement | null>) => {
 
       try {
         const windowObj = window as Window & { THREE?: unknown; VANTA?: { WAVES: (options: Record<string, unknown>) => VantaEffect } };
-        
+
         const waitForVanta = (): Promise<void> => {
           return new Promise((resolve) => {
             if (windowObj.VANTA && typeof windowObj.VANTA.WAVES === "function" && windowObj.THREE) {
@@ -50,12 +50,12 @@ export const useHero = (vantaRef: React.RefObject<HTMLDivElement | null>) => {
         };
 
         await waitForVanta();
-        
+
         if (!element) return;
 
         const VANTA = windowObj.VANTA;
         const THREE = windowObj.THREE;
-        
+
         if (!VANTA || !VANTA.WAVES || !THREE) {
           return;
         }
@@ -70,9 +70,9 @@ export const useHero = (vantaRef: React.RefObject<HTMLDivElement | null>) => {
           minWidth: 200.0,
           scale: 1.0,
           scaleMobile: 1.0,
-          shininess: 50.0,
-          waveHeight: 20.0,
-          zoom: 1.05,
+          shininess: 10.0,
+          waveHeight: 40.0,
+          zoom: 1,
         });
       } catch {
       }
