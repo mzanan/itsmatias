@@ -11,6 +11,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { IconButton } from "@/components/Styles/Buttons/IconButton/IconButton";
 
 type ShareProps = {
     isInHero?: boolean;
@@ -41,60 +42,41 @@ const ShareContent = ({
                 <DialogTitle className="text-center">Share</DialogTitle>
             </DialogHeader>
 
-            <div className="flex flex-col items-center mb-6">
+            <div className="flex flex-col items-center">
                 <div className="bg-white p-4 rounded-lg mb-4">
                     <QRCodeSVG value={url} size={160} level="M" />
                 </div>
-                <p className="text-sm text-muted-foreground text-center">
-                    Scan to open on mobile
-                </p>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-3">
-                <button
+            <div className="flex justify-center">
+                <IconButton
                     onClick={(e) => handleShare("whatsapp", e)}
-                    className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-primary/10 transition-colors group"
-                >
-                    <div className="p-2 rounded-lg bg-green-500/10 group-hover:bg-green-500/20 transition-colors">
-                        <FaWhatsapp className="h-6 w-6 text-green-500" />
-                    </div>
-                    <span className="text-xs font-medium">WhatsApp</span>
-                </button>
+                    variant="green"
+                    iconColor="green"
+                    icon={<FaWhatsapp />}
+                    label="WhatsApp"
+                />
 
-                <button
+                <IconButton
                     onClick={(e) => handleShare("telegram", e)}
-                    className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-primary/10 transition-colors group"
-                >
-                    <div className="p-2 rounded-lg bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors">
-                        <FaTelegram className="h-6 w-6 text-blue-500" />
-                    </div>
-                    <span className="text-xs font-medium">Telegram</span>
-                </button>
+                    variant="blue"
+                    iconColor="blue"
+                    icon={<FaTelegram />}
+                    label="Telegram"
+                />
 
-                <button
+                <IconButton
                     onClick={handleCopyLink}
-                    className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-primary/10 transition-colors group"
-                >
-                    <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                        {copied ? (
-                            <FaCheck className="h-6 w-6 text-primary" />
-                        ) : (
-                            <FaCopy className="h-6 w-6 text-primary" />
-                        )}
-                    </div>
-                    <span className="text-xs font-medium">Copy link</span>
-                </button>
+                    icon={copied ? <FaCheck /> : <FaCopy />}
+                    label="Copy link"
+                />
 
                 {(!platform.isMac || platform.hasWebShare) && (
-                    <button
+                    <IconButton
                         onClick={handleNativeShare}
-                        className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-primary/10 transition-colors group"
-                    >
-                        <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                            <FaShare className="h-6 w-6 text-primary" />
-                        </div>
-                        <span className="text-xs font-medium">More options</span>
-                    </button>
+                        icon={<FaShare />}
+                        label="More options"
+                    />
                 )}
             </div>
         </>
