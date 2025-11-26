@@ -96,7 +96,7 @@ export const Share = ({ isInHero = false, label = "Share", asButton = false, cla
         handleShare,
     } = useShare();
 
-    const baseClasses = "text-sm font-medium transition-all duration-300 hover:text-primary hover:scale-105";
+    const baseClasses = "text-sm font-medium transition-all duration-300 hover:text-primary hover:scale-105 cursor-pointer";
     const colorClass = isInHero ? "text-white" : "text-muted-foreground";
     const shinyClass = isAnimated ? "shiny-text" : "";
     const buttonClassName = `${baseClasses} ${colorClass} ${shinyClass} ${className}`;
