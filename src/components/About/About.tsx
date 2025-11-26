@@ -10,7 +10,6 @@ import { Share } from "@/components/Share/Share"
 export const About = () => {
   const {
     about,
-    scrollToContact,
     ref,
     leftVariants,
     rightVariants,
@@ -24,7 +23,8 @@ export const About = () => {
     <section
       ref={ref}
       id="about"
-      className="snap-start min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-24 overflow-hidden w-full"
+      data-snap-section
+      className="snap-start h-dvh flex items-center justify-center px-4 sm:px-6 lg:px-8 py-24 overflow-hidden w-full"
     >
       <div className="container mx-auto max-w-6xl">
         <div className="grid md:grid-cols-2 gap-16 items-start">
@@ -45,15 +45,12 @@ export const About = () => {
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed whitespace-pre-line">{about.description}</p>
 
             <div className="flex flex-wrap gap-4 mt-4">
-            <Button
-              onClick={scrollToContact}
-              size="lg"
-              variant="outline"
-                className="text-base px-6 group bg-transparent"
-            >
-                Let&apos;s connect
-              <FaArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
+              <Button asChild size="lg" variant="outline" className="text-base px-6 group bg-transparent">
+                <a href="#contact">
+                  Let&apos;s connect
+                  <FaArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </a>
+              </Button>
               <Share label="Tell a friend" asButton />
             </div>
           </motion.div>
@@ -86,18 +83,7 @@ export const About = () => {
                   />
                 </motion.div>
               ))
-            ) : (
-              about.techStack.map((tech, index) => (
-                <motion.div
-                  key={index}
-                  className="px-4 lg:px-6 py-3 lg:py-4 bg-linear-to-br from-primary/10 to-secondary/10 border border-primary/30 rounded-lg text-sm font-medium text-primary hover:from-primary/20 hover:to-secondary/20 transition-all cursor-default"
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  variants={{ hiddenEnter: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-                >
-                  {tech}
-                </motion.div>
-              ))
-            )}
+            ) : undefined}
           </motion.div>
         </div>
       </div>

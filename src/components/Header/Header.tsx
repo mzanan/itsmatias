@@ -4,7 +4,7 @@ import { useHeader } from "./useHeader"
 import { Share } from "@/components/Share/Share"
 
 export const Header = () => {
-  const { scrollToSection, isScrolled, isInHero } = useHeader()
+  const { isScrolled, isInHero } = useHeader()
 
   return (
     <header
@@ -14,12 +14,12 @@ export const Header = () => {
         }`}
     >
       <nav className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
-        <button
-          onClick={() => scrollToSection("hero")}
+        <a
+          href="#hero"
           className="text-lg font-bold gradient-text transition-all hover:opacity-80"
         >
           MZ
-        </button>
+        </a>
         <div className="flex items-center gap-8">
           {["Home", "Work", "About", "Contact"].map((item, idx) => {
             const getSectionId = () => {
@@ -29,14 +29,14 @@ export const Header = () => {
             };
 
             return (
-            <button
-              key={idx}
-                onClick={() => scrollToSection(getSectionId())}
+              <a
+                key={idx}
+                href={`#${getSectionId()}`}
                 className={`text-sm font-medium transition-all duration-300 hover:text-primary hover:scale-105 ${isInHero ? "text-white" : "text-muted-foreground"
                   }`}
-            >
-              {item}
-            </button>
+              >
+                {item}
+              </a>
             );
           })}
           <Share isInHero={isInHero} />

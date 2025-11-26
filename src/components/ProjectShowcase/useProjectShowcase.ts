@@ -1,11 +1,9 @@
-import { useEffect, useRef, useMemo, useCallback } from "react"
+import { useEffect, useRef, useMemo } from "react"
 import { useInView } from "framer-motion"
-import { useScrollDirection } from "@/hooks/useScrollDirection"
 
 export const useProjectShowcase = (videoRef: React.RefObject<HTMLVideoElement | null>) => {
   const ref = useRef<HTMLElement>(null)
   const isInView = useInView(ref, { margin: "-20% 0px", once: false })
-  const { scrollDirection } = useScrollDirection()
 
   useEffect(() => {
     const video = videoRef.current
@@ -59,17 +57,13 @@ export const useProjectShowcase = (videoRef: React.RefObject<HTMLVideoElement | 
     []
   )
 
-  const getVideoAnimation = useCallback(() => {
-    if (isInView) return "visible"
-    if (scrollDirection === "down") return "hiddenEnter"
-    return "hiddenExit"
-  }, [isInView, scrollDirection])
+  const getVideoAnimation = () => {
+    return isInView ? "visible" : "hiddenEnter"
+  }
 
-  const getTextAnimation = useCallback(() => {
-    if (isInView) return "visible"
-    if (scrollDirection === "down") return "hiddenEnter"
-    return "hiddenExit"
-  }, [isInView, scrollDirection])
+  const getTextAnimation = () => {
+    return isInView ? "visible" : "hiddenEnter"
+  }
 
   return {
     ref,

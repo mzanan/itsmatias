@@ -1,7 +1,5 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { useInView } from "framer-motion";
-import { useScrollDirection } from "@/hooks/useScrollDirection";
-import { useScrollToSection } from "@/hooks/useScrollToSection";
 
 type AboutData = {
   description: string;
@@ -11,8 +9,6 @@ type AboutData = {
 export const useAbout = () => {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { margin: "-20% 0px", once: false });
-  const { scrollDirection } = useScrollDirection();
-  const { scrollToSection } = useScrollToSection();
   const [instagramImages, setInstagramImages] = useState<string[]>([]);
   const [displayedImages, setDisplayedImages] = useState<string[]>([]);
   const usedImagesRef = useRef<Set<string>>(new Set());
@@ -136,28 +132,18 @@ export const useAbout = () => {
     []
   );
 
-  const getLeftAnimation = useCallback(() => {
-    if (isInView) return "visible";
-    if (scrollDirection === "down") return "hiddenEnter";
-    return "hiddenExit";
-  }, [isInView, scrollDirection]);
+  const getLeftAnimation = () => {
+    return isInView ? "visible" : "hiddenEnter";
+  };
 
-  const getRightAnimation = useCallback(() => {
-    if (isInView) return "visible";
-    if (scrollDirection === "down") return "hiddenEnter";
-    return "hiddenExit";
-  }, [isInView, scrollDirection]);
-
-  const scrollToContact = useCallback(() => {
-    scrollToSection("contact");
-  }, [scrollToSection]);
+  const getRightAnimation = () => {
+    return isInView ? "visible" : "hiddenEnter";
+  };
 
   return {
     about,
-    scrollToContact,
     ref,
     isInView,
-    scrollDirection,
     leftVariants,
     rightVariants,
     getLeftAnimation,

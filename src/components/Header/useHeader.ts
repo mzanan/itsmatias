@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
-import { useScrollToSection } from "@/hooks/useScrollToSection";
 
 export const useHeader = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isInHero, setIsInHero] = useState(true);
-    const { scrollToSection } = useScrollToSection();
 
     useEffect(() => {
         const mainElement = document.querySelector("main");
@@ -26,6 +24,6 @@ export const useHeader = () => {
         return () => mainElement.removeEventListener("scroll", handleScroll);
     }, []);
 
-    return { scrollToSection, isScrolled, isInHero };
+    return { isScrolled, isInHero };
 };
 
