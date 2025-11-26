@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useShare } from "./useShare";
 import { QRCodeSVG } from "qrcode.react";
 import { FaWhatsapp, FaTelegram, FaCopy, FaCheck, FaShare } from "react-icons/fa";
@@ -17,6 +18,7 @@ type ShareProps = {
     isInHero?: boolean;
     label?: string;
     asButton?: boolean;
+    className?: string;
 };
 
 type ShareContentProps = {
@@ -83,7 +85,8 @@ const ShareContent = ({
     );
 };
 
-export const Share = ({ isInHero = false, label = "Share", asButton = false }: ShareProps) => {
+export const Share = ({ isInHero = false, label = "Share", asButton = false, className = "" }: ShareProps) => {
+    const [isAnimated, setIsAnimated] = useState(true);
     const {
         platform,
         url,
@@ -93,8 +96,14 @@ export const Share = ({ isInHero = false, label = "Share", asButton = false }: S
         handleShare,
     } = useShare();
 
-    const buttonClassName = `text-sm font-medium transition-all duration-300 hover:text-primary hover:scale-105 ${isInHero ? "text-white" : "text-muted-foreground"
-        }`;
+    const baseClasses = "text-sm font-medium transition-all duration-300 hover:text-primary hover:scale-105";
+    const colorClass = isInHero ? "text-white" : "text-muted-foreground";
+    const shinyClass = isAnimated ? "shiny-text" : "";
+    const buttonClassName = `${baseClasses} ${colorClass} ${shinyClass} ${className}`;
+
+    const handleClick = () => {
+        setIsAnimated(false);
+    };
 
     return (
         <Dialog>
@@ -104,12 +113,13 @@ export const Share = ({ isInHero = false, label = "Share", asButton = false }: S
                         size="lg"
                         variant="outline"
                         className="text-base px-6 group bg-transparent"
+                        onClick={handleClick}
                     >
                         {label}
                         <FaShare className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                     </Button>
                 ) : (
-                    <button className={buttonClassName}>
+                    <button className={buttonClassName} onClick={handleClick}>
                         {label}
                     </button>
                 )}
