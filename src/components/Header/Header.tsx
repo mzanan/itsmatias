@@ -15,30 +15,22 @@ export const Header = () => {
     >
       <nav className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         <a
-          href="#hero"
+          href="#home"
           className="text-lg font-bold gradient-text transition-all hover:opacity-80"
         >
           MZ
         </a>
         <div className="flex items-center gap-8">
-          {["Home", "Work", "About", "Contact"].map((item, idx) => {
-            const getSectionId = () => {
-              if (item === "Home") return "hero";
-              if (item === "Work") return "projects";
-              return item.toLowerCase();
-            };
-
-            return (
-              <a
-                key={idx}
-                href={`#${getSectionId()}`}
-                className={`text-sm font-medium transition-all duration-300 hover:text-primary hover:scale-105 ${isInHero ? "text-white" : "text-muted-foreground"
-                  }`}
-              >
-                {item}
-              </a>
-            );
-          })}
+          {["Home", "Projects", "About", "Contact"].map((item, idx) => (
+            <a
+              key={idx}
+              href={`#${item.toLowerCase()}`}
+              className={`text-sm font-medium transition-all duration-300 hover:text-primary hover:scale-105 ${isInHero ? "text-white" : "text-muted-foreground"
+                }`}
+            >
+              {item}
+            </a>
+          ))}
           <Share isInHero={isInHero} />
         </div>
       </nav>
