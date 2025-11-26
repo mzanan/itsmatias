@@ -9,14 +9,16 @@ export const Contact = () => {
   const {
     contact,
     formData,
-    setFormData,
     isSubmitting,
     submitStatus,
-    handleSubmit,
+    state,
     ref,
     isInView,
     containerVariants,
     itemVariants,
+    setFormData,
+    handleSubmit,
+    ValidationError,
   } = useContact();
 
   return (
@@ -62,10 +64,17 @@ export const Contact = () => {
               <input
                 type="text"
                 id="name"
+                name="name"
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className="w-full px-4 py-2 border-2 border-primary/20 rounded-md bg-input text-foreground focus:outline-none focus:ring focus:ring-primary focus:border-primary"
+              />
+              <ValidationError
+                prefix="Name"
+                field="name"
+                errors={state.errors}
+                className="text-red-500 text-sm mt-1"
               />
             </div>
 
@@ -76,10 +85,17 @@ export const Contact = () => {
               <input
                 type="email"
                 id="email"
+                name="email"
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="w-full px-4 py-2 border-2 border-primary/20 rounded-md bg-input text-foreground focus:outline-none focus:ring focus:ring-primary focus:border-primary"
+              />
+              <ValidationError
+                prefix="Email"
+                field="email"
+                errors={state.errors}
+                className="text-red-500 text-sm mt-1"
               />
             </div>
 
@@ -89,11 +105,18 @@ export const Contact = () => {
               </label>
               <textarea
                 id="message"
+                name="message"
                 required
                 rows={4}
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 className="w-full px-4 py-2 border-2 border-primary/20 rounded-md bg-input text-foreground focus:outline-none focus:ring focus:ring-primary focus:border-primary resize-none"
+              />
+              <ValidationError
+                prefix="Message"
+                field="message"
+                errors={state.errors}
+                className="text-red-500 text-sm mt-1"
               />
             </div>
 
@@ -110,7 +133,7 @@ export const Contact = () => {
             )}
 
             <Button type="submit" disabled={isSubmitting} className="w-full">
-              {isSubmitting ? "Sending..." : "Send Message"}
+              {isSubmitting ? "Sending..." : "Send"}
             </Button>
           </form>
         </motion.div>

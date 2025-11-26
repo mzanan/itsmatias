@@ -1,5 +1,6 @@
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo, useEffect } from "react";
 import { useInView } from "framer-motion";
+import { useForm, ValidationError } from "@formspree/react";
 
 type ContactData = {
   description: string;
@@ -14,8 +15,13 @@ type FormData = {
 
 export const useContact = () => {
   const [formData, setFormData] = useState<FormData>({ name: "", email: "", message: "" });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [state, handleSubmit] = useForm("mblvrwdy");
+
+  useEffect(() => {
+    if (state.succeeded) {
+      setFormData({ name: "", email: "", message: "" });
+    }
+  }, [state.succeeded]);
 
   const contact: ContactData = useMemo(
     () => ({
@@ -30,42 +36,8 @@ export const useContact = () => {
     []
   );
 
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus("idle");
-
-    try {
-      const response = await fetch("https://formspree.io/f/xpwnqjdk", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-          _subject: "Project Inquiry from Portfolio",
-        }),
-      });
-
-      if (response.ok) {
-        setSubmitStatus("success");
-        setFormData({ name: "", email: "", message: "" });
-        setTimeout(() => {
-          setSubmitStatus("idle");
-        }, 3000);
-      } else {
-        setSubmitStatus("error");
-      }
-    } catch {
-      setSubmitStatus("error");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
+  const isSubmitting = state.submitting;
+  const submitStatus = state.succeeded ? "success" : (state.errors?.length ?? 0) > 0 ? "error" : "idle";
 
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { margin: "-20% 0px", once: false });
@@ -96,6 +68,8 @@ export const useContact = () => {
     isSubmitting,
     submitStatus,
     handleSubmit,
+    state,
+    ValidationError,
     ref,
     isInView,
     containerVariants,
