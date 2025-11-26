@@ -43,13 +43,16 @@ export async function GET() {
 
             await setCachedImage(imageUrl, buffer, contentType);
             console.log(`[Instagram API] Downloaded missing image ${index + 1}/${missingImages.length}`);
+            return { imageUrl, success: true };
           } catch (error) {
             console.error(`[Instagram API] Error downloading missing image ${index + 1}/${missingImages.length}:`, error);
+            return { imageUrl, success: false };
           }
         });
 
-        await Promise.allSettled(downloadPromises);
-        console.log(`[Instagram API] All missing images downloaded`);
+        const results = await Promise.allSettled(downloadPromises);
+        const successful = results.filter((r) => r.status === "fulfilled" && r.value?.success).length;
+        console.log(`[Instagram API] All missing images downloaded: ${successful}/${missingImages.length} successful`);
       } else {
         console.log(`[Instagram API] ✓ All ${cached.images.length} images are cached, serving from cache (NO API call to Instagram)`);
       }
@@ -63,7 +66,9 @@ export async function GET() {
       }
 
       console.log(`[Instagram API] Returning ${Object.keys(imageData).length} images from cache`);
-      return NextResponse.json({ ...cached, imageData });
+      const result = { ...cached, imageData };
+      await setCachedData("instagram_images", result);
+      return NextResponse.json(result);
     }
 
     console.log(`[Instagram API] No cache found, fetching from Instagram API...`);
@@ -114,7 +119,7 @@ export async function GET() {
               const cached = await getCachedImage(imageUrl);
               if (cached) {
                 console.log(`[Instagram API] Image ${index + 1}/${imageUrls.length} already cached`);
-                return;
+                return { imageUrl, success: true, cached };
               }
 
               const imageResponse = await axios.get(imageUrl, {
@@ -132,23 +137,34 @@ export async function GET() {
               const buffer = Buffer.from(imageResponse.data);
 
               await setCachedImage(imageUrl, buffer, contentType);
+              console.log(`[Instagram API] Downloaded image ${index + 1}/${imageUrls.length}`);
+              return { imageUrl, success: true, cached: { buffer, contentType } };
             } catch (error) {
               console.error(`[Instagram API] Error downloading image ${index + 1}/${imageUrls.length}:`, error);
+              return { imageUrl, success: false };
             }
           });
 
           const results = await Promise.allSettled(downloadPromises);
-          const successful = results.filter((r) => r.status === "fulfilled").length;
+          const successful = results.filter((r) => r.status === "fulfilled" && r.value?.success).length;
           console.log(`[Instagram API] Download complete: ${successful}/${imageUrls.length} images cached`);
 
           const imageData: Record<string, string> = {};
-          for (const imageUrl of imageUrls) {
-            const cached = await getCachedImage(imageUrl);
-            if (cached) {
-              imageData[imageUrl] = `data:${cached.contentType};base64,${cached.buffer.toString("base64")}`;
+          for (const result of results) {
+            if (result.status === "fulfilled" && result.value?.success) {
+              const { imageUrl, cached } = result.value;
+              if (cached) {
+                imageData[imageUrl] = `data:${cached.contentType};base64,${cached.buffer.toString("base64")}`;
+              } else {
+                const cachedImage = await getCachedImage(imageUrl);
+                if (cachedImage) {
+                  imageData[imageUrl] = `data:${cachedImage.contentType};base64,${cachedImage.buffer.toString("base64")}`;
+                }
+              }
             }
           }
 
+          console.log(`[Instagram API] Returning ${Object.keys(imageData).length} images with data`);
           const result = { images: imageUrls, imageData };
           await setCachedData("instagram_images", result);
           return NextResponse.json(result);

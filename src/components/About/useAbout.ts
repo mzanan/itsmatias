@@ -60,12 +60,15 @@ export const useAbout = () => {
         const data = await response.json();
         if (data.images && data.images.length > 0) {
           setInstagramImages(data.images);
-          if (data.imageData) {
+          if (data.imageData && Object.keys(data.imageData).length > 0) {
             setImageDataCache(data.imageData);
+            const { newImages } = getRandomImages(data.images, 4, new Set(), []);
+            const availableImages = newImages.filter(img => data.imageData[img]);
+            if (availableImages.length > 0) {
+              setDisplayedImages(availableImages);
+              usedImagesRef.current = new Set(availableImages);
+            }
           }
-          const { newImages } = getRandomImages(data.images, 4, new Set(), []);
-          setDisplayedImages(newImages);
-          usedImagesRef.current = new Set(newImages);
         }
       } catch (error) {
         console.error("Error fetching Instagram images:", error);
@@ -76,27 +79,31 @@ export const useAbout = () => {
   }, [getRandomImages]);
 
   useEffect(() => {
-    if (instagramImages.length === 0) return;
+    if (instagramImages.length === 0 || Object.keys(imageDataCache).length === 0) return;
 
     const interval = setInterval(() => {
       setDisplayedImages((current) => {
+        const availableImages = instagramImages.filter(img => imageDataCache[img]);
+        if (availableImages.length === 0) return current;
+
         const { newImages, shouldReset } = getRandomImages(
-          instagramImages,
+          availableImages,
           4,
           usedImagesRef.current,
           current
         );
+        const validImages = newImages.filter(img => imageDataCache[img]);
         if (shouldReset) {
           usedImagesRef.current = new Set();
         } else {
-          newImages.forEach((img) => usedImagesRef.current.add(img));
+          validImages.forEach((img) => usedImagesRef.current.add(img));
         }
-        return newImages;
+        return validImages.length > 0 ? validImages : current;
       });
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [instagramImages, getRandomImages]);
+  }, [instagramImages, imageDataCache, getRandomImages]);
 
   const about: AboutData = useMemo(
     () => ({
