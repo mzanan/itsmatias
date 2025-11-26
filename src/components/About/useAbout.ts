@@ -3,6 +3,7 @@ import { useInView } from "framer-motion";
 
 type AboutData = {
   description: string;
+  descriptionMobile: string;
   techStack: string[];
 };
 
@@ -62,7 +63,7 @@ export const useAbout = () => {
           setInstagramImages(data.images);
           if (data.imageData && Object.keys(data.imageData).length > 0) {
             setImageDataCache(data.imageData);
-            const { newImages } = getRandomImages(data.images, 4, new Set(), []);
+          const { newImages } = getRandomImages(data.images, 4, new Set(), []);
             const availableImages = newImages.filter(img => data.imageData[img]);
             if (availableImages.length > 0) {
               setDisplayedImages(availableImages);
@@ -109,6 +110,8 @@ export const useAbout = () => {
     () => ({
     description:
         "Hi, I'm Matias. I create websites that look good, feel smooth, and help businesses grow online.\nI believe a website shouldn't just exist, it should actually do something for you: bring clients, show your work, or sell what you offer.\n\nI work remotely while traveling, which inspires my creativity and keeps me curious. Every project here was designed and developed entirely by me, with care and attention to detail.",
+      descriptionMobile:
+        "Hi, I'm Matias. I create websites that look good, feel smooth, and help businesses grow online.\n\nEvery project here was designed and developed by me, with care and attention to detail.",
     techStack: [
       "Next.js",
       "TypeScript",

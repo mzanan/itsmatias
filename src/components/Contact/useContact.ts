@@ -20,7 +20,7 @@ export const useContact = () => {
   useEffect(() => {
     if (state.succeeded) {
       startTransition(() => {
-        setFormData({ name: "", email: "", message: "" });
+      setFormData({ name: "", email: "", message: "" });
       });
     }
   }, [state.succeeded]);

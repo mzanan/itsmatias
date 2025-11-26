@@ -178,6 +178,46 @@
     }
   }
 
+  .shiny-border {
+    position: relative;
+    border: 1px solid transparent;
+    background:
+      linear-gradient(var(--background), var(--background)) padding-box,
+      linear-gradient(90deg,
+        rgba(34, 211, 238, 0.4) 0%,
+        rgba(34, 211, 238, 0.4) 20%,
+        rgba(59, 130, 246, 0.4) 40%,
+        rgba(147, 51, 234, 0.8) 50%,
+        rgba(59, 130, 246, 0.4) 60%,
+        rgba(34, 211, 238, 0.4) 80%,
+        rgba(34, 211, 238, 0.4) 100%) border-box;
+    background-size: 100% 100%, 200% 100%;
+    animation: shiny-border 3s linear infinite;
+  }
+
+  .shiny-border:hover {
+    background:
+      linear-gradient(var(--primary), var(--primary)) padding-box,
+      linear-gradient(90deg,
+        rgba(34, 211, 238, 0.4) 0%,
+        rgba(34, 211, 238, 0.4) 20%,
+        rgba(59, 130, 246, 0.4) 40%,
+        rgba(147, 51, 234, 0.8) 50%,
+        rgba(59, 130, 246, 0.4) 60%,
+        rgba(34, 211, 238, 0.4) 80%,
+        rgba(34, 211, 238, 0.4) 100%) border-box;
+  }
+
+  @keyframes shiny-border {
+    0% {
+      background-position: 0 0, 200% center;
+    }
+
+    100% {
+      background-position: 0 0, -200% center;
+    }
+  }
+
   .glass-effect {
     @apply bg-white/10 backdrop-blur-md border border-white/20;
   }
