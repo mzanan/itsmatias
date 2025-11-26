@@ -155,11 +155,20 @@ export async function GET() {
         }
       }
     } catch (error) {
-      console.error("Instagram API error:", error);
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          console.log("[Instagram API] Authentication required - using cached data or returning empty");
+        } else {
+          console.error("[Instagram API] Request failed:", error.response?.status || error.message);
+        }
+      } else {
+        console.error("[Instagram API] Error:", error);
+      }
     }
 
     return NextResponse.json({
       images: [],
+      imageData: {},
       error: "Unable to fetch Instagram images",
     });
   } catch (error) {
