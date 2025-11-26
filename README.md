@@ -118,7 +118,7 @@ Each component has its own hook file located in the same directory:
 - `useAbout`: Manages about section data, animations, and scroll
 - `useContact`: Handles contact form state and submission
 - `useProjectShowcase`: Manages project showcase animations and video controls
-- `useProjects`: Provides project data
+- `useProjectsShowcase`: Provides project data
 
 ## Styling
 

@@ -1,10 +1,10 @@
 "use client"
 
-import { useProjects } from "./useProjects"
+import { useProjectsShowcase } from "./useProjectsShowcase"
 import { ProjectShowcase } from "../ProjectShowcase/ProjectShowcase"
 
 export const ProjectsShowcase = () => {
-  const { projects } = useProjects()
+  const { projects } = useProjectsShowcase()
 
   return (
     <>
