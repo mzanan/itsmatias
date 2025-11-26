@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useContact } from "./useContact";
 import { Button } from "@/components/ui/button";
 import { FaCheckCircle } from "react-icons/fa";
+import { Title } from "@/components/Styles/Texts/Title/Title";
 
 export const Contact = () => {
   const {
@@ -39,10 +40,7 @@ export const Contact = () => {
         className="container mx-auto max-w-3xl text-center relative z-10"
       >
         <motion.div variants={itemVariants} className="mb-8">
-          <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">
-            <span className="gradient-text">Send me an email</span>
-          </h2>
-          <div className="h-1 w-12 bg-linear-to-r from-cyan-400 to-purple-600 rounded-full mx-auto" />
+          <Title centered>Let&apos;s connect</Title>
         </motion.div>
 
         <motion.p

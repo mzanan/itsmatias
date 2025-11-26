@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { FaArrowRight } from "react-icons/fa"
 import Image from "next/image"
 import { Share } from "@/components/Share/Share"
+import { Title } from "@/components/Styles/Texts/Title/Title"
 
 export const About = () => {
   const {
@@ -35,12 +36,7 @@ export const About = () => {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="space-y-8"
           >
-            <div>
-              <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">
-                <span className="gradient-text">About Me</span>
-              </h2>
-              <div className="h-1 w-12 bg-linear-to-r from-cyan-400 to-purple-600 rounded-full" />
-            </div>
+            <Title>About Me</Title>
 
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed whitespace-pre-line">{about.description}</p>
 

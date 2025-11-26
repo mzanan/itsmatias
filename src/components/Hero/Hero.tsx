@@ -3,6 +3,7 @@
 import { useHero } from "./useHero"
 import { motion, AnimatePresence } from "framer-motion"
 import { useRef } from "react"
+import { Title } from "@/components/Styles/Texts/Title/Title"
 
 export const Hero = () => {
   const vantaRef = useRef<HTMLDivElement>(null)
@@ -24,25 +25,28 @@ export const Hero = () => {
         initial="hidden"
         animate="visible"
       >
-        <motion.h1
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-4 md:mb-6 tracking-tight leading-tight"
-          variants={itemVariants}
-        >
-          <div className="relative h-[1.2em] flex items-center justify-center overflow-hidden">
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={currentWordIndex}
-                className="absolute bg-linear-to-b from-sky-400 to-pink-400 bg-clip-text text-transparent shadow-black drop-shadow-md"
-                initial="enter"
-                animate="center"
-                exit="exit"
-                variants={wordVariants}
-              >
-                {words[currentWordIndex]}
-              </motion.span>
-            </AnimatePresence>
-          </div>
-        </motion.h1>
+        <motion.div variants={itemVariants}>
+          <Title
+            as="h1"
+            showUnderline={false}
+            wrapContent={false}
+          >
+            <div className="relative h-[1.2em] flex items-center justify-center overflow-hidden">
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={currentWordIndex}
+                  className="absolute bg-linear-to-b from-sky-400 to-pink-400 bg-clip-text text-transparent shadow-black drop-shadow-md"
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  variants={wordVariants}
+                >
+                  {words[currentWordIndex]}
+                </motion.span>
+              </AnimatePresence>
+            </div>
+          </Title>
+        </motion.div>
       </motion.div>
 
       <motion.div
@@ -75,7 +79,7 @@ export const Hero = () => {
                 cy="7"
                 r="1"
                 fill="currentColor"
-            />
+              />
             </motion.g>
           </svg>
         </div>

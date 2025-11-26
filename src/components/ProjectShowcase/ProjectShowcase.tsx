@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import type { Project } from "../ProjectsShowcase/useProjectsShowcase"
 import { useProjectShowcase } from "./useProjectShowcase"
 import { useRef } from "react"
+import { Title } from "@/components/Styles/Texts/Title/Title"
 
 type ProjectShowcaseProps = {
   project: Project
@@ -29,16 +30,7 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="space-y-8"
         >
-          <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">
-            <a
-              href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="gradient-text hover:opacity-80 transition-opacity cursor-pointer"
-            >
-              {project.title}
-            </a>
-          </h2>
+          <Title href={project.url}>{project.title}</Title>
         </motion.div>
 
         <motion.div
