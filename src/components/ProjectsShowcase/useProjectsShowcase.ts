@@ -14,10 +14,10 @@ export const useProjectsShowcase = () => {
         () => [
             {
                 id: "1",
-                title: "E-commerce with Admin Panel",
+                title: "E-commerce with Custom Admin Panel",
                 benefit:
                     "Boost sales with a fast, elegant and conversion-focused fashion store.",
-                url: "https://ecommerce-six-peach-14.vercel.app/",
+                url: "https://ecommerce.itsmatias.com",
                 video: "/videos/demo-infideli.mp4",
                 tags: ["Next.js", "E-commerce", "Animations", "Responsive"],
             },
@@ -26,7 +26,7 @@ export const useProjectsShowcase = () => {
                 title: "E-commerce Landing Page",
                 benefit:
                     "A conversion-focused landing page designed to promote and drive traffic to the e-commerce store.",
-                url: "https://ecommerce-landing-kappa.vercel.app/",
+                url: "https://landing.itsmatias.com",
                 video: "/videos/demo-landing.mp4",
                 tags: ["Next.js", "Landing Page", "Marketing", "UI/UX"],
             },
@@ -35,7 +35,7 @@ export const useProjectsShowcase = () => {
                 title: "My Social Links",
                 benefit:
                     "A modern, dynamic, and fast custom link-in-bio page to centralize all your social media links.",
-                url: "https://mzanan.vercel.app/",
+                url: "https://links.itsmatias.com",
                 video: "/videos/demo-links.mp4",
                 tags: ["Next.js", "Social Links", "Custom Design", "Link-in-Bio"],
             },
