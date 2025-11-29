@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 
 const SITE_URL = "https://itsmatias.com";
 const SITE_NAME = "ItsMatias";
-const SITE_DESCRIPTION = "Portfolio del desarrollador Matías, sitios escalables para marcas y creadores.";
-const OG_IMAGE_URL = "https://itsmatias.com/og-image-v1.png";
+const SITE_DESCRIPTION = "Matías - Web developer crafting scalable websites for brands and creators.";
+const OG_IMAGE_URL = "/og-image.png";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -48,13 +48,8 @@ export const metadata: Metadata = {
     images: [OG_IMAGE_URL],
   },
   icons: {
-    icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/favicon.ico", sizes: "any" },
-    ],
-    apple: [
-      { url: "/icon.svg", type: "image/svg+xml" },
-    ],
+    icon: "/icon.svg",
+    apple: "/icon.svg",
   },
   alternates: {
     canonical: SITE_URL,
