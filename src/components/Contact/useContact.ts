@@ -4,6 +4,7 @@ import { useForm, ValidationError } from "@formspree/react";
 
 type ContactData = {
   description: string;
+  descriptionMobile: string;
   reassurances: string[];
 };
 
@@ -29,10 +30,11 @@ export const useContact = () => {
     () => ({
       description:
         "Have a project in mind or want to discuss opportunities? I'd love to hear from you. Fill out the form below and I'll get back to you as soon as possible.",
+      descriptionMobile:
+        "Have a project in mind? I'd love to hear from you.",
       reassurances: [
         "Fast replies",
-        "100% tailored solutions",
-        "Secure payment integration available",
+        "100% tailored solutions"
       ],
     }),
     []

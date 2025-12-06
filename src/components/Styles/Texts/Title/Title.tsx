@@ -21,10 +21,9 @@ export const Title = ({
     wrapContent = true,
     className = ""
 }: TitleProps) => {
-    const underlineClassName = `h-1 w-12 bg-linear-to-r from-cyan-400 to-purple-600 rounded-full ${centered ? "mx-auto" : ""}`;
+    const underlineClassName = `h-1 w-12 bg-linear-to-r from-cyan-400 to-purple-600 rounded-full ${centered ? "md:mx-auto" : ""}`;
     const isString = typeof children === "string";
     const shouldWrap = wrapContent && isString;
-    const isH1 = HeadingTag === "h1";
 
     const content = href ? (
         <a
@@ -41,17 +40,13 @@ export const Title = ({
         children
     );
 
-    const headingClassName = isH1
-        ? "text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-4 md:mb-6 tracking-tight leading-tight"
-        : "text-5xl md:text-6xl font-bold tracking-tight mb-4";
-
-    return (
-        <div className={className}>
-            <HeadingTag className={headingClassName}>
-                {content}
-            </HeadingTag>
-            {showUnderline && <div className={underlineClassName} />}
-        </div>
-    );
+return (
+    <div className={className}>
+        <HeadingTag className={`text-4xl md:text-6xl font-bold tracking-tight mb-4 ${centered ? "md:text-center" : ""}`}>
+            {content}
+        </HeadingTag>
+        {showUnderline && <div className={underlineClassName} />}
+    </div>
+);
 };
 

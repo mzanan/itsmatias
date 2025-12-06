@@ -1,7 +1,7 @@
 "use client"
 
 import { useHero } from "./useHero"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion" // Eliminado AnimatePresence
 import { useRef } from "react"
 import { Title } from "@/components/Styles/Texts/Title/Title"
 
@@ -9,43 +9,49 @@ export const Hero = () => {
   const vantaRef = useRef<HTMLDivElement>(null)
   const {
     containerVariants,
-    itemVariants,
     scrollIndicatorVariants,
     words,
-    currentWordIndex,
+    visibleWordIndex,
     wordVariants,
+    containerPhraseVariants,
+    currentPhraseIndex,
+    isFadingOut,
   } = useHero(vantaRef)
 
   return (
     <section id="home" className="relative h-dvh flex flex-col justify-center items-center text-center snap-start overflow-hidden w-full max-w-full">
       <div ref={vantaRef} className="absolute inset-0 z-0 w-full h-full" />
       <motion.div
-        className="relative z-10 max-w-4xl px-4 flex flex-col gap-6 md:gap-10 w-full h-full justify-center py-8 overflow-hidden"
+        className="relative z-10 w-full h-full flex items-center justify-center px-4"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        <motion.div variants={itemVariants}>
-          <Title
-            as="h1"
-            showUnderline={false}
-            wrapContent={false}
-          >
-            <div className="relative h-[1.2em] flex items-center justify-center overflow-hidden">
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={currentWordIndex}
-                  className="absolute bg-linear-to-b from-sky-400 to-pink-400 bg-clip-text text-transparent shadow-black drop-shadow-md"
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  variants={wordVariants}
-                >
-                  {words[currentWordIndex]}
-                </motion.span>
-              </AnimatePresence>
-            </div>
-          </Title>
+        <motion.div
+          className="flex flex-wrap items-center justify-center gap-2 md:gap-3 max-w-6xl"
+          variants={containerPhraseVariants}
+          animate="visible"
+        >
+          {words.map((word, index) => (
+            <motion.div
+              key={`${currentPhraseIndex}-${index}`}
+              variants={wordVariants}
+              initial="hidden"
+              animate={index < visibleWordIndex && !isFadingOut ? "visible" : "hidden"}
+              exit="exit"
+            >
+              <Title
+                as="h1"
+                showUnderline={false}
+                wrapContent={false}
+                className="inline"
+              >
+                <span className="text-3xl md:text-5xl lg:text-6xl font-bold text-black drop-shadow-lg">
+                  {word}
+                </span>
+              </Title>
+            </motion.div>
+          ))}
         </motion.div>
       </motion.div>
 

@@ -8,12 +8,10 @@ export const useHero = (vantaRef: React.RefObject<HTMLDivElement | null>) => {
 
   useEffect(() => {
     if (!vantaRef.current) return;
-
     let vantaEffect: VantaEffect | null = null;
 
     const initVanta = async () => {
       if (typeof window === "undefined") return;
-
       const element = vantaRef.current;
       if (!element) return;
 
@@ -50,15 +48,10 @@ export const useHero = (vantaRef: React.RefObject<HTMLDivElement | null>) => {
         };
 
         await waitForVanta();
-
         if (!element) return;
-
         const VANTA = windowObj.VANTA;
         const THREE = windowObj.THREE;
-
-        if (!VANTA || !VANTA.WAVES || !THREE) {
-          return;
-        }
+        if (!VANTA || !VANTA.WAVES || !THREE) return;
 
         vantaEffect = VANTA.WAVES({
           el: element,
@@ -74,90 +67,100 @@ export const useHero = (vantaRef: React.RefObject<HTMLDivElement | null>) => {
           waveHeight: 40.0,
           zoom: 1,
         });
-      } catch {
-      }
+      } catch {}
     };
 
-    const timer = setTimeout(() => {
-      initVanta();
-    }, 200);
-
+    const timer = setTimeout(() => { initVanta(); }, 200);
     return () => {
       clearTimeout(timer);
-      if (vantaEffect && vantaEffect.destroy) {
-        vantaEffect.destroy();
-      }
+      if (vantaEffect && vantaEffect.destroy) vantaEffect.destroy();
     };
   }, [vantaRef]);
 
   const containerVariants = useMemo(
     () => ({
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2, delayChildren: 0.1 },
-    },
-    }),
-    []
-  );
-
-  const itemVariants = useMemo(
-    () => ({
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: { staggerChildren: 0.2, delayChildren: 0.1 },
+      },
     }),
     []
   );
 
   const scrollIndicatorVariants = useMemo(
     () => ({
-    animate: { y: [0, 10, 0] },
-    transition: { duration: 2, repeat: Number.POSITIVE_INFINITY },
+      animate: { y: [0, 10, 0] },
+      transition: { duration: 2, repeat: Number.POSITIVE_INFINITY },
     }),
     []
   );
 
-  const words = ["Build.", "Create.", "Deploy."];
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentWordIndex((prev) => (prev + 1) % words.length);
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, [words.length]);
-
   const wordVariants = useMemo(
     () => ({
-    enter: {
-      y: 50,
-      opacity: 0,
-    },
-    center: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-      },
-    },
-    exit: {
-      y: -50,
-      opacity: 0,
-      transition: {
-        duration: 0.3,
-      },
-    },
+      hidden: { opacity: 0 },
+      visible: { opacity: 1, transition: { duration: 0.4 } },
+      exit: { opacity: 0, transition: { duration: 0.3 } },
     }),
     []
+  );
+
+  const phrases = useMemo(() => [
+    "Transform your ideas into modern, high-performing websites.",
+    "Craft a digital presence that truly represents your brand.",
+    "Designed to convert and ready to grow."
+  ], []);
+
+  const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
+  const [visibleWordIndex, setVisibleWordIndex] = useState(0);
+  const [isFadingOut, setIsFadingOut] = useState(false);
+
+  const currentPhrase = phrases[currentPhraseIndex];
+  const words = currentPhrase.split(" ");
+
+  useEffect(() => {
+    if (isFadingOut) {
+      const fadeOutTimer = setTimeout(() => {
+        setCurrentPhraseIndex((prev) => (prev + 1) % phrases.length);
+        setVisibleWordIndex(0);
+        setIsFadingOut(false);
+      }, 500);
+      return () => clearTimeout(fadeOutTimer);
+    }
+
+    if (visibleWordIndex < words.length) {
+      const wordTimer = setTimeout(() => {
+        setVisibleWordIndex((prev) => prev + 1);
+      }, 200);
+      return () => clearTimeout(wordTimer);
+    }
+
+    else {
+      const pauseTimer = setTimeout(() => {
+        setIsFadingOut(true);
+      }, 2000);
+      return () => clearTimeout(pauseTimer);
+    }
+  }, [visibleWordIndex, isFadingOut, words.length, phrases.length]);
+
+  const containerPhraseVariants = useMemo(
+    () => ({
+      visible: {
+        opacity: isFadingOut ? 0 : 1,
+        transition: { duration: 0.5 },
+      },
+    }),
+    [isFadingOut]
   );
 
   return {
     containerVariants,
-    itemVariants,
     scrollIndicatorVariants,
     words,
-    currentWordIndex,
+    visibleWordIndex,
     wordVariants,
+    containerPhraseVariants,
+    currentPhraseIndex,
+    isFadingOut,
   };
 };

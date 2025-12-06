@@ -26,33 +26,34 @@ export const Contact = () => {
     <section
       ref={ref}
       id="contact"
-      className="snap-start min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-24 relative overflow-hidden w-full"
+      className="snap-start min-h-dvh flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16 md:pt-0 relative overflow-hidden"
     >
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-20 right-20 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl mix-blend-screen" />
-        <div className="absolute bottom-20 left-20 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl mix-blend-screen" />
-      </div>
-
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        className="container mx-auto max-w-3xl text-center relative z-10"
+        className="container mx-auto max-w-3xl relative z-10"
       >
-        <motion.div variants={itemVariants} className="mb-8">
+        <motion.div variants={itemVariants} className="mb-6">
           <Title centered>Let&apos;s connect</Title>
         </motion.div>
 
         <motion.p
-          className="text-lg md:text-xl text-muted-foreground mb-12 leading-relaxed"
+          className="text-lg md:text-xl text-muted-foreground mb-6 md:mb-12 leading-relaxed md:text-center"
           variants={itemVariants}
         >
-          {contact.description}
+          <span className="hidden md:block">
+            {contact.description}
+          </span>
+
+          <span className="md:hidden">
+            {contact.descriptionMobile}
+          </span>
         </motion.p>
 
         <motion.div
           variants={itemVariants}
-          className="bg-card border-2 border-primary/20 rounded-lg p-8 max-w-md w-full mx-auto shadow-2xl backdrop-blur-sm"
+          className="bg-card border-2 border-primary/20 rounded-lg p-4 md:p-8 max-w-md w-full mx-auto shadow-2xl backdrop-blur-sm"
         >
           <form onSubmit={handleSubmit} className="space-y-4 text-left">
             <div>
@@ -137,7 +138,7 @@ export const Contact = () => {
         </motion.div>
 
         <motion.div
-          className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground mt-8"
+          className="hidden md:flex flex-wrap justify-center gap-6 text-sm text-muted-foreground mt-12"
           variants={containerVariants}
         >
           {contact.reassurances.map((reassurance, index) => (

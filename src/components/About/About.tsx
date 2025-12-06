@@ -34,7 +34,7 @@ export const About = () => {
             initial="hiddenEnter"
             animate={getLeftAnimation()}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="space-y-8"
+            className="space-y-6"
           >
             <Title>About Me</Title>
 
@@ -44,7 +44,7 @@ export const About = () => {
                 initial="hiddenEnter"
                 animate={getRightAnimation()}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                className="grid grid-cols-2 gap-3 lg:gap-4 mb-8 lg:mb-0 lg:hidden"
+                className="grid grid-cols-2 gap-3 lg:gap-4 mb-6 lg:mb-0 lg:hidden"
               >
                 {displayedImages.slice(0, 2).map((image) => (
                   <motion.div
@@ -69,7 +69,7 @@ export const About = () => {
               </motion.div>
             )}
 
-            <p className="block lg:hidden text-lg md:text-xl text-muted-foreground leading-relaxed whitespace-pre-line">{about.descriptionMobile}</p>
+            <p className="block lg:hidden text-lg md:text-xl text-muted-foreground leading-snug whitespace-pre-line">{about.descriptionMobile}</p>
             <p className="hidden lg:block text-lg md:text-xl text-muted-foreground leading-relaxed whitespace-pre-line">{about.description}</p>
 
             <div className="flex flex-wrap gap-4 mt-4">
