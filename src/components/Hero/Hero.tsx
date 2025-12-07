@@ -1,7 +1,7 @@
 "use client"
 
 import { useHero } from "./useHero"
-import { motion } from "framer-motion" // Eliminado AnimatePresence
+import { motion } from "framer-motion"
 import { useRef } from "react"
 import { Title } from "@/components/Styles/Texts/Title/Title"
 
@@ -46,7 +46,7 @@ export const Hero = () => {
                 wrapContent={false}
                 className="inline"
               >
-                <span className="text-3xl md:text-5xl lg:text-6xl font-bold text-black drop-shadow-lg">
+                <span className="text-3xl md:text-5xl lg:text-6xl font-bold drop-shadow-lg">
                   {word}
                 </span>
               </Title>
