@@ -4,6 +4,7 @@ import { useHero } from "./useHero"
 import { motion } from "framer-motion"
 import { useRef } from "react"
 import { Title } from "@/components/Styles/Texts/Title/Title"
+import { FaArrowRight } from "react-icons/fa"
 
 export const Hero = () => {
   const vantaRef = useRef<HTMLDivElement>(null)
@@ -54,6 +55,18 @@ export const Hero = () => {
           ))}
         </motion.div>
       </motion.div>
+
+      {/* CTA — absolute, no se mueve al cambiar el largo del título rotativo */}
+      <motion.a
+        href="#projects"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 1.2 }}
+        className="group absolute bottom-32 md:bottom-40 left-1/2 -translate-x-1/2 z-10 inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/30 bg-white/5 text-white text-sm md:text-base font-medium backdrop-blur-sm hover:bg-white/10 hover:border-white/60 transition-all whitespace-nowrap"
+      >
+        See my work
+        <FaArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+      </motion.a>
 
       <motion.div
         className="absolute bottom-4 md:bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center"

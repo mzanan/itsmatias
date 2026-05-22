@@ -106,9 +106,9 @@ export const useHero = (vantaRef: React.RefObject<HTMLDivElement | null>) => {
   );
 
   const phrases = useMemo(() => [
-    "Transform your ideas into modern, high-performing websites.",
-    "Craft a digital presence that truly represents your brand.",
-    "Designed to convert and ready to grow."
+    "Hi, I'm Matias.",
+    "I build smooth, elegant, pixel-perfect websites end-to-end.",
+    "Designed, coded, and shipped by me. Remote, traveling, deeply curious."
   ], []);
 
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
