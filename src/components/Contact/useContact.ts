@@ -1,17 +1,24 @@
-import { useState, useRef, useMemo, useEffect, startTransition } from "react";
+import { useState, useRef, useMemo, useEffect, startTransition, type ComponentType } from "react";
 import { useInView } from "framer-motion";
 import { useForm, ValidationError } from "@formspree/react";
+import { FaWhatsapp, FaLinkedin } from "react-icons/fa";
+import { HiMail } from "react-icons/hi";
 
 type ContactData = {
   description: string;
   descriptionMobile: string;
-  reassurances: string[];
 };
 
 type FormData = {
   name: string;
   email: string;
   message: string;
+};
+
+type Social = {
+  label: string;
+  href: string;
+  Icon: ComponentType<{ className?: string }>;
 };
 
 export const useContact = () => {
@@ -29,14 +36,19 @@ export const useContact = () => {
   const contact: ContactData = useMemo(
     () => ({
       description:
-        "Have a project in mind or want to discuss opportunities? I'd love to hear from you. Fill out the form below and I'll get back to you as soon as possible.",
+        "Have a project in mind or just want to explore ideas?\nShare a few details below and I'll get back to you shortly.",
       descriptionMobile:
-        "Have a project in mind? I'd love to hear from you.",
-      reassurances: [
-        "Fast replies",
-        "100% tailored solutions"
-      ],
+        "Have a project in mind? Share a few details and I'll get back to you shortly.",
     }),
+    []
+  );
+
+  const socials: Social[] = useMemo(
+    () => [
+      { label: "WhatsApp", href: "https://wa.me/5491157567049", Icon: FaWhatsapp },
+      { label: "LinkedIn", href: "https://linkedin.com/in/matiaszanan", Icon: FaLinkedin },
+      { label: "matiaszanan@gmail.com", href: "mailto:matiaszanan@gmail.com", Icon: HiMail },
+    ],
     []
   );
 
@@ -67,6 +79,7 @@ export const useContact = () => {
 
   return {
     contact,
+    socials,
     formData,
     setFormData,
     isSubmitting,

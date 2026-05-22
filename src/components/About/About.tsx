@@ -75,7 +75,7 @@ export const About = () => {
             <div className="flex flex-wrap gap-4 mt-4">
               <Button asChild size="lg" variant="outline" className="text-base px-6 group shiny-border text-white hover:text-primary-foreground">
                 <a href="#contact">
-                  Let&apos;s connect
+                  Get in touch
                   <FaArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </a>
               </Button>
