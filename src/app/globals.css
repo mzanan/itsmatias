@@ -129,10 +129,26 @@
 
   body {
     @apply bg-background text-foreground;
+    position: relative;
+  }
+
+  /* Ambient background — aurora-like spots fixed to viewport. Visible sin overpower. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background:
+      radial-gradient(ellipse 70% 55% at 15% 12%, oklch(0.6 0.2 264 / 0.22), transparent 55%),
+      radial-gradient(ellipse 60% 50% at 85% 88%, oklch(0.5 0.18 300 / 0.20), transparent 60%),
+      radial-gradient(ellipse 55% 45% at 75% 25%, oklch(0.65 0.2 200 / 0.12), transparent 60%),
+      radial-gradient(ellipse 60% 45% at 50% 50%, oklch(0.55 0.18 220 / 0.10), transparent 65%);
   }
 
   /*  Added smooth scroll behavior and gradient text utility */
-  html {
+  html,
+  main {
     scroll-behavior: smooth;
   }
 
@@ -215,6 +231,20 @@
 
     100% {
       background-position: 0 0, -200% center;
+    }
+  }
+
+  /* QR share button — sutil halo cyan que palpita para llamar atención sin ser molesto */
+  .qr-pulse {
+    animation: qr-pulse 3.5s ease-in-out infinite;
+  }
+
+  @keyframes qr-pulse {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(34, 211, 238, 0);
+    }
+    50% {
+      box-shadow: 0 0 0 6px rgba(34, 211, 238, 0.18);
     }
   }
 
