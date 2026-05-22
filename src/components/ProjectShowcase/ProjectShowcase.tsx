@@ -13,7 +13,7 @@ type ProjectShowcaseProps = {
 export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcaseProps) => {
   const { ref, videoVariants, textVariants, animationState } = useProjectShowcase(1.5)
 
-  const cardClasses = "relative block shadow-2xl rounded-2xl cursor-pointer group aspect-[9/16] md:aspect-video max-h-[calc(100dvh-200px)] md:max-h-none"
+  const cardClasses = "relative block shadow-2xl rounded-2xl cursor-pointer group aspect-[9/16] md:aspect-video max-h-[calc(100dvh-240px)] md:max-h-none"
   const desktopOverlayClasses = "hidden md:flex absolute inset-0 z-20 items-center justify-center transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:bg-black/40 group-hover:backdrop-blur-[2px]"
   const desktopButtonClasses = "flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 border border-white/20 backdrop-blur-md transform transition-all duration-300 translate-y-4 group-hover:translate-y-0 hover:scale-105 active:scale-95 active:bg-white/20"
   const mobileButtonClasses = "flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 transition-all duration-200 active:scale-95 active:bg-white/20"
@@ -22,7 +22,7 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
     <section
       ref={ref}
       id={isFirst ? "projects" : undefined}
-      className="snap-start relative h-dvh md:min-h-dvh flex flex-col items-center overflow-hidden bg-transparent pt-16 md:pt-0"
+      className="snap-start relative h-dvh md:min-h-dvh flex flex-col items-center overflow-hidden bg-transparent px-4 pt-20 pb-8 md:px-0 md:pt-0 md:pb-0"
     >
       <div className="w-full h-full max-w-7xl flex flex-col items-center justify-start md:justify-center relative z-10 gap-4 md:gap-6">
 
