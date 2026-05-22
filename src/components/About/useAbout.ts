@@ -109,9 +109,9 @@ export const useAbout = () => {
   const about: AboutData = useMemo(
     () => ({
     description:
-        "Hi, I'm Matias. I create websites that look good, feel smooth, and help businesses grow online.\nI believe a website shouldn't just exist, it should actually do something for you: bring clients, show your work, or sell what you offer.\n\nI work remotely while traveling, which inspires my creativity and keeps me curious. Every project here was designed and developed entirely by me, with care and attention to detail.",
+        "Hi, I'm Matias.\n\nI work remotely while traveling, building production websites end-to-end: design, code, deploy. No agencies, no handoffs, just code that ships.\n\nEvery project here was made by me, with care and attention to detail.",
       descriptionMobile:
-        "Hi, I'm Matias. I create websites that look good, feel smooth, and help businesses grow online.\n\nEvery project here was designed and developed by me, with care and attention to detail.",
+        "Hi, I'm Matias.\n\nI build production websites end-to-end: design, code, deploy.\n\nRemote, traveling, made with care.",
     techStack: [
       "Next.js",
       "TypeScript",
@@ -124,20 +124,22 @@ export const useAbout = () => {
     []
   );
 
+  // Unificado con el patrón de Contact: fade + slight y, sin x-translate.
+  // El stagger entre left/right viene del containerVariants envolvente.
   const leftVariants = useMemo(
     () => ({
-    hiddenEnter: { opacity: 0, x: -100 },
-    visible: { opacity: 1, x: 0 },
-    hiddenExit: { opacity: 0, x: -100 },
+      hiddenEnter: { opacity: 0, y: 20 },
+      visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+      hiddenExit: { opacity: 0, y: 20 },
     }),
     []
   );
 
   const rightVariants = useMemo(
     () => ({
-    hiddenEnter: { opacity: 0, x: 100, y: 20 },
-    visible: { opacity: 1, x: 0, y: 0, transition: { staggerChildren: 0.1 } },
-    hiddenExit: { opacity: 0, x: 100 },
+      hiddenEnter: { opacity: 0, y: 20 },
+      visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.15 } },
+      hiddenExit: { opacity: 0, y: 20 },
     }),
     []
   );
