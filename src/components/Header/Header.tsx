@@ -3,8 +3,15 @@
 import { useHeader } from "./useHeader"
 import { Share } from "@/components/Share/Share"
 
+const NAV_ITEMS = [
+  { label: "Home", id: "home" },
+  { label: "Projects", id: "projects" },
+  { label: "About", id: "about" },
+  { label: "Contact", id: "contact" },
+] as const
+
 export const Header = () => {
-  const { isScrolled, isInHero } = useHeader()
+  const { isScrolled, isInHero, activeSection } = useHeader()
 
   return (
     <header
@@ -21,16 +28,28 @@ export const Header = () => {
           MZ
         </a>
         <div className="flex items-center gap-4 md:gap-8">
-          {["Home", "Projects", "About", "Contact"].map((item, idx) => (
-            <a
-              key={idx}
-              href={`#${item.toLowerCase()}`}
-              className={`text-sm font-medium transition-all duration-300 hover:text-primary hover:scale-105 ${isInHero ? "text-white" : "text-muted-foreground"
+          {NAV_ITEMS.map(({ label, id }) => {
+            const isActive = activeSection === id
+            const baseColor = isInHero ? "text-white" : "text-muted-foreground"
+            const activeColor = isInHero ? "text-cyan-300" : "text-primary"
+            return (
+              <a
+                key={id}
+                href={`#${id}`}
+                aria-current={isActive ? "page" : undefined}
+                className={`relative text-sm font-medium transition-all duration-300 hover:scale-105 ${
+                  isActive ? activeColor : `${baseColor} hover:text-primary`
                 }`}
-            >
-              {item}
-            </a>
-          ))}
+              >
+                {label}
+                <span
+                  className={`pointer-events-none absolute -bottom-1 left-0 h-0.5 rounded-full bg-current transition-all duration-300 ${
+                    isActive ? "w-full opacity-100" : "w-0 opacity-0"
+                  }`}
+                />
+              </a>
+            )
+          })}
           <Share isInHero={isInHero} />
         </div>
       </nav>
