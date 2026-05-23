@@ -170,16 +170,21 @@ export const Contact = () => {
                 />
                 <span> and I&apos;d like help with </span>
                 <label htmlFor="message-d" className="sr-only">What I need help with</label>
-                <input
-                  type="text"
-                  id="message-d"
-                  name="message"
-                  required
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="a landing, an ecommerce…"
-                  className={`${inputBase} ${growable} inline-block align-baseline min-w-[18rem] mx-2 text-2xl lg:text-3xl`}
-                />
+                <span className="inline-grid align-baseline mx-2 max-w-full">
+                  <span aria-hidden className="col-start-1 row-start-1 invisible whitespace-pre text-2xl lg:text-3xl px-1">
+                    {formData.message || "a landing, an ecommerce…"}
+                  </span>
+                  <input
+                    type="text"
+                    id="message-d"
+                    name="message"
+                    required
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    placeholder="a landing, an ecommerce…"
+                    className={`${inputBase} col-start-1 row-start-1 w-full text-2xl lg:text-3xl px-1`}
+                  />
+                </span>
                 <span>. You can reach me at </span>
                 <label htmlFor="email-d" className="sr-only">Your email</label>
                 <input
