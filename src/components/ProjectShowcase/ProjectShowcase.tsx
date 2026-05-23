@@ -59,6 +59,31 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
               className="relative rounded-2xl overflow-hidden border border-primary/30 bg-black group-hover:border-primary/50 transition-colors z-10"
               suppressHydrationWarning
             >
+              {/* --- PERSISTENT BADGE (top-right, always visible) --- */}
+              <div className="absolute top-3 right-3 z-30 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-lg pointer-events-none">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+                </span>
+                <span className="text-white text-xs font-medium tracking-wide">
+                  Live site
+                </span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="11"
+                  height="11"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-white"
+                >
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+              </div>
               {/* MOBILE VIDEO */}
               <video
                 src={project.videoMobile}
