@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from "react";
-import { useInView } from "framer-motion";
+import { useInView } from "motion/react";
 
 type AboutData = {
   description: string;

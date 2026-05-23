@@ -1,5 +1,5 @@
 import { useEffect, useRef, useMemo, useCallback } from "react"
-import { useInView } from "framer-motion"
+import { useInView } from "motion/react"
 
 export const useProjectShowcase = (playbackSpeed: number = 1.5) => {
   const ref = useRef<HTMLElement>(null)

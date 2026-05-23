@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useContact } from "./useContact";
 import { Title } from "@/components/Styles/Texts/Title/Title";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";

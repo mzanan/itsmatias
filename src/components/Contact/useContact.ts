@@ -1,5 +1,5 @@
 import { useState, useRef, useMemo, useEffect, startTransition, type ComponentType } from "react";
-import { useInView } from "framer-motion";
+import { useInView } from "motion/react";
 import { useForm, ValidationError } from "@formspree/react";
 import { FaWhatsapp, FaLinkedin } from "react-icons/fa";
 import { HiMail } from "react-icons/hi";

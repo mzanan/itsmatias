@@ -1,7 +1,7 @@
 "use client"
 
 import { useHero } from "./useHero"
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import { useRef } from "react"
 import { FaArrowRight } from "react-icons/fa"
 

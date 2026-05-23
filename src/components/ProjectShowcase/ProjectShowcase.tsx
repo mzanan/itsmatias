@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import type { Project } from "../ProjectsShowcase/useProjectsShowcase"
 import { useProjectShowcase } from "./useProjectShowcase"
 import { Title } from "@/components/Styles/Texts/Title/Title"
