@@ -17,7 +17,6 @@ export const About = () => {
     displayedImages,
     getLeftAnimation,
     getRightAnimation,
-    getProxyImageUrl,
   } = useAbout()
 
   return (
@@ -28,7 +27,7 @@ export const About = () => {
       className="snap-start min-h-dvh flex items-center justify-center px-4 sm:px-6 lg:px-8 lg:py-24 overflow-hidden w-full"
     >
       <div className="container mx-auto max-w-6xl">
-        <div className="block lg:grid lg:grid-cols-2 lg:gap-16 lg:items-start">
+        <div className="block lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center">
           <motion.div
             variants={leftVariants}
             initial="hiddenEnter"
@@ -52,17 +51,17 @@ export const About = () => {
                     layout
                     transition={{
                       type: "spring",
-                      damping: 20,
-                      stiffness: 300,
+                      damping: 32,
+                      stiffness: 500,
                     }}
                     className="relative aspect-square rounded-lg overflow-hidden border border-primary/30"
                   >
                     <Image
-                      src={getProxyImageUrl(image)}
-                      alt={`Instagram post`}
+                      src={image}
+                      alt="About Matias"
                       fill
+                      sizes="(max-width: 1024px) 50vw, 25vw"
                       className="object-cover"
-                      unoptimized
                     />
                   </motion.div>
                 ))}
@@ -97,17 +96,17 @@ export const About = () => {
                   layout
                   transition={{
                     type: "spring",
-                    damping: 20,
-                    stiffness: 300,
+                    damping: 32,
+                    stiffness: 500,
                   }}
                   className="relative aspect-square rounded-lg overflow-hidden border border-primary/30"
                 >
                   <Image
-                    src={getProxyImageUrl(image)}
-                    alt={`Instagram post`}
+                    src={image}
+                    alt="About Matias"
                     fill
+                    sizes="(max-width: 1024px) 50vw, 25vw"
                     className="object-cover"
-                    unoptimized
                   />
                 </motion.div>
               ))}

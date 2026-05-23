@@ -7,125 +7,52 @@ type AboutData = {
   techStack: string[];
 };
 
+const ABOUT_IMAGES = [
+  "/about/1.jpg",
+  "/about/2.jpg",
+  "/about/3.jpg",
+  "/about/4.jpg",
+];
+
+const shuffle = <T,>(arr: T[]): T[] => [...arr].sort(() => Math.random() - 0.5);
+
 export const useAbout = () => {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { margin: "-20% 0px", once: false });
-  const [instagramImages, setInstagramImages] = useState<string[]>([]);
-  const [displayedImages, setDisplayedImages] = useState<string[]>([]);
-  const usedImagesRef = useRef<Set<string>>(new Set());
-  const [imageDataCache, setImageDataCache] = useState<Record<string, string>>({});
-
-  const getProxyImageUrl = useCallback((imageUrl: string): string => {
-    if (imageDataCache[imageUrl]) {
-      return imageDataCache[imageUrl];
-    }
-    return `/api/instagram/image?url=${encodeURIComponent(imageUrl)}`;
-  }, [imageDataCache]);
-
-  const getRandomImages = useCallback((
-    images: string[],
-    count: number,
-    exclude: Set<string>,
-    currentImages: string[]
-  ): { newImages: string[]; shouldReset: boolean } => {
-    const available = images.filter((img) => !exclude.has(img));
-
-    if (available.length === 0) {
-      const shuffled = [...images].sort(() => 0.5 - Math.random());
-      return { newImages: shuffled.slice(0, count), shouldReset: true };
-    }
-
-    const keepCount = Math.floor(count / 2);
-    const keepImages = currentImages.slice(0, keepCount);
-    const newCount = count - keepImages.length;
-
-    if (newCount <= 0) {
-      const shuffled = [...currentImages].sort(() => 0.5 - Math.random());
-      return { newImages: shuffled.slice(0, count), shouldReset: false };
-    }
-
-    const shuffled = [...available]
-      .filter((img) => !keepImages.includes(img))
-      .sort(() => 0.5 - Math.random());
-    const newImages = shuffled.slice(0, newCount);
-
-    const result = [...keepImages, ...newImages].sort(() => 0.5 - Math.random());
-    return { newImages: result, shouldReset: false };
-  }, []);
-
+  const [displayedImages, setDisplayedImages] = useState<string[]>(ABOUT_IMAGES);
 
   useEffect(() => {
-    const fetchInstagramImages = async () => {
-      try {
-        const response = await fetch("/api/instagram");
-        const data = await response.json();
-        if (data.images && data.images.length > 0) {
-          setInstagramImages(data.images);
-          if (data.imageData && Object.keys(data.imageData).length > 0) {
-            setImageDataCache(data.imageData);
-          const { newImages } = getRandomImages(data.images, 4, new Set(), []);
-            const availableImages = newImages.filter(img => data.imageData[img]);
-            if (availableImages.length > 0) {
-              setDisplayedImages(availableImages);
-              usedImagesRef.current = new Set(availableImages);
-            }
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching Instagram images:", error);
-      }
-    };
-
-    fetchInstagramImages();
-  }, [getRandomImages]);
-
-  useEffect(() => {
-    if (instagramImages.length === 0 || Object.keys(imageDataCache).length === 0) return;
-
     const interval = setInterval(() => {
       setDisplayedImages((current) => {
-        const availableImages = instagramImages.filter(img => imageDataCache[img]);
-        if (availableImages.length === 0) return current;
-
-        const { newImages, shouldReset } = getRandomImages(
-          availableImages,
-          4,
-          usedImagesRef.current,
-          current
-        );
-        const validImages = newImages.filter(img => imageDataCache[img]);
-        if (shouldReset) {
-          usedImagesRef.current = new Set();
-        } else {
-          validImages.forEach((img) => usedImagesRef.current.add(img));
+        let next = shuffle(current);
+        if (next[0] === current[0] && next[1] === current[1]) {
+          next = [next[1], next[0], ...next.slice(2)];
         }
-        return validImages.length > 0 ? validImages : current;
+        return next;
       });
-    }, 3000);
+    }, 2000);
 
     return () => clearInterval(interval);
-  }, [instagramImages, imageDataCache, getRandomImages]);
+  }, []);
 
   const about: AboutData = useMemo(
     () => ({
-    description:
+      description:
         "Hi, I'm Matias.\n\nI work remotely while traveling, building production websites end-to-end: design, code, deploy. No agencies, no handoffs, just code that ships.\n\nEvery project here was made by me, with care and attention to detail.",
       descriptionMobile:
         "Hi, I'm Matias.\n\nI build production websites end-to-end: design, code, deploy.\n\nRemote, traveling, made with care.",
-    techStack: [
-      "Next.js",
-      "TypeScript",
-      "React",
-      "Tailwind CSS",
-      "Supabase",
-      "Stripe",
-    ],
+      techStack: [
+        "Next.js",
+        "TypeScript",
+        "React",
+        "Tailwind CSS",
+        "Supabase",
+        "Stripe",
+      ],
     }),
     []
   );
 
-  // Unificado con el patrón de Contact: fade + slight y, sin x-translate.
-  // El stagger entre left/right viene del containerVariants envolvente.
   const leftVariants = useMemo(
     () => ({
       hiddenEnter: { opacity: 0, y: 20 },
@@ -144,13 +71,15 @@ export const useAbout = () => {
     []
   );
 
-  const getLeftAnimation = () => {
-    return isInView ? "visible" : "hiddenEnter";
-  };
+  const getLeftAnimation = useCallback(
+    () => (isInView ? "visible" : "hiddenEnter"),
+    [isInView]
+  );
 
-  const getRightAnimation = () => {
-    return isInView ? "visible" : "hiddenEnter";
-  };
+  const getRightAnimation = useCallback(
+    () => (isInView ? "visible" : "hiddenEnter"),
+    [isInView]
+  );
 
   return {
     about,
@@ -161,6 +90,5 @@ export const useAbout = () => {
     getLeftAnimation,
     getRightAnimation,
     displayedImages,
-    getProxyImageUrl,
   };
 };
