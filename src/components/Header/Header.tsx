@@ -25,7 +25,7 @@ export const Header = () => {
           href="#home"
           className="text-lg font-bold gradient-text transition-all hover:opacity-80"
         >
-          MZ
+          itsmatias
         </a>
         <div className="flex items-center gap-4 md:gap-8">
           {NAV_ITEMS.map(({ label, id }) => {
