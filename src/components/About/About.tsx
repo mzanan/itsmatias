@@ -12,11 +12,10 @@ export const About = () => {
   const {
     about,
     ref,
-    leftVariants,
-    rightVariants,
+    isInView,
+    containerVariants,
+    itemVariants,
     displayedImages,
-    getLeftAnimation,
-    getRightAnimation,
   } = useAbout()
 
   return (
@@ -26,79 +25,27 @@ export const About = () => {
       data-snap-section
       className="snap-start min-h-dvh flex items-center justify-center px-4 sm:px-6 lg:px-8 lg:py-24 overflow-hidden w-full"
     >
-      <div className="container mx-auto max-w-6xl">
-        <div className="block lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center">
-          <motion.div
-            variants={leftVariants}
-            initial="hiddenEnter"
-            animate={getLeftAnimation()}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="space-y-6"
-          >
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        className="container mx-auto max-w-6xl block lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center"
+      >
+        <motion.div variants={containerVariants} className="space-y-6">
+          <motion.div variants={itemVariants}>
             <Title>About Me</Title>
-
-            {displayedImages.length > 0 && (
-              <motion.div
-                variants={rightVariants}
-                initial="hiddenEnter"
-                animate={getRightAnimation()}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="grid grid-cols-2 gap-3 lg:gap-4 mb-6 lg:mb-0 lg:hidden"
-              >
-                {displayedImages.slice(0, 2).map((image) => (
-                  <motion.div
-                    key={image}
-                    layout
-                    transition={{
-                      type: "spring",
-                      damping: 32,
-                      stiffness: 500,
-                    }}
-                    className="relative aspect-square rounded-lg overflow-hidden border border-primary/30"
-                  >
-                    <Image
-                      src={image}
-                      alt="Matias Zanan, web developer"
-                      fill
-                      sizes="(max-width: 1024px) 50vw, 25vw"
-                      className="object-cover"
-                    />
-                  </motion.div>
-                ))}
-              </motion.div>
-            )}
-
-            <p className="block lg:hidden text-lg md:text-xl text-muted-foreground leading-snug whitespace-pre-line">{about.descriptionMobile}</p>
-            <p className="hidden lg:block text-lg md:text-xl text-muted-foreground leading-relaxed whitespace-pre-line">{about.description}</p>
-
-            <div className="flex flex-wrap gap-4 mt-4">
-              <Button asChild size="lg" variant="outline" className="text-base px-6 group shiny-border text-white hover:text-primary-foreground">
-                <a href="#contact">
-                  Get in touch
-                  <FaArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </a>
-              </Button>
-              <Share label="Tell a friend" asButton />
-            </div>
           </motion.div>
 
           {displayedImages.length > 0 && (
             <motion.div
-              variants={rightVariants}
-              initial="hiddenEnter"
-              animate={getRightAnimation()}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="hidden lg:grid lg:grid-cols-2 gap-4"
+              variants={itemVariants}
+              className="grid grid-cols-2 gap-3 mb-6 lg:hidden"
             >
-              {displayedImages.map((image) => (
+              {displayedImages.slice(0, 2).map((image) => (
                 <motion.div
                   key={image}
                   layout
-                  transition={{
-                    type: "spring",
-                    damping: 32,
-                    stiffness: 500,
-                  }}
+                  transition={{ type: "spring", damping: 32, stiffness: 500 }}
                   className="relative aspect-square rounded-lg overflow-hidden border border-primary/30"
                 >
                   <Image
@@ -112,8 +59,63 @@ export const About = () => {
               ))}
             </motion.div>
           )}
-        </div>
-      </div>
+
+          <motion.p
+            variants={itemVariants}
+            className="block lg:hidden text-lg md:text-xl text-muted-foreground leading-snug whitespace-pre-line"
+          >
+            {about.descriptionMobile}
+          </motion.p>
+          <motion.p
+            variants={itemVariants}
+            className="hidden lg:block text-lg md:text-xl text-muted-foreground leading-relaxed whitespace-pre-line"
+          >
+            {about.description}
+          </motion.p>
+
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-wrap gap-4 mt-4"
+          >
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="text-base px-6 group shiny-border text-white hover:text-primary-foreground"
+            >
+              <a href="#contact">
+                Get in touch
+                <FaArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </a>
+            </Button>
+            <Share label="Tell a friend" asButton />
+          </motion.div>
+        </motion.div>
+
+        {displayedImages.length > 0 && (
+          <motion.div
+            variants={itemVariants}
+            className="hidden lg:grid lg:grid-cols-2 gap-4"
+          >
+            {displayedImages.map((image) => (
+              <motion.div
+                key={image}
+                layout
+                transition={{ type: "spring", damping: 32, stiffness: 500 }}
+                className="relative aspect-square rounded-lg overflow-hidden border border-primary/30"
+              >
+                <Image
+                  src={image}
+                  alt="Matias Zanan, web developer"
+                  fill
+                  sizes="(max-width: 1024px) 50vw, 25vw"
+                  className="object-cover"
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </motion.div>
     </section>
   )
 }

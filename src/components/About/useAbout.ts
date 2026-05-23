@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useInView } from "framer-motion";
 
 type AboutData = {
@@ -53,42 +53,31 @@ export const useAbout = () => {
     []
   );
 
-  const leftVariants = useMemo(
+  const containerVariants = useMemo(
     () => ({
-      hiddenEnter: { opacity: 0, y: 20 },
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: { staggerChildren: 0.15, delayChildren: 0.1 },
+      },
+    }),
+    []
+  );
+
+  const itemVariants = useMemo(
+    () => ({
+      hidden: { opacity: 0, y: 20 },
       visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-      hiddenExit: { opacity: 0, y: 20 },
     }),
     []
-  );
-
-  const rightVariants = useMemo(
-    () => ({
-      hiddenEnter: { opacity: 0, y: 20 },
-      visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.15 } },
-      hiddenExit: { opacity: 0, y: 20 },
-    }),
-    []
-  );
-
-  const getLeftAnimation = useCallback(
-    () => (isInView ? "visible" : "hiddenEnter"),
-    [isInView]
-  );
-
-  const getRightAnimation = useCallback(
-    () => (isInView ? "visible" : "hiddenEnter"),
-    [isInView]
   );
 
   return {
     about,
     ref,
     isInView,
-    leftVariants,
-    rightVariants,
-    getLeftAnimation,
-    getRightAnimation,
+    containerVariants,
+    itemVariants,
     displayedImages,
   };
 };
