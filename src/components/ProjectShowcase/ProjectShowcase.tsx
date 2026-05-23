@@ -4,6 +4,7 @@ import { motion } from "motion/react"
 import type { Project } from "../ProjectsShowcase/useProjectsShowcase"
 import { useProjectShowcase } from "./useProjectShowcase"
 import { Title } from "@/components/Styles/Texts/Title/Title"
+import { LazyVideo } from "@/components/LazyVideo/LazyVideo"
 
 type ProjectShowcaseProps = {
   project: Project
@@ -85,25 +86,15 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
                 </svg>
               </div>
               {/* MOBILE VIDEO */}
-              <video
+              <LazyVideo
                 src={project.videoMobile}
-                muted
-                loop
-                playsInline
-                preload="metadata"
                 className="block md:hidden"
-                suppressHydrationWarning
               />
 
               {/* DESKTOP VIDEO */}
-              <video
+              <LazyVideo
                 src={project.videoDesktop}
-                muted
-                loop
-                playsInline
-                preload="metadata"
                 className="hidden md:block transition-transform duration-500 group-hover:scale-105"
-                suppressHydrationWarning
               />
 
               {/* --- MOBILE OVERLAY (Bottom Gradient) --- */}
