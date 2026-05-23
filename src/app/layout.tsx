@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -18,7 +17,6 @@ const SITE_NAME = "itsmatias";
 const SITE_TITLE = "Matias Zanan — Web Developer";
 const SITE_DESCRIPTION =
   "I build production websites end-to-end: design, code, deploy. Remote, traveling, made with care. Hi, I'm Matias.";
-const OG_IMAGE_URL = "/og-image.png";
 const PERSON_NAME = "Matias Zanan";
 
 const jsonLd = {
@@ -29,7 +27,7 @@ const jsonLd = {
       "@id": `${SITE_URL}/#person`,
       name: PERSON_NAME,
       url: SITE_URL,
-      image: `${SITE_URL}${OG_IMAGE_URL}`,
+      image: `${SITE_URL}/opengraph-image`,
       jobTitle: "Web Developer",
       description: SITE_DESCRIPTION,
       sameAs: [
@@ -78,20 +76,11 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: [
-      {
-        url: OG_IMAGE_URL,
-        width: 1200,
-        height: 630,
-        alt: `${PERSON_NAME} — Web Developer`,
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: [OG_IMAGE_URL],
   },
   icons: {
     icon: "/icon.svg",
@@ -119,20 +108,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossOrigin="" />
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        <Script
-          src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"
-          strategy="beforeInteractive"
-        />
-        <Script
-          src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"
-          strategy="afterInteractive"
         />
         {children}
       </body>

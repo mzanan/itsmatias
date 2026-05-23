@@ -4,58 +4,59 @@ type VantaEffect = {
   destroy: () => void;
 };
 
-export const useHero = (vantaRef: React.RefObject<HTMLDivElement | null>) => {
+type WindowWithVanta = Window & {
+  THREE?: unknown;
+  VANTA?: { WAVES: (options: Record<string, unknown>) => VantaEffect };
+};
 
+const THREE_SRC =
+  "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js";
+const VANTA_SRC =
+  "https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js";
+
+const loadScript = (src: string): Promise<void> =>
+  new Promise((resolve, reject) => {
+    const existing = document.querySelector<HTMLScriptElement>(
+      `script[src="${src}"]`,
+    );
+    if (existing) {
+      if (existing.dataset.loaded === "true") {
+        resolve();
+        return;
+      }
+      existing.addEventListener("load", () => resolve());
+      existing.addEventListener("error", () => reject());
+      return;
+    }
+    const s = document.createElement("script");
+    s.src = src;
+    s.async = true;
+    s.onload = () => {
+      s.dataset.loaded = "true";
+      resolve();
+    };
+    s.onerror = () => reject(new Error(`Failed to load ${src}`));
+    document.head.appendChild(s);
+  });
+
+export const useHero = (vantaRef: React.RefObject<HTMLDivElement | null>) => {
   useEffect(() => {
     if (!vantaRef.current) return;
     let vantaEffect: VantaEffect | null = null;
+    let cancelled = false;
 
-    const initVanta = async () => {
-      if (typeof window === "undefined") return;
-      const element = vantaRef.current;
-      if (!element) return;
-
-      const checkDimensions = () => {
-        const rect = element.getBoundingClientRect();
-        return rect.width > 0 && rect.height > 0;
-      };
-
-      if (!checkDimensions()) {
-        setTimeout(initVanta, 100);
-        return;
-      }
-
+    const init = async () => {
       try {
-        const windowObj = window as Window & { THREE?: unknown; VANTA?: { WAVES: (options: Record<string, unknown>) => VantaEffect } };
+        await loadScript(THREE_SRC);
+        await loadScript(VANTA_SRC);
+        if (cancelled || !vantaRef.current) return;
 
-        const waitForVanta = (): Promise<void> => {
-          return new Promise((resolve) => {
-            if (windowObj.VANTA && typeof windowObj.VANTA.WAVES === "function" && windowObj.THREE) {
-              resolve();
-              return;
-            }
-            const checkInterval = setInterval(() => {
-              if (windowObj.VANTA && typeof windowObj.VANTA.WAVES === "function" && windowObj.THREE) {
-                clearInterval(checkInterval);
-                resolve();
-              }
-            }, 50);
-            setTimeout(() => {
-              clearInterval(checkInterval);
-              resolve();
-            }, 5000);
-          });
-        };
+        const w = window as WindowWithVanta;
+        if (!w.VANTA?.WAVES || !w.THREE) return;
 
-        await waitForVanta();
-        if (!element) return;
-        const VANTA = windowObj.VANTA;
-        const THREE = windowObj.THREE;
-        if (!VANTA || !VANTA.WAVES || !THREE) return;
-
-        vantaEffect = VANTA.WAVES({
-          el: element,
-          THREE: THREE,
+        vantaEffect = w.VANTA.WAVES({
+          el: vantaRef.current,
+          THREE: w.THREE,
           mouseControls: true,
           touchControls: true,
           gyroControls: false,
@@ -70,9 +71,18 @@ export const useHero = (vantaRef: React.RefObject<HTMLDivElement | null>) => {
       } catch {}
     };
 
-    const timer = setTimeout(() => { initVanta(); }, 200);
+    const idle =
+      (window as Window & { requestIdleCallback?: (cb: () => void) => number })
+        .requestIdleCallback;
+    const handle = idle
+      ? idle(() => init())
+      : window.setTimeout(() => init(), 100);
+
     return () => {
-      clearTimeout(timer);
+      cancelled = true;
+      if (typeof handle === "number") {
+        clearTimeout(handle);
+      }
       if (vantaEffect && vantaEffect.destroy) vantaEffect.destroy();
     };
   }, [vantaRef]);
