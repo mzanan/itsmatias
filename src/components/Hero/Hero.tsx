@@ -3,7 +3,6 @@
 import { useHero } from "./useHero"
 import { motion } from "framer-motion"
 import { useRef } from "react"
-import { Title } from "@/components/Styles/Texts/Title/Title"
 import { FaArrowRight } from "react-icons/fa"
 
 export const Hero = () => {
@@ -21,6 +20,7 @@ export const Hero = () => {
 
   return (
     <section id="home" className="relative h-dvh flex flex-col justify-center items-center text-center snap-start overflow-hidden w-full max-w-full">
+      <h1 className="sr-only">Matias Zanan — Web Developer</h1>
       <div ref={vantaRef} className="absolute inset-0 z-0 w-full h-full" />
       <motion.div
         className="relative z-10 w-full h-full flex items-center justify-center px-4"
@@ -32,6 +32,7 @@ export const Hero = () => {
           className="flex flex-wrap items-center justify-center gap-2 md:gap-3 max-w-6xl"
           variants={containerPhraseVariants}
           animate="visible"
+          aria-hidden="true"
         >
           {words.map((word, index) => (
             <motion.div
@@ -40,17 +41,11 @@ export const Hero = () => {
               initial="hidden"
               animate={index < visibleWordIndex && !isFadingOut ? "visible" : "hidden"}
               exit="exit"
+              className="inline-block"
             >
-              <Title
-                as="h1"
-                showUnderline={false}
-                wrapContent={false}
-                className="inline"
-              >
-                <span className="text-3xl md:text-5xl lg:text-6xl font-bold drop-shadow-lg">
-                  {word}
-                </span>
-              </Title>
+              <span className="text-3xl md:text-5xl lg:text-6xl font-bold drop-shadow-lg tracking-tight">
+                {word}
+              </span>
             </motion.div>
           ))}
         </motion.div>
