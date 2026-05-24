@@ -9,7 +9,7 @@ import { Pill } from "@/components/ui/Pill"
 import { LazyVideo } from "@/components/LazyVideo/LazyVideo"
 
 const posterFor = (videoSrc: string) =>
-  videoSrc.replace("/videos/", "/videos/posters/").replace(/\.mp4$/, ".jpg")
+  videoSrc.replace("/videos/", "/videos/posters/").replace(/\.mp4$/, ".webp")
 
 const projects = [
   {

@@ -15,7 +15,7 @@ type ProjectShowcaseProps = {
 }
 
 const posterFor = (videoSrc: string) =>
-  videoSrc.replace("/videos/", "/videos/posters/").replace(/\.mp4$/, ".jpg")
+  videoSrc.replace("/videos/", "/videos/posters/").replace(/\.mp4$/, ".webp")
 
 export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcaseProps) => {
   const { ref, videoVariants, textVariants, animationState } = useProjectShowcase(1.5)
