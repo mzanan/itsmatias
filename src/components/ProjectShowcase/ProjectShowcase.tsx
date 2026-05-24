@@ -14,10 +14,13 @@ type ProjectShowcaseProps = {
   isFirst?: boolean
 }
 
+const posterFor = (videoSrc: string) =>
+  videoSrc.replace("/videos/", "/videos/posters/").replace(/\.mp4$/, ".jpg")
+
 export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcaseProps) => {
   const { ref, videoVariants, textVariants, animationState } = useProjectShowcase(1.5)
 
-  const cardClasses = "relative block shadow-2xl rounded-2xl cursor-pointer group aspect-[9/16] md:aspect-video max-h-[calc(100dvh-240px)] md:max-h-none"
+  const cardClasses = "relative block w-full max-w-5xl shadow-2xl rounded-2xl cursor-pointer group aspect-[9/16] md:aspect-video max-h-[calc(100dvh-240px)] md:max-h-none mx-auto"
 
   return (
     <section
@@ -57,7 +60,7 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
 
             {/* Video Wrapper */}
             <div
-              className="relative rounded-2xl overflow-hidden border border-primary/30 bg-black group-hover:border-primary/50 transition-colors z-10"
+              className="absolute inset-0 rounded-2xl overflow-hidden border border-primary/30 bg-black group-hover:border-primary/50 transition-colors z-10"
               suppressHydrationWarning
             >
               {/* Live badge */}
@@ -67,10 +70,15 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
                 </GlassBadge>
               </div>
 
-              <LazyVideo src={project.videoMobile} className="block md:hidden" />
+              <LazyVideo
+                src={project.videoMobile}
+                poster={posterFor(project.videoMobile)}
+                className="block md:hidden w-full h-full object-cover"
+              />
               <LazyVideo
                 src={project.videoDesktop}
-                className="hidden md:block transition-transform duration-500 group-hover:scale-105"
+                poster={posterFor(project.videoDesktop)}
+                className="hidden md:block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
 
               {/* Mobile bottom CTA */}

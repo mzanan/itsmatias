@@ -4,10 +4,11 @@ import { useEffect, useRef } from "react";
 
 type Props = {
   src: string;
+  poster?: string;
   className?: string;
 };
 
-export const LazyVideo = ({ src, className }: Props) => {
+export const LazyVideo = ({ src, poster, className }: Props) => {
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -51,6 +52,7 @@ export const LazyVideo = ({ src, className }: Props) => {
       loop
       playsInline
       preload="none"
+      poster={poster}
       className={className}
       suppressHydrationWarning
     />
