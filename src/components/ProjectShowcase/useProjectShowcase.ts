@@ -1,7 +1,7 @@
 import { useEffect, useRef, useMemo, useCallback } from "react"
 import { useInView } from "motion/react"
 
-export const useProjectShowcase = (playbackSpeed: number = 1.5) => {
+export const useProjectShowcase = () => {
   const ref = useRef<HTMLElement>(null)
   const isInView = useInView(ref, { margin: "0px 0px -20% 0px", amount: 0.4 })
 
@@ -12,9 +12,6 @@ export const useProjectShowcase = (playbackSpeed: number = 1.5) => {
     const videos = container.querySelectorAll("video")
 
     videos.forEach((video) => {
-      // Usamos la variable, no el número hardcodeado
-      video.playbackRate = playbackSpeed
-
       const isVisibleCSS = video.offsetParent !== null
 
       if (isInView && isVisibleCSS) {
@@ -25,7 +22,7 @@ export const useProjectShowcase = (playbackSpeed: number = 1.5) => {
         video.pause()
       }
     })
-  }, [isInView, playbackSpeed]) // Agregamos playbackSpeed a dependencias
+  }, [isInView])
 
   useEffect(() => {
     updateVideoPlayback()

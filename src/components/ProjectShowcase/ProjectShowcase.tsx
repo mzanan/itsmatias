@@ -18,9 +18,9 @@ const posterFor = (videoSrc: string) =>
   videoSrc.replace("/videos/", "/videos/posters/").replace(/\.mp4$/, ".webp")
 
 export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcaseProps) => {
-  const { ref, videoVariants, textVariants, animationState } = useProjectShowcase(1.5)
+  const { ref, videoVariants, textVariants, animationState } = useProjectShowcase()
 
-  const cardClasses = "relative block w-full shadow-2xl rounded-2xl cursor-pointer group aspect-[9/16] md:aspect-video max-h-[calc(100dvh-240px)] md:max-h-none"
+  const cardClasses = "relative block w-full shadow-2xl rounded-2xl cursor-pointer group aspect-[9/16] md:aspect-video max-h-[calc(100dvh-240px)] md:max-h-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
 
   return (
     <section
@@ -61,7 +61,7 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
 
             {/* Video Wrapper */}
             <div
-              className="absolute inset-0 rounded-2xl overflow-hidden border border-primary/30 bg-black group-hover:border-primary/50 transition-colors z-10"
+              className="absolute inset-0 rounded-2xl overflow-hidden border border-primary/30 group-hover:border-primary/50 transition-colors z-10"
               suppressHydrationWarning
             >
               {/* Live badge */}

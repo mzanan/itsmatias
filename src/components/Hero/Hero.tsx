@@ -1,7 +1,7 @@
 "use client"
 
 import { useHero } from "./useHero"
-import { motion, useAnimationFrame, useMotionValue } from "motion/react"
+import { motion, useAnimationFrame, useInView, useMotionValue } from "motion/react"
 import { useEffect, useRef, useState } from "react"
 import { FaArrowRight } from "react-icons/fa"
 import { GlassBadge } from "@/components/ui/GlassBadge"
@@ -48,18 +48,32 @@ export const Hero = () => {
   const vantaRef = useRef<HTMLDivElement>(null)
   const { scrollIndicatorVariants } = useHero(vantaRef)
 
+  const sectionRef = useRef<HTMLElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const x = useMotionValue(0)
+  const sectionInView = useInView(sectionRef, { margin: "0px" })
   const [halfTrack, setHalfTrack] = useState(0)
-  const [paused, setPaused] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
   const [speed, setSpeed] = useState(SPEED_DESKTOP)
   const [reduceMotion, setReduceMotion] = useState(false)
-  const wasDragging = useRef(false)
+  const pointerStart = useRef({ x: 0, y: 0 })
+  const movedFar = useRef(false)
+
+  const paused = isHovered || isDragging
 
   useEffect(() => {
     const el = trackRef.current
     if (!el) return
-    const measure = () => setHalfTrack(el.scrollWidth / 2)
+    const measure = () => {
+      const firstChild = el.children[0] as HTMLElement | undefined
+      const halfChild = el.children[cards.length] as HTMLElement | undefined
+      if (firstChild && halfChild) {
+        setHalfTrack(halfChild.offsetLeft - firstChild.offsetLeft)
+      } else {
+        setHalfTrack(el.scrollWidth / 2)
+      }
+    }
     measure()
     const ro = new ResizeObserver(measure)
     ro.observe(el)
@@ -81,14 +95,20 @@ export const Hero = () => {
     }
   }, [])
 
+  useEffect(() => {
+    if (reduceMotion) x.set(0)
+  }, [reduceMotion, x])
+
   useAnimationFrame((_, delta) => {
-    if (paused || reduceMotion || halfTrack === 0) return
-    const next = x.get() - (speed * delta) / 1000
-    x.set(next <= -halfTrack ? next + halfTrack : next)
+    if (paused || reduceMotion || !sectionInView || halfTrack === 0) return
+    let next = x.get() - (speed * delta) / 1000
+    while (next <= -halfTrack) next += halfTrack
+    while (next > 0) next -= halfTrack
+    x.set(next)
   })
 
   return (
-    <section id="home" className="relative h-dvh flex flex-col justify-center items-center text-center snap-start overflow-hidden w-full max-w-full">
+    <section ref={sectionRef} id="home" className="relative h-dvh flex flex-col justify-center items-center text-center snap-start overflow-hidden w-full max-w-full">
       <h1 className="sr-only">Matias Zanan — Web Developer</h1>
       <div ref={vantaRef} className="absolute inset-0 z-0 w-full h-full" />
 
@@ -112,23 +132,27 @@ export const Hero = () => {
             style={{ x }}
             drag="x"
             dragMomentum={false}
-            onDragStart={() => {
-              wasDragging.current = true
-              setPaused(true)
+            onDragStart={() => setIsDragging(true)}
+            onDragEnd={() => setIsDragging(false)}
+            onPointerDownCapture={(e) => {
+              pointerStart.current = { x: e.clientX, y: e.clientY }
+              movedFar.current = false
             }}
-            onDragEnd={() => {
-              setTimeout(() => { wasDragging.current = false }, 80)
-              setPaused(false)
+            onPointerMoveCapture={(e) => {
+              if (movedFar.current) return
+              const dx = Math.abs(e.clientX - pointerStart.current.x)
+              const dy = Math.abs(e.clientY - pointerStart.current.y)
+              if (dx > 6 || dy > 6) movedFar.current = true
             }}
             onClickCapture={(e) => {
-              if (wasDragging.current) {
+              if (movedFar.current) {
                 e.preventDefault()
                 e.stopPropagation()
               }
             }}
-            onMouseEnter={() => setPaused(true)}
-            onMouseLeave={() => setPaused(false)}
-            className="flex gap-4 md:gap-6 w-max cursor-grab active:cursor-grabbing select-none touch-pan-y"
+            onPointerEnter={(e) => { if (e.pointerType === "mouse") setIsHovered(true) }}
+            onPointerLeave={(e) => { if (e.pointerType === "mouse") setIsHovered(false) }}
+            className="flex gap-4 md:gap-6 w-max cursor-grab active:cursor-grabbing touch-pan-y"
           >
             {loop.map((item, i) => {
               const sizeClasses =

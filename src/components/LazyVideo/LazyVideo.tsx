@@ -21,12 +21,12 @@ export const LazyVideo = ({ src, poster, className, playbackRate = 1 }: Props) =
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    el.dataset.loaded = "false";
 
     const load = () => {
       if (el.dataset.loaded === "true") return;
       el.dataset.loaded = "true";
       el.src = src;
-      el.playbackRate = playbackRate;
       el.load();
       el.play().catch(() => {});
     };
@@ -51,7 +51,7 @@ export const LazyVideo = ({ src, poster, className, playbackRate = 1 }: Props) =
 
     io.observe(el);
     return () => io.disconnect();
-  }, [src, playbackRate]);
+  }, [src]);
 
   return (
     <video
