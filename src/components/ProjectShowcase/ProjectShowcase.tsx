@@ -20,7 +20,7 @@ const posterFor = (videoSrc: string) =>
 export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcaseProps) => {
   const { ref, videoVariants, textVariants, animationState } = useProjectShowcase(1.5)
 
-  const cardClasses = "relative block w-full max-w-5xl shadow-2xl rounded-2xl cursor-pointer group aspect-[9/16] md:aspect-video max-h-[calc(100dvh-240px)] md:max-h-none mx-auto"
+  const cardClasses = "relative block w-full shadow-2xl rounded-2xl cursor-pointer group aspect-[9/16] md:aspect-video max-h-[calc(100dvh-240px)] md:max-h-none"
 
   return (
     <section
@@ -47,6 +47,7 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
           initial="hiddenEnter"
           animate={animationState}
           transition={{ duration: 0.8, ease: "easeOut" }}
+          className="w-full max-w-5xl px-4 md:px-6"
         >
           <a
             href={project.url}
