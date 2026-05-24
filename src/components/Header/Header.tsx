@@ -2,6 +2,7 @@
 
 import { useHeader } from "./useHeader"
 import { Share } from "@/components/Share/Share"
+import { ShareHint } from "./ShareHint"
 
 const NAV_ITEMS = [
   { label: "Home", id: "home" },
@@ -28,30 +29,35 @@ export const Header = () => {
           itsmatias
         </a>
         <div className="flex items-center gap-4 md:gap-8">
-          {NAV_ITEMS.map(({ label, id }) => {
-            const isActive = activeSection === id
-            const baseColor = isInHero ? "text-white/70" : "text-muted-foreground"
-            return (
-              <a
-                key={id}
-                href={`#${id}`}
-                aria-current={isActive ? "page" : undefined}
-                className={`relative text-sm font-medium transition-all duration-300 hover:scale-105 ${
-                  isActive
-                    ? "text-white font-semibold drop-shadow-[0_0_8px_rgba(255,255,255,0.25)]"
-                    : `${baseColor} hover:text-white`
-                }`}
-              >
-                {label}
-                <span
-                  className={`pointer-events-none absolute -bottom-1 left-0 h-0.5 rounded-full bg-current transition-all duration-300 ${
-                    isActive ? "w-full opacity-100" : "w-0 opacity-0"
+          <div className="hidden md:flex items-center gap-4 md:gap-8">
+            {NAV_ITEMS.map(({ label, id }) => {
+              const isActive = activeSection === id
+              const baseColor = isInHero ? "text-white/70" : "text-muted-foreground"
+              return (
+                <a
+                  key={id}
+                  href={`#${id}`}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`relative text-sm font-medium transition-all duration-300 hover:scale-105 ${
+                    isActive
+                      ? "text-white font-semibold drop-shadow-[0_0_8px_rgba(255,255,255,0.25)]"
+                      : `${baseColor} hover:text-white`
                   }`}
-                />
-              </a>
-            )
-          })}
-          <Share isInHero={isInHero} />
+                >
+                  {label}
+                  <span
+                    className={`pointer-events-none absolute -bottom-1 left-0 h-0.5 rounded-full bg-current transition-all duration-300 ${
+                      isActive ? "w-full opacity-100" : "w-0 opacity-0"
+                    }`}
+                  />
+                </a>
+              )
+            })}
+          </div>
+          <div className="relative">
+            <Share isInHero={isInHero} />
+            <ShareHint />
+          </div>
         </div>
       </nav>
     </header>

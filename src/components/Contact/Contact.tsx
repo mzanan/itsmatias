@@ -1,10 +1,12 @@
 "use client";
 
 import { motion } from "motion/react";
+import { useEffect } from "react";
 import { useContact } from "./useContact";
 import { Title } from "@/components/Styles/Texts/Title/Title";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { FaArrowRight } from "react-icons/fa";
+import { fireConfetti } from "@/lib/confetti";
 
 export const Contact = () => {
   const {
@@ -22,6 +24,10 @@ export const Contact = () => {
     handleSubmit,
     ValidationError,
   } = useContact();
+
+  useEffect(() => {
+    if (submitStatus === "success") fireConfetti();
+  }, [submitStatus]);
 
   const inputBase =
     "bg-transparent border-b border-white/40 focus:border-white outline-none placeholder:text-white/30 text-white pb-1 transition-colors";

@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { FaQrcode } from "react-icons/fa";
 import { FaShareNodes } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
+import { fireConfetti } from "@/lib/confetti";
 
 const ShareDialog = dynamic(
   () => import("./ShareDialog").then((m) => m.ShareDialog),
@@ -30,6 +31,7 @@ export const Share = ({
   const handleClick = () => {
     setIsAnimated(false);
     setOpen(true);
+    fireConfetti();
   };
 
   const pillBase =
@@ -60,7 +62,7 @@ export const Share = ({
           aria-label="Share"
         >
           <FaQrcode className="h-3.5 w-3.5" />
-          <span className="hidden sm:inline">{label}</span>
+          <span>{label}</span>
         </button>
       )}
       {open && <ShareDialog open={open} onOpenChange={setOpen} />}

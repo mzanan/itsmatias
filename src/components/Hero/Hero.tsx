@@ -55,12 +55,14 @@ export const Hero = () => {
   const [halfTrack, setHalfTrack] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
+  const [isWheeling, setIsWheeling] = useState(false)
   const [speed, setSpeed] = useState(SPEED_DESKTOP)
   const [reduceMotion, setReduceMotion] = useState(false)
   const pointerStart = useRef({ x: 0, y: 0 })
   const movedFar = useRef(false)
+  const wheelTimeoutRef = useRef<number | null>(null)
 
-  const paused = isHovered || isDragging
+  const paused = isHovered || isDragging || isWheeling
 
   useEffect(() => {
     const el = trackRef.current
@@ -94,6 +96,27 @@ export const Hero = () => {
       motionMq.removeEventListener("change", updateMotion)
     }
   }, [])
+
+  useEffect(() => {
+    const el = trackRef.current
+    if (!el) return
+    const handleWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY) || Math.abs(e.deltaX) < 1) return
+      e.preventDefault()
+      let next = x.get() - e.deltaX
+      while (halfTrack > 0 && next <= -halfTrack) next += halfTrack
+      while (halfTrack > 0 && next > 0) next -= halfTrack
+      x.set(next)
+      setIsWheeling(true)
+      if (wheelTimeoutRef.current) window.clearTimeout(wheelTimeoutRef.current)
+      wheelTimeoutRef.current = window.setTimeout(() => setIsWheeling(false), 600)
+    }
+    el.addEventListener("wheel", handleWheel, { passive: false })
+    return () => {
+      el.removeEventListener("wheel", handleWheel)
+      if (wheelTimeoutRef.current) window.clearTimeout(wheelTimeoutRef.current)
+    }
+  }, [x, halfTrack])
 
   useEffect(() => {
     if (reduceMotion) x.set(0)
