@@ -30,15 +30,16 @@ export const Header = () => {
         <div className="flex items-center gap-4 md:gap-8">
           {NAV_ITEMS.map(({ label, id }) => {
             const isActive = activeSection === id
-            const baseColor = isInHero ? "text-white" : "text-muted-foreground"
-            const activeColor = isInHero ? "text-cyan-300" : "text-primary"
+            const baseColor = isInHero ? "text-white/70" : "text-muted-foreground"
             return (
               <a
                 key={id}
                 href={`#${id}`}
                 aria-current={isActive ? "page" : undefined}
                 className={`relative text-sm font-medium transition-all duration-300 hover:scale-105 ${
-                  isActive ? activeColor : `${baseColor} hover:text-primary`
+                  isActive
+                    ? "text-white font-semibold drop-shadow-[0_0_8px_rgba(255,255,255,0.25)]"
+                    : `${baseColor} hover:text-white`
                 }`}
               >
                 {label}

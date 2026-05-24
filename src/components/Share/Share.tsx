@@ -35,8 +35,8 @@ export const Share = ({
   const pillBase =
     "inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer hover:scale-[1.03]";
   const pillColors = isInHero
-    ? "border-cyan-300/60 text-white bg-white/5 hover:bg-cyan-400/15 hover:border-cyan-300"
-    : "border-cyan-400/50 text-cyan-200 bg-cyan-400/5 hover:bg-cyan-400/15 hover:border-cyan-300";
+    ? "border-white/25 text-white bg-white/5 hover:bg-white/10 hover:border-white/50"
+    : "border-white/20 text-white/85 bg-white/5 hover:bg-white/10 hover:border-white/45";
   const pillPulse = isAnimated ? "qr-pulse" : "";
   const pillClassName = `${pillBase} ${pillColors} ${pillPulse} ${className}`;
 

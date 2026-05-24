@@ -5,6 +5,9 @@ import type { Project } from "../ProjectsShowcase/useProjectsShowcase"
 import { useProjectShowcase } from "./useProjectShowcase"
 import { Title } from "@/components/Styles/Texts/Title/Title"
 import { LazyVideo } from "@/components/LazyVideo/LazyVideo"
+import { GlassBadge } from "@/components/ui/GlassBadge"
+import { Pill } from "@/components/ui/Pill"
+import { FaArrowUpRightFromSquare } from "react-icons/fa6"
 
 type ProjectShowcaseProps = {
   project: Project
@@ -15,9 +18,6 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
   const { ref, videoVariants, textVariants, animationState } = useProjectShowcase(1.5)
 
   const cardClasses = "relative block shadow-2xl rounded-2xl cursor-pointer group aspect-[9/16] md:aspect-video max-h-[calc(100dvh-240px)] md:max-h-none"
-  const desktopOverlayClasses = "hidden md:flex absolute inset-0 z-20 items-center justify-center transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:bg-black/40 group-hover:backdrop-blur-[2px]"
-  const desktopButtonClasses = "flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 border border-white/20 backdrop-blur-md transform transition-all duration-300 translate-y-4 group-hover:translate-y-0 hover:scale-105 active:scale-95 active:bg-white/20"
-  const mobileButtonClasses = "flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 transition-all duration-200 active:scale-95 active:bg-white/20"
 
   return (
     <section
@@ -52,98 +52,40 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
             className={cardClasses}
             suppressHydrationWarning
           >
-            {/* Glow Effect */}
-            <div className="absolute inset-0 rounded-2xl bg-linear-to-br from-cyan-500/20 via-blue-500/10 to-purple-600/20 blur-xl opacity-75 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            {/* Glow */}
+            <div className="absolute inset-0 rounded-2xl bg-linear-to-br from-slate-200/25 via-white/15 to-slate-300/25 blur-xl opacity-75 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
             {/* Video Wrapper */}
             <div
               className="relative rounded-2xl overflow-hidden border border-primary/30 bg-black group-hover:border-primary/50 transition-colors z-10"
               suppressHydrationWarning
             >
-              {/* --- PERSISTENT BADGE (top-right, always visible) --- */}
-              <div className="absolute top-3 right-3 z-30 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-lg pointer-events-none">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-                </span>
-                <span className="text-white text-xs font-medium tracking-wide">
+              {/* Live badge */}
+              <div className="absolute top-3 right-3 z-30 pointer-events-none">
+                <GlassBadge tone="dark" withDot Icon={FaArrowUpRightFromSquare} className="shadow-lg">
                   Live site
-                </span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="11"
-                  height="11"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-white"
-                >
-                  <polyline points="15 3 21 3 21 9" />
-                  <line x1="10" y1="14" x2="21" y2="3" />
-                </svg>
+                </GlassBadge>
               </div>
-              {/* MOBILE VIDEO */}
-              <LazyVideo
-                src={project.videoMobile}
-                className="block md:hidden"
-              />
 
-              {/* DESKTOP VIDEO */}
+              <LazyVideo src={project.videoMobile} className="block md:hidden" />
               <LazyVideo
                 src={project.videoDesktop}
                 className="hidden md:block transition-transform duration-500 group-hover:scale-105"
               />
 
-              {/* --- MOBILE OVERLAY (Bottom Gradient) --- */}
-              <div className="md:hidden absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex items-end justify-center pb-5 z-20">
-                <div className={mobileButtonClasses}>
-                  <span className="text-white/90 text-sm font-medium tracking-wide">
-                    Visit Website
-                  </span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="text-white/90"
-                  >
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                  </svg>
-                </div>
+              {/* Mobile bottom CTA */}
+              <div className="md:hidden absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex items-end justify-center pb-5 z-20 pointer-events-none">
+                <Pill as="span" variant="ghost" size="sm" Icon={FaArrowUpRightFromSquare} iconClassName="group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                  Visit Website
+                </Pill>
               </div>
 
-              {/* --- DESKTOP OVERLAY (Hover Center) --- */}
-              <div className={desktopOverlayClasses}>
-                <div className={desktopButtonClasses}>
-                  <span className="text-white font-medium text-base tracking-wide drop-shadow-md">
+              {/* Desktop hover overlay */}
+              <div className="hidden md:flex absolute inset-0 z-20 items-center justify-center transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:bg-black/40 group-hover:backdrop-blur-[2px] pointer-events-none">
+                <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                  <Pill as="span" variant="outline" size="md" Icon={FaArrowUpRightFromSquare} iconClassName="group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
                     Visit Website
-                  </span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="text-white drop-shadow-md"
-                  >
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                  </svg>
+                  </Pill>
                 </div>
               </div>
 

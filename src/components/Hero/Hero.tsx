@@ -4,67 +4,108 @@ import { useHero } from "./useHero"
 import { motion } from "motion/react"
 import { useRef } from "react"
 import { FaArrowRight } from "react-icons/fa"
+import { GlassBadge } from "@/components/ui/GlassBadge"
+import { Pill } from "@/components/ui/Pill"
+
+const projects = [
+  {
+    desktop: "/videos/ecommerce.mp4",
+    mobile: "/videos/ecommerce-mobile.mp4",
+    label: "ecommerce",
+    href: "https://ecommerce.itsmatias.com",
+  },
+  {
+    desktop: "/videos/landing.mp4",
+    mobile: "/videos/landing-mobile.mp4",
+    label: "landing",
+    href: "https://landing.itsmatias.com",
+  },
+  {
+    desktop: "/videos/links.mp4",
+    mobile: "/videos/links-mobile.mp4",
+    label: "social links",
+    href: "https://links.itsmatias.com",
+  },
+]
+
+type Card = { src: string; label: string; href: string; format: "desktop" | "mobile" }
+
+const cards: Card[] = projects.flatMap((p) => [
+  { src: p.desktop, label: p.label, href: p.href, format: "desktop" },
+  { src: p.mobile, label: p.label, href: p.href, format: "mobile" },
+])
+
+const loop = [...cards, ...cards]
 
 export const Hero = () => {
   const vantaRef = useRef<HTMLDivElement>(null)
-  const {
-    containerVariants,
-    scrollIndicatorVariants,
-    words,
-    visibleWordIndex,
-    wordVariants,
-    containerPhraseVariants,
-    currentPhraseIndex,
-    isFadingOut,
-  } = useHero(vantaRef)
+  const { scrollIndicatorVariants } = useHero(vantaRef)
 
   return (
     <section id="home" className="relative h-dvh flex flex-col justify-center items-center text-center snap-start overflow-hidden w-full max-w-full">
       <h1 className="sr-only">Matias Zanan — Web Developer</h1>
       <div ref={vantaRef} className="absolute inset-0 z-0 w-full h-full" />
-      <motion.div
-        className="relative z-10 w-full h-full flex items-center justify-center px-4"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
+
+      <div className="relative z-10 w-full h-full flex flex-col items-center justify-center gap-8">
         <motion.div
-          className="flex flex-wrap items-center justify-center gap-2 md:gap-3 max-w-6xl"
-          variants={containerPhraseVariants}
-          animate="visible"
-          aria-hidden="true"
+          initial={{ opacity: 0, y: -12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center px-4"
         >
-          {words.map((word, index) => (
-            <motion.div
-              key={`${currentPhraseIndex}-${index}`}
-              variants={wordVariants}
-              initial="hidden"
-              animate={index < visibleWordIndex && !isFadingOut ? "visible" : "hidden"}
-              exit="exit"
-              className="inline-block"
-            >
-              <span className="text-3xl md:text-5xl lg:text-6xl font-bold drop-shadow-lg tracking-tight">
-                {word}
-              </span>
-            </motion.div>
-          ))}
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+            <span className="gradient-text">One of these could be yours.</span>
+          </h2>
         </motion.div>
-      </motion.div>
 
-      {/* CTA — absolute, no se mueve al cambiar el largo del título rotativo */}
-      <motion.a
-        href="#projects"
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1.2 }}
-        className="group absolute bottom-32 md:bottom-40 left-1/2 -translate-x-1/2 z-10 inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/30 bg-white/5 text-white text-sm md:text-base font-medium backdrop-blur-sm hover:bg-white/10 hover:border-white/60 transition-all whitespace-nowrap"
-      >
-        See my work
-        <FaArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-      </motion.a>
+        <div className="relative w-full overflow-hidden py-2">
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 md:w-32 bg-gradient-to-r from-black/40 to-transparent z-10" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 md:w-32 bg-gradient-to-l from-black/40 to-transparent z-10" />
+          <div className="hero-marquee flex gap-4 md:gap-6 w-max">
+            {loop.map((item, i) => {
+              const sizeClasses =
+                item.format === "desktop"
+                  ? "h-[32dvh] md:h-[40dvh] aspect-video"
+                  : "h-[32dvh] md:h-[40dvh] aspect-[9/16]"
+              return (
+                <a
+                  key={i}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`relative block ${sizeClasses} rounded-xl overflow-hidden border border-white/15 shadow-xl bg-black group shrink-0`}
+                >
+                  <video
+                    src={item.src}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute bottom-2 left-2">
+                    <GlassBadge tone="dark">{item.label}</GlassBadge>
+                  </div>
+                </a>
+              )
+            })}
+          </div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          <Pill as="a" href="#projects" Icon={FaArrowRight}>
+            See all projects
+          </Pill>
+        </motion.div>
+      </div>
 
       <motion.div
-        className="absolute bottom-4 md:bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+        className="absolute bottom-4 md:bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-10"
         animate={scrollIndicatorVariants.animate}
         transition={scrollIndicatorVariants.transition}
       >

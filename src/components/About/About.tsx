@@ -81,7 +81,7 @@ export const About = () => {
               asChild
               size="lg"
               variant="outline"
-              className="text-base px-6 group shiny-border text-white hover:text-primary-foreground"
+              className="text-base px-6 group shiny-border text-white"
             >
               <a href="#contact">
                 Get in touch

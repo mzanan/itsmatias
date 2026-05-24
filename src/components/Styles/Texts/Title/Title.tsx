@@ -21,7 +21,7 @@ export const Title = ({
     wrapContent = true,
     className = ""
 }: TitleProps) => {
-    const underlineClassName = `h-1 w-12 bg-linear-to-r from-cyan-400 to-purple-600 rounded-full ${centered ? "md:mx-auto" : ""}`;
+    const underlineClassName = `h-1 w-12 rounded-full bg-[image:linear-gradient(to_right,var(--brand-from),var(--brand-via),var(--brand-to))] ${centered ? "md:mx-auto" : ""}`;
     const isString = typeof children === "string";
     const shouldWrap = wrapContent && isString;
 

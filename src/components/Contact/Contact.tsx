@@ -128,7 +128,7 @@ export const Contact = () => {
                   href={href}
                   target={href.startsWith("mailto:") ? undefined : "_blank"}
                   rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
-                  className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors"
+                  className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-white transition-colors"
                   aria-label={label}
                 >
                   <Icon className="h-4 w-4" />
@@ -245,7 +245,7 @@ export const Contact = () => {
                   href={href}
                   target={href.startsWith("mailto:") ? undefined : "_blank"}
                   rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
-                  className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors group"
+                  className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-white transition-colors group"
                 >
                   <Icon className="h-4 w-4 opacity-70 group-hover:opacity-100 transition-opacity" />
                   <span>{label}</span>
