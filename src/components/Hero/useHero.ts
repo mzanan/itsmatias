@@ -1,102 +1,194 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { Renderer, Camera, Transform, Plane, Mesh, Program } from "ogl";
 
-type VantaEffect = {
-  destroy: () => void;
-};
+const vertexShader = /* glsl */ `
+  attribute vec3 position;
+  attribute vec2 uv;
 
-type WindowWithVanta = Window & {
-  THREE?: unknown;
-  VANTA?: { WAVES: (options: Record<string, unknown>) => VantaEffect };
-};
+  uniform mat4 modelViewMatrix;
+  uniform mat4 projectionMatrix;
+  uniform float uTime;
+  uniform vec2 uMouse;
+  uniform float uWaveHeight;
 
-const THREE_SRC =
-  "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js";
-const VANTA_SRC =
-  "https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js";
+  varying vec3 vNormal;
+  varying float vHeight;
+  varying vec2 vUv;
 
-const loadScript = (src: string): Promise<void> =>
-  new Promise((resolve, reject) => {
-    const existing = document.querySelector<HTMLScriptElement>(
-      `script[src="${src}"]`,
-    );
-    if (existing) {
-      if (existing.dataset.loaded === "true") {
-        resolve();
-        return;
-      }
-      existing.addEventListener("load", () => resolve());
-      existing.addEventListener("error", () => reject());
-      return;
-    }
-    const s = document.createElement("script");
-    s.src = src;
-    s.async = true;
-    s.onload = () => {
-      s.dataset.loaded = "true";
-      resolve();
-    };
-    s.onerror = () => reject(new Error(`Failed to load ${src}`));
-    document.head.appendChild(s);
-  });
+  float wave(vec2 p, float t, vec2 dir, float freq, float speed) {
+    return sin(dot(p, dir) * freq + t * speed);
+  }
+
+  float surface(vec2 p, float t, vec2 mouse) {
+    vec2 m = mouse * 0.6;
+    vec2 d1 = normalize(vec2(1.0, 0.6) + m);
+    vec2 d2 = normalize(vec2(-0.7, 1.0) - m * 0.5);
+    vec2 d3 = normalize(vec2(0.4, -1.0) + m * 0.3);
+
+    float h = 0.0;
+    h += wave(p, t, d1, 0.018, 0.9) * 0.55;
+    h += wave(p, t, d2, 0.030, 1.2) * 0.30;
+    h += wave(p, t, d3, 0.055, 1.5) * 0.18;
+    h += sin(p.x * 0.012 + t * 0.4 + mouse.x * 1.2) * 0.25;
+    h += cos(p.y * 0.014 + t * 0.35 + mouse.y * 1.1) * 0.22;
+    return h;
+  }
+
+  void main() {
+    vUv = uv;
+    vec3 pos = position;
+
+    float h = surface(pos.xy, uTime, uMouse);
+    pos.z += h * uWaveHeight;
+
+    float eps = 4.0;
+    float hx = surface(pos.xy + vec2(eps, 0.0), uTime, uMouse);
+    float hy = surface(pos.xy + vec2(0.0, eps), uTime, uMouse);
+    vec3 tangentX = vec3(eps, 0.0, (hx - h) * uWaveHeight);
+    vec3 tangentY = vec3(0.0, eps, (hy - h) * uWaveHeight);
+    vNormal = normalize(cross(tangentX, tangentY));
+    vHeight = h;
+
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+  }
+`;
+
+const fragmentShader = /* glsl */ `
+  precision highp float;
+
+  uniform float uShininess;
+  uniform vec3 uColorDeep;
+  uniform vec3 uColorPeak;
+
+  varying vec3 vNormal;
+  varying float vHeight;
+  varying vec2 vUv;
+
+  void main() {
+    vec3 normal = normalize(vNormal);
+    vec3 lightDir = normalize(vec3(0.4, 0.8, 0.6));
+    vec3 viewDir = vec3(0.0, 0.0, 1.0);
+
+    float diff = max(dot(normal, lightDir), 0.0);
+    vec3 reflectDir = reflect(-lightDir, normal);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), uShininess);
+
+    float t = clamp(vHeight * 0.5 + 0.5, 0.0, 1.0);
+    vec3 base = mix(uColorDeep, uColorPeak, t);
+
+    vec3 color = base * (0.35 + 0.65 * diff) + spec * 0.5;
+
+    float vignette = smoothstep(1.1, 0.4, length(vUv - 0.5));
+    color *= mix(0.85, 1.0, vignette);
+
+    gl_FragColor = vec4(color, 1.0);
+  }
+`;
 
 export const useHero = (vantaRef: React.RefObject<HTMLDivElement | null>) => {
   useEffect(() => {
-    if (!vantaRef.current) return;
-    let vantaEffect: VantaEffect | null = null;
-    let cancelled = false;
+    const container = vantaRef.current;
+    if (!container) return;
 
-    const init = async () => {
-      try {
-        await loadScript(THREE_SRC);
-        await loadScript(VANTA_SRC);
-        if (cancelled || !vantaRef.current) return;
+    const renderer = new Renderer({
+      dpr: Math.min(window.devicePixelRatio, 2),
+      alpha: false,
+      antialias: false,
+    });
+    const gl = renderer.gl;
+    gl.clearColor(0.024, 0.039, 0.094, 1.0);
+    container.appendChild(gl.canvas);
+    gl.canvas.style.width = "100%";
+    gl.canvas.style.height = "100%";
+    gl.canvas.style.display = "block";
 
-        const w = window as WindowWithVanta;
-        if (!w.VANTA?.WAVES || !w.THREE) return;
+    const camera = new Camera(gl, { fov: 45, near: 0.1, far: 5000 });
+    camera.position.set(0, 220, 420);
+    camera.lookAt([0, 0, -100]);
 
-        vantaEffect = w.VANTA.WAVES({
-          el: vantaRef.current,
-          THREE: w.THREE,
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.0,
-          minWidth: 200.0,
-          scale: 1.0,
-          scaleMobile: 1.0,
-          shininess: 10.0,
-          waveHeight: 40.0,
-          zoom: 1,
-        });
-      } catch {}
+    const scene = new Transform();
+
+    const geometry = new Plane(gl, {
+      width: 1400,
+      height: 1000,
+      widthSegments: 100,
+      heightSegments: 80,
+    });
+
+    const mouseTarget = { x: 0, y: 0 };
+    const mouseCurrent = { x: 0, y: 0 };
+
+    const program = new Program(gl, {
+      vertex: vertexShader,
+      fragment: fragmentShader,
+      cullFace: null,
+      uniforms: {
+        uTime: { value: 0 },
+        uMouse: { value: [0, 0] },
+        uWaveHeight: { value: 40.0 },
+        uShininess: { value: 24.0 },
+        uColorDeep: { value: [0.024, 0.039, 0.094] },
+        uColorPeak: { value: [0.16, 0.38, 0.62] },
+      },
+    });
+
+    const mesh = new Mesh(gl, { geometry, program });
+    mesh.rotation.x = -Math.PI / 2;
+    mesh.position.z = -200;
+    mesh.setParent(scene);
+
+    const resize = () => {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      if (w === 0 || h === 0) return;
+      renderer.setSize(w, h);
+      camera.perspective({ aspect: w / h });
     };
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(container);
 
-    const idle =
-      (window as Window & { requestIdleCallback?: (cb: () => void) => number })
-        .requestIdleCallback;
-    const handle = idle
-      ? idle(() => init())
-      : window.setTimeout(() => init(), 100);
+    const onPointerMove = (clientX: number, clientY: number) => {
+      const rect = container.getBoundingClientRect();
+      const x = ((clientX - rect.left) / rect.width) * 2 - 1;
+      const y = ((clientY - rect.top) / rect.height) * 2 - 1;
+      mouseTarget.x = x;
+      mouseTarget.y = -y;
+    };
+    const onMouseMove = (e: MouseEvent) => onPointerMove(e.clientX, e.clientY);
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        onPointerMove(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    };
+    container.addEventListener("mousemove", onMouseMove, { passive: true });
+    container.addEventListener("touchmove", onTouchMove, { passive: true });
+
+    let raf = 0;
+    const start = performance.now();
+    const loop = () => {
+      const t = (performance.now() - start) * 0.001;
+      mouseCurrent.x += (mouseTarget.x - mouseCurrent.x) * 0.05;
+      mouseCurrent.y += (mouseTarget.y - mouseCurrent.y) * 0.05;
+      program.uniforms.uTime.value = t;
+      program.uniforms.uMouse.value = [mouseCurrent.x, mouseCurrent.y];
+      renderer.render({ scene, camera });
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
 
     return () => {
-      cancelled = true;
-      if (typeof handle === "number") {
-        clearTimeout(handle);
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      container.removeEventListener("mousemove", onMouseMove);
+      container.removeEventListener("touchmove", onTouchMove);
+      if (gl.canvas.parentElement === container) {
+        container.removeChild(gl.canvas);
       }
-      if (vantaEffect && vantaEffect.destroy) vantaEffect.destroy();
+      const ext = gl.getExtension("WEBGL_lose_context");
+      ext?.loseContext();
     };
   }, [vantaRef]);
-
-  const containerVariants = useMemo(
-    () => ({
-      hidden: { opacity: 0 },
-      visible: {
-        opacity: 1,
-        transition: { staggerChildren: 0.2, delayChildren: 0.1 },
-      },
-    }),
-    []
-  );
 
   const scrollIndicatorVariants = useMemo(
     () => ({
@@ -106,71 +198,5 @@ export const useHero = (vantaRef: React.RefObject<HTMLDivElement | null>) => {
     []
   );
 
-  const wordVariants = useMemo(
-    () => ({
-      hidden: { opacity: 0 },
-      visible: { opacity: 1, transition: { duration: 0.4 } },
-      exit: { opacity: 0, transition: { duration: 0.3 } },
-    }),
-    []
-  );
-
-  const phrases = useMemo(() => [
-    "Hi, I'm Matias.",
-    "I build smooth, elegant, pixel-perfect websites end-to-end.",
-    "Designed, coded, and shipped by me. Remote, traveling, deeply curious."
-  ], []);
-
-  const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
-  const [visibleWordIndex, setVisibleWordIndex] = useState(0);
-  const [isFadingOut, setIsFadingOut] = useState(false);
-
-  const currentPhrase = phrases[currentPhraseIndex];
-  const words = currentPhrase.split(" ");
-
-  useEffect(() => {
-    if (isFadingOut) {
-      const fadeOutTimer = setTimeout(() => {
-        setCurrentPhraseIndex((prev) => (prev + 1) % phrases.length);
-        setVisibleWordIndex(0);
-        setIsFadingOut(false);
-      }, 500);
-      return () => clearTimeout(fadeOutTimer);
-    }
-
-    if (visibleWordIndex < words.length) {
-      const wordTimer = setTimeout(() => {
-        setVisibleWordIndex((prev) => prev + 1);
-      }, 200);
-      return () => clearTimeout(wordTimer);
-    }
-
-    else {
-      const pauseTimer = setTimeout(() => {
-        setIsFadingOut(true);
-      }, 2000);
-      return () => clearTimeout(pauseTimer);
-    }
-  }, [visibleWordIndex, isFadingOut, words.length, phrases.length]);
-
-  const containerPhraseVariants = useMemo(
-    () => ({
-      visible: {
-        opacity: isFadingOut ? 0 : 1,
-        transition: { duration: 0.5 },
-      },
-    }),
-    [isFadingOut]
-  );
-
-  return {
-    containerVariants,
-    scrollIndicatorVariants,
-    words,
-    visibleWordIndex,
-    wordVariants,
-    containerPhraseVariants,
-    currentPhraseIndex,
-    isFadingOut,
-  };
+  return { scrollIndicatorVariants };
 };

@@ -108,10 +108,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossOrigin="" />
-        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="" />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
