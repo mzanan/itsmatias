@@ -6,10 +6,17 @@ type Props = {
   src: string;
   poster?: string;
   className?: string;
+  playbackRate?: number;
 };
 
-export const LazyVideo = ({ src, poster, className }: Props) => {
+export const LazyVideo = ({ src, poster, className, playbackRate = 1 }: Props) => {
   const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.playbackRate = playbackRate;
+  }, [playbackRate]);
 
   useEffect(() => {
     const el = ref.current;
@@ -19,6 +26,7 @@ export const LazyVideo = ({ src, poster, className }: Props) => {
       if (el.dataset.loaded === "true") return;
       el.dataset.loaded = "true";
       el.src = src;
+      el.playbackRate = playbackRate;
       el.load();
       el.play().catch(() => {});
     };
@@ -43,7 +51,7 @@ export const LazyVideo = ({ src, poster, className }: Props) => {
 
     io.observe(el);
     return () => io.disconnect();
-  }, [src]);
+  }, [src, playbackRate]);
 
   return (
     <video

@@ -1,8 +1,8 @@
 "use client"
 
 import { useHero } from "./useHero"
-import { motion } from "motion/react"
-import { useRef } from "react"
+import { motion, useAnimationFrame, useMotionValue } from "motion/react"
+import { useEffect, useRef, useState } from "react"
 import { FaArrowRight } from "react-icons/fa"
 import { GlassBadge } from "@/components/ui/GlassBadge"
 import { Pill } from "@/components/ui/Pill"
@@ -41,9 +41,51 @@ const cards: Card[] = projects.flatMap((p) => [
 
 const loop = [...cards, ...cards]
 
+const SPEED_DESKTOP = 90
+const SPEED_MOBILE = 100
+
 export const Hero = () => {
   const vantaRef = useRef<HTMLDivElement>(null)
   const { scrollIndicatorVariants } = useHero(vantaRef)
+
+  const trackRef = useRef<HTMLDivElement>(null)
+  const x = useMotionValue(0)
+  const [halfTrack, setHalfTrack] = useState(0)
+  const [paused, setPaused] = useState(false)
+  const [speed, setSpeed] = useState(SPEED_DESKTOP)
+  const [reduceMotion, setReduceMotion] = useState(false)
+  const wasDragging = useRef(false)
+
+  useEffect(() => {
+    const el = trackRef.current
+    if (!el) return
+    const measure = () => setHalfTrack(el.scrollWidth / 2)
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const speedMq = window.matchMedia("(max-width: 768px)")
+    const motionMq = window.matchMedia("(prefers-reduced-motion: reduce)")
+    const updateSpeed = () => setSpeed(speedMq.matches ? SPEED_MOBILE : SPEED_DESKTOP)
+    const updateMotion = () => setReduceMotion(motionMq.matches)
+    updateSpeed()
+    updateMotion()
+    speedMq.addEventListener("change", updateSpeed)
+    motionMq.addEventListener("change", updateMotion)
+    return () => {
+      speedMq.removeEventListener("change", updateSpeed)
+      motionMq.removeEventListener("change", updateMotion)
+    }
+  }, [])
+
+  useAnimationFrame((_, delta) => {
+    if (paused || reduceMotion || halfTrack === 0) return
+    const next = x.get() - (speed * delta) / 1000
+    x.set(next <= -halfTrack ? next + halfTrack : next)
+  })
 
   return (
     <section id="home" className="relative h-dvh flex flex-col justify-center items-center text-center snap-start overflow-hidden w-full max-w-full">
@@ -65,7 +107,29 @@ export const Hero = () => {
         <div className="relative w-full overflow-hidden py-2">
           <div className="pointer-events-none absolute inset-y-0 left-0 w-16 md:w-32 bg-gradient-to-r from-black/40 to-transparent z-10" />
           <div className="pointer-events-none absolute inset-y-0 right-0 w-16 md:w-32 bg-gradient-to-l from-black/40 to-transparent z-10" />
-          <div className="hero-marquee flex gap-4 md:gap-6 w-max">
+          <motion.div
+            ref={trackRef}
+            style={{ x }}
+            drag="x"
+            dragMomentum={false}
+            onDragStart={() => {
+              wasDragging.current = true
+              setPaused(true)
+            }}
+            onDragEnd={() => {
+              setTimeout(() => { wasDragging.current = false }, 80)
+              setPaused(false)
+            }}
+            onClickCapture={(e) => {
+              if (wasDragging.current) {
+                e.preventDefault()
+                e.stopPropagation()
+              }
+            }}
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+            className="flex gap-4 md:gap-6 w-max cursor-grab active:cursor-grabbing select-none touch-pan-y"
+          >
             {loop.map((item, i) => {
               const sizeClasses =
                 item.format === "desktop"
@@ -77,20 +141,22 @@ export const Hero = () => {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  draggable={false}
                   className={`relative block ${sizeClasses} rounded-xl overflow-hidden border border-white/15 shadow-xl bg-black group shrink-0`}
                 >
                   <LazyVideo
                     src={item.src}
                     poster={posterFor(item.src)}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    playbackRate={1.25}
+                    className="w-full h-full object-cover pointer-events-none transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute bottom-2 left-2">
+                  <div className="absolute bottom-2 left-2 pointer-events-none">
                     <GlassBadge tone="dark">{item.label}</GlassBadge>
                   </div>
                 </a>
               )
             })}
-          </div>
+          </motion.div>
         </div>
 
         <motion.div

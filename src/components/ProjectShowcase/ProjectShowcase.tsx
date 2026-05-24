@@ -74,11 +74,13 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
               <LazyVideo
                 src={project.videoMobile}
                 poster={posterFor(project.videoMobile)}
+                playbackRate={1.25}
                 className="block md:hidden w-full h-full object-cover"
               />
               <LazyVideo
                 src={project.videoDesktop}
                 poster={posterFor(project.videoDesktop)}
+                playbackRate={1.25}
                 className="hidden md:block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
 

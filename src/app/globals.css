@@ -255,26 +255,6 @@
     }
   }
 
-  @keyframes hero-marquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-
-  .hero-marquee {
-    animation: hero-marquee 40s linear infinite;
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .hero-marquee:hover {
-      animation-play-state: paused;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero-marquee {
-      animation: none;
-    }
-  }
 
   .glass-effect {
     @apply bg-white/10 backdrop-blur-md border border-white/20;
