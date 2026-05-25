@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "motion/react"
+import Image from "next/image"
 import type { Project } from "../ProjectsShowcase/useProjectsShowcase"
 import { useProjectShowcase } from "./useProjectShowcase"
 import { Title } from "@/components/Styles/Texts/Title/Title"
@@ -8,6 +9,7 @@ import { LazyVideo } from "@/components/LazyVideo/LazyVideo"
 import { GlassBadge } from "@/components/ui/GlassBadge"
 import { Pill } from "@/components/ui/Pill"
 import { FaArrowUpRightFromSquare } from "react-icons/fa6"
+import { FaHandshake, FaArrowRight } from "react-icons/fa"
 
 type ProjectShowcaseProps = {
   project: Project
@@ -20,13 +22,13 @@ const posterFor = (videoSrc: string) =>
 export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcaseProps) => {
   const { ref, videoVariants, textVariants, animationState } = useProjectShowcase()
 
-  const cardClasses = "relative block w-full shadow-2xl rounded-2xl cursor-pointer group aspect-[9/16] md:aspect-video max-h-[calc(100dvh-240px)] md:max-h-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+  const cardClasses = "relative block w-full shadow-2xl rounded-2xl cursor-pointer group aspect-[9/16] md:aspect-video max-h-[calc(100dvh-340px)] md:max-h-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
 
   return (
     <section
       ref={ref}
       id={isFirst ? "projects" : undefined}
-      className="snap-start relative h-dvh md:min-h-dvh flex flex-col items-center overflow-hidden bg-transparent px-4 pt-20 pb-8 md:px-0 md:pt-0 md:pb-0"
+      className="snap-start relative h-dvh md:min-h-dvh flex flex-col items-center overflow-hidden bg-transparent px-4 pt-20 pb-12 md:px-0 md:pt-0 md:pb-0"
     >
       <div className="w-full h-full max-w-7xl flex flex-col items-center justify-start md:justify-center relative z-10 gap-4 md:gap-6">
 
@@ -102,6 +104,43 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
 
             </div>
           </a>
+        </motion.div>
+
+        {/* --- CTA ROW --- */}
+        <motion.div
+          variants={textVariants}
+          initial="hiddenEnter"
+          animate={animationState}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+          className="flex flex-wrap items-center justify-center gap-3 px-4"
+        >
+          {project.model === "sale" ? (
+            <>
+              <Pill as="a" href={project.buyUrl} target="_blank" rel="noopener noreferrer" variant="solid" size="md" Icon={FaHandshake}>
+                Hire me to build this
+              </Pill>
+              <a
+                href={project.deployUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Deploy template to Vercel"
+                className="inline-flex items-center"
+              >
+                <Image
+                  src="https://vercel.com/button"
+                  alt="Deploy with Vercel"
+                  width={92}
+                  height={32}
+                  unoptimized
+                  className="h-10 w-auto"
+                />
+              </a>
+            </>
+          ) : (
+            <Pill as="a" href={project.subscribeUrl} target="_blank" rel="noopener noreferrer" variant="solid" size="md" Icon={FaArrowRight}>
+              Subscribe
+            </Pill>
+          )}
         </motion.div>
       </div>
     </section>
