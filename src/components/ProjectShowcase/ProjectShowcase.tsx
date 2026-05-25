@@ -9,7 +9,7 @@ import { LazyVideo } from "@/components/LazyVideo/LazyVideo"
 import { GlassBadge } from "@/components/ui/GlassBadge"
 import { Pill } from "@/components/ui/Pill"
 import { FaArrowUpRightFromSquare } from "react-icons/fa6"
-import { FaHandshake, FaArrowRight } from "react-icons/fa"
+import { FaArrowRight } from "react-icons/fa"
 
 type ProjectShowcaseProps = {
   project: Project
@@ -22,7 +22,7 @@ const posterFor = (videoSrc: string) =>
 export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcaseProps) => {
   const { ref, videoVariants, textVariants, animationState } = useProjectShowcase()
 
-  const cardClasses = "relative block w-full shadow-2xl rounded-2xl cursor-pointer group aspect-[9/16] md:aspect-video max-h-[calc(100dvh-340px)] md:max-h-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+  const cardClasses = "relative block w-full shadow-2xl rounded-2xl cursor-pointer group aspect-[9/16] md:aspect-video max-h-[calc(100dvh-440px)] md:max-h-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
 
   return (
     <section
@@ -106,18 +106,36 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
           </a>
         </motion.div>
 
+        {/* --- DESCRIPTION --- */}
+        <motion.div
+          variants={textVariants}
+          initial="hiddenEnter"
+          animate={animationState}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.05 }}
+          className="flex flex-col items-center gap-1 px-4 max-w-2xl text-center"
+        >
+          <p className="text-sm md:text-base text-white/80">
+            {project.description}
+          </p>
+          {project.descriptionExtra && (
+            <p className="text-xs md:text-sm italic text-white/50">
+              {project.descriptionExtra}
+            </p>
+          )}
+        </motion.div>
+
         {/* --- CTA ROW --- */}
         <motion.div
           variants={textVariants}
           initial="hiddenEnter"
           animate={animationState}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
           className="flex flex-wrap items-center justify-center gap-3 px-4"
         >
           {project.model === "sale" ? (
             <>
-              <Pill as="a" href={project.buyUrl} target="_blank" rel="noopener noreferrer" variant="solid" size="md" Icon={FaHandshake}>
-                Hire me to build this
+              <Pill as="a" href={project.buyUrl} target="_blank" rel="noopener noreferrer" variant="solid" size="md" Icon={FaArrowRight}>
+                Get the full website
               </Pill>
               <a
                 href={project.deployUrl}
