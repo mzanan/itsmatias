@@ -137,8 +137,8 @@ export const Hero = () => {
 
       <div className="relative z-10 w-full h-full flex flex-col items-center justify-center gap-8">
         <motion.div
-          initial={{ opacity: 0, y: -12 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: -12 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-center px-4"
         >

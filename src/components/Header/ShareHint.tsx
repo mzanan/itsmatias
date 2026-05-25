@@ -2,8 +2,10 @@
 
 import { motion, AnimatePresence } from "motion/react"
 import { useEffect, useState } from "react"
-import Lottie from "lottie-react"
+import dynamic from "next/dynamic"
 import shareHintAnim from "./share-hint.json"
+
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false })
 
 const SHOW_DELAY_MS = 800
 const AUTO_DISMISS_MS = 15000
