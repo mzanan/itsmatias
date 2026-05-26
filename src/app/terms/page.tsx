@@ -79,7 +79,27 @@ export default function TermsPage() {
         </p>
         <p>
           You may remove this credit by purchasing the &quot;Remove
-          Attribution&quot; add-on for the relevant product on itsmatias.com.
+          Attribution&quot; add-on for the relevant product:
+        </p>
+        <ul className="list-disc pl-6 space-y-1">
+          <li>
+            <a
+              href="https://buy.polar.sh/polar_cl_mK3kO9gASJE62I0Udu2QOgaBFpvHK2wERyVOP43h2YW"
+              className="underline hover:text-white"
+            >
+              Remove attribution — Ecommerce ($99)
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://buy.polar.sh/polar_cl_9XlnRlzyF6WGKbTYu8dpBpu5tVPa8ljLt2FnJ3H82WF"
+              className="underline hover:text-white"
+            >
+              Remove attribution — Landing ($19)
+            </a>
+          </li>
+        </ul>
+        <p>
           After purchase you may set{" "}
           <code className="rounded bg-slate-800 px-1.5 py-0.5 text-sm">
             NEXT_PUBLIC_HIDE_ATTRIBUTION=true
