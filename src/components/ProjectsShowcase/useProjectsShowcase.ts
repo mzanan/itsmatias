@@ -13,7 +13,6 @@ type BaseProject = {
 type ForSaleProject = BaseProject & {
   model: "sale";
   buyUrl: string;
-  deployUrl: string;
 };
 
 type SubscriptionProject = BaseProject & {
@@ -31,11 +30,10 @@ export const useProjectsShowcase = () => {
       url: "https://ecommerce.itsmatias.com",
       videoDesktop: "/videos/ecommerce.mp4",
       videoMobile: "/videos/ecommerce-mobile.mp4",
-      description: "A full ecommerce with admin panel, real-time stock, orders, and email notifications. One-click deploy to your Vercel. $999 one-time.",
+      description: "A full ecommerce with admin panel, real-time stock, orders, and email notifications. One-click deploy to your Vercel. $990 one-time.",
       descriptionExtra: "Built with Next.js, Vercel Postgres, Clerk, and Stripe.",
       model: "sale",
       buyUrl: "https://buy.polar.sh/polar_cl_CLikmCFG83HCAfDWdK9ILx6zps8Wg3MaWGCQB3fru2o",
-      deployUrl: "https://vercel.com/new/clone?repository-url=https://github.com/mzanan/template-ecommerce",
     },
     {
       id: "2",
@@ -47,7 +45,6 @@ export const useProjectsShowcase = () => {
       descriptionExtra: "Built with Next.js and Resend.",
       model: "sale",
       buyUrl: "https://buy.polar.sh/polar_cl_EoJiL7xT64MDONqC8clZ4OjLVGFcdUfoRHrvo3XY3Oh",
-      deployUrl: "https://vercel.com/new/clone?repository-url=https://github.com/mzanan/template-landing",
     },
     {
       id: "3",

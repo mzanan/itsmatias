@@ -1,7 +1,6 @@
 "use client"
 
 import { motion } from "motion/react"
-import Image from "next/image"
 import type { Project } from "../ProjectsShowcase/useProjectsShowcase"
 import { useProjectShowcase } from "./useProjectShowcase"
 import { Title } from "@/components/Styles/Texts/Title/Title"
@@ -133,27 +132,9 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
           className="flex flex-wrap items-center justify-center gap-3 px-4"
         >
           {project.model === "sale" ? (
-            <>
-              <Pill as="a" href={project.buyUrl} target="_blank" rel="noopener noreferrer" variant="solid" size="md" Icon={FaArrowRight}>
-                Get the full website
-              </Pill>
-              <a
-                href={project.deployUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Deploy template to Vercel"
-                className="inline-flex items-center"
-              >
-                <Image
-                  src="https://vercel.com/button"
-                  alt="Deploy with Vercel"
-                  width={92}
-                  height={32}
-                  unoptimized
-                  className="h-10 w-auto"
-                />
-              </a>
-            </>
+            <Pill as="a" href={project.buyUrl} target="_blank" rel="noopener noreferrer" variant="solid" size="md" Icon={FaArrowRight}>
+              Get the full website
+            </Pill>
           ) : (
             <Pill as="a" href={project.subscribeUrl} target="_blank" rel="noopener noreferrer" variant="solid" size="md" Icon={FaArrowRight}>
               Subscribe
