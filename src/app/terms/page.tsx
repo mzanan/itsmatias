@@ -75,11 +75,12 @@ export default function TermsPage() {
         <p>
           By default, deployed sites built on the Templates display a small
           &quot;Built by Matias Zanan&quot; credit in the footer linking to
-          itsmatias.com.
+          itsmatias.com. Both the Ecommerce and Landing products ship this
+          credit on a fresh install.
         </p>
         <p>
-          You may remove this credit by purchasing the &quot;Remove
-          Attribution&quot; add-on for the relevant product:
+          You may remove the credit by purchasing the &quot;Remove
+          Attribution&quot; add-on for the product you bought:
         </p>
         <ul className="list-disc pl-6 space-y-1">
           <li>
@@ -131,11 +132,19 @@ export default function TermsPage() {
         <h2 className="text-xl font-medium text-white">6. Updates</h2>
         <p>
           You get lifetime updates: any improvement, fix, or new feature I
-          publish to the source repository becomes available to you via{" "}
-          <code className="rounded bg-slate-800 px-1.5 py-0.5 text-sm">
-            git pull
-          </code>{" "}
-          on the template branch.
+          publish to the source repository stays available to you. Because your
+          copy is created via &quot;Use this template&quot; (fresh repo, no
+          shared git history), you pull updates by adding the source repo as
+          an upstream remote and merging:
+        </p>
+        <pre className="rounded bg-slate-800 px-4 py-3 text-sm overflow-x-auto">
+          <code>{`git remote add upstream git@github.com:mzanan/<product>.git
+git fetch upstream
+git merge upstream/main   # resolve conflicts as needed`}</code>
+        </pre>
+        <p className="text-sm text-slate-400">
+          The exact commands and the upstream URL for your product live in the
+          repo&apos;s README.
         </p>
       </section>
 

@@ -1,33 +1,28 @@
 import { Webhooks } from '@polar-sh/nextjs';
+import type { Order } from '@polar-sh/sdk/models/components/order';
 
-type PolarOrderCustomFieldData = Record<string, string | number | boolean | null>;
+const POLAR_WEBHOOK_SECRET = process.env.POLAR_WEBHOOK_SECRET;
+const GITHUB_PAT = process.env.GITHUB_PAT;
+const GITHUB_OWNER = process.env.GITHUB_OWNER ?? 'mzanan';
+const POLAR_PRODUCT_ID_ECOMMERCE = process.env.POLAR_PRODUCT_ID_ECOMMERCE;
+const POLAR_PRODUCT_ID_LANDING = process.env.POLAR_PRODUCT_ID_LANDING;
 
-interface PolarOrderLike {
-  product?: { id?: string };
-  product_id?: string;
-  customer?: { email?: string };
-  custom_field_data?: PolarOrderCustomFieldData;
-  customer_metadata?: PolarOrderCustomFieldData;
+if (!POLAR_WEBHOOK_SECRET) {
+  throw new Error('POLAR_WEBHOOK_SECRET env var is required for /api/webhooks/polar');
 }
 
 const REPO_MAP: Record<string, string> = {
-  [process.env.POLAR_PRODUCT_ID_ECOMMERCE ?? '']: 'full-ecommerce',
-  [process.env.POLAR_PRODUCT_ID_LANDING ?? '']: 'full-landing',
+  ...(POLAR_PRODUCT_ID_ECOMMERCE ? { [POLAR_PRODUCT_ID_ECOMMERCE]: 'full-ecommerce' } : {}),
+  ...(POLAR_PRODUCT_ID_LANDING ? { [POLAR_PRODUCT_ID_LANDING]: 'full-landing' } : {}),
 };
 
-const GITHUB_OWNER = process.env.GITHUB_OWNER ?? 'mzanan';
-const GITHUB_PAT = process.env.GITHUB_PAT;
-
-function pickGithubUsername(payload: PolarOrderLike): string | null {
-  const fromCustom = payload.custom_field_data?.github_username;
-  if (typeof fromCustom === 'string' && fromCustom.length > 0) return fromCustom;
-  const fromMetadata = payload.customer_metadata?.github_username;
-  if (typeof fromMetadata === 'string' && fromMetadata.length > 0) return fromMetadata;
-  return null;
+function pickGithubUsername(order: Order): string | null {
+  const fromCustom = order.customFieldData?.github_username;
+  return typeof fromCustom === 'string' && fromCustom.length > 0 ? fromCustom : null;
 }
 
-function pickRepoFromProduct(payload: PolarOrderLike): string | null {
-  const productId = payload.product?.id ?? payload.product_id;
+function pickRepoFromProduct(order: Order): string | null {
+  const productId = order.product?.id ?? order.productId;
   if (!productId) return null;
   return REPO_MAP[productId] ?? null;
 }
@@ -53,13 +48,13 @@ async function addCollaborator(repo: string, username: string): Promise<void> {
 }
 
 export const POST = Webhooks({
-  webhookSecret: process.env.POLAR_WEBHOOK_SECRET ?? '',
+  webhookSecret: POLAR_WEBHOOK_SECRET,
   onOrderPaid: async (payload) => {
-    const order = (payload.data ?? {}) as PolarOrderLike;
+    const order = payload.data;
     const repo = pickRepoFromProduct(order);
     const username = pickGithubUsername(order);
     if (!repo) {
-      console.error('[polar webhook] no repo mapped for product', order.product?.id ?? order.product_id);
+      console.error('[polar webhook] no repo mapped for product', order.product?.id ?? order.productId);
       return;
     }
     if (!username) {

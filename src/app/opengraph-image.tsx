@@ -77,7 +77,7 @@ export default async function Image() {
               letterSpacing: "-0.01em",
             }}
           >
-            I build smooth, elegant, pixel-perfect websites end-to-end.
+            I build smooth, elegant, pixel-perfect websites.
           </div>
           <div
             style={{
