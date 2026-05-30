@@ -5,7 +5,6 @@ import type { Project } from "../ProjectsShowcase/useProjectsShowcase"
 import { useProjectShowcase } from "./useProjectShowcase"
 import { Title } from "@/components/Styles/Texts/Title/Title"
 import { LazyVideo } from "@/components/LazyVideo/LazyVideo"
-import { GlassBadge } from "@/components/ui/GlassBadge"
 import { Pill } from "@/components/ui/Pill"
 import { FaArrowUpRightFromSquare } from "react-icons/fa6"
 import { FaArrowRight } from "react-icons/fa"
@@ -39,7 +38,7 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="flex justify-center px-4 pb-2"
         >
-          <Title href={project.url}>{project.title}</Title>
+          <Title href={project.url} centered>{project.title}</Title>
         </motion.div>
 
         {/* --- VIDEO CARD --- */}
@@ -65,13 +64,6 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
               className="absolute inset-0 rounded-2xl overflow-hidden border border-primary/30 group-hover:border-primary/50 transition-colors z-10"
               suppressHydrationWarning
             >
-              {/* Live badge */}
-              <div className="absolute top-3 right-3 z-30 pointer-events-none">
-                <GlassBadge tone="dark" withDot Icon={FaArrowUpRightFromSquare} className="shadow-lg">
-                  Live site
-                </GlassBadge>
-              </div>
-
               <LazyVideo
                 src={project.videoMobile}
                 poster={posterFor(project.videoMobile)}
@@ -85,21 +77,8 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
                 className="hidden md:block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
 
-              {/* Mobile bottom CTA */}
-              <div className="md:hidden absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex items-end justify-center pb-5 z-20 pointer-events-none">
-                <Pill as="span" variant="ghost" size="sm" Icon={FaArrowUpRightFromSquare} iconClassName="group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                  Visit Website
-                </Pill>
-              </div>
-
-              {/* Desktop hover overlay */}
-              <div className="hidden md:flex absolute inset-0 z-20 items-center justify-center transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:bg-black/40 group-hover:backdrop-blur-[2px] pointer-events-none">
-                <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                  <Pill as="span" variant="outline" size="md" Icon={FaArrowUpRightFromSquare} iconClassName="group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                    Visit Website
-                  </Pill>
-                </div>
-              </div>
+              {/* Desktop hover dim — subtle feedback that the card is clickable */}
+              <div className="hidden md:block absolute inset-0 z-10 bg-black/0 group-hover:bg-black/15 transition-colors duration-300 pointer-events-none" />
 
             </div>
           </a>
@@ -129,14 +108,17 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
           initial="hiddenEnter"
           animate={animationState}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
-          className="flex flex-wrap items-center justify-center gap-3 px-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3 px-4 w-full"
         >
+          <Pill as="a" href={project.url} target="_blank" rel="noopener noreferrer" variant="outline" size="md" Icon={FaArrowUpRightFromSquare} iconClassName="group-hover:translate-x-0.5 group-hover:-translate-y-0.5" className="w-full max-w-xs justify-center sm:w-auto">
+            Visit live site
+          </Pill>
           {project.model === "sale" ? (
-            <Pill as="a" href={project.buyUrl} target="_blank" rel="noopener noreferrer" variant="solid" size="md" Icon={FaArrowRight}>
+            <Pill as="a" href={project.buyUrl} target="_blank" rel="noopener noreferrer" variant="solid" size="md" Icon={FaArrowRight} className="w-full max-w-xs justify-center sm:w-auto">
               Get the full website
             </Pill>
           ) : (
-            <Pill as="a" href={project.subscribeUrl} target="_blank" rel="noopener noreferrer" variant="solid" size="md" Icon={FaArrowRight}>
+            <Pill as="a" href={project.subscribeUrl} target="_blank" rel="noopener noreferrer" variant="solid" size="md" Icon={FaArrowRight} className="w-full max-w-xs justify-center sm:w-auto">
               Subscribe
             </Pill>
           )}
