@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 
 type TitleProps = {
     children: ReactNode;
+    variant?: "display" | "heading";
     centered?: boolean;
     href?: string;
     gradientClassName?: string;
@@ -11,8 +12,14 @@ type TitleProps = {
     className?: string;
 };
 
+const variantSize: Record<NonNullable<TitleProps["variant"]>, string> = {
+    display: "text-display",
+    heading: "text-heading",
+};
+
 export const Title = ({
     children,
+    variant = "heading",
     centered = false,
     href,
     gradientClassName = "gradient-text",
@@ -21,7 +28,7 @@ export const Title = ({
     wrapContent = true,
     className = ""
 }: TitleProps) => {
-    const underlineClassName = `h-1 w-12 rounded-full bg-[image:linear-gradient(to_right,var(--brand-from),var(--brand-via),var(--brand-to))] ${centered ? "md:mx-auto" : ""}`;
+    const underlineClassName = `h-1 w-12 rounded-full bg-[image:linear-gradient(to_right,var(--brand-from),var(--brand-via),var(--brand-to))] ${centered ? "mx-auto" : ""}`;
     const isString = typeof children === "string";
     const shouldWrap = wrapContent && isString;
 
@@ -42,7 +49,7 @@ export const Title = ({
 
 return (
     <div className={className}>
-        <HeadingTag className={`text-4xl md:text-6xl font-bold tracking-tight mb-4 ${centered ? "md:text-center" : ""}`}>
+        <HeadingTag className={`${variantSize[variant]} font-bold tracking-tight text-balance ${showUnderline ? "mb-4" : ""} ${centered ? "text-center" : ""}`}>
             {content}
         </HeadingTag>
         {showUnderline && <div className={underlineClassName} />}

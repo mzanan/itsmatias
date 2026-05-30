@@ -49,7 +49,7 @@ export const Contact = () => {
         <div className="md:hidden flex flex-col gap-8">
           <motion.div variants={itemVariants}>
             <Title>Let&apos;s talk.</Title>
-            <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
+            <p className="mt-4 text-subtitle text-muted-foreground leading-relaxed">
               {contact.descriptionMobile}
             </p>
           </motion.div>
@@ -151,7 +151,7 @@ export const Contact = () => {
             {/* Top: heading */}
             <motion.div variants={itemVariants}>
               <Title>Let&apos;s talk.</Title>
-              <p className="mt-4 text-lg md:text-xl text-muted-foreground leading-relaxed whitespace-pre-line max-w-2xl">
+              <p className="mt-4 text-subtitle text-muted-foreground leading-relaxed whitespace-pre-line max-w-2xl">
                 {contact.description}
               </p>
             </motion.div>

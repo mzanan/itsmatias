@@ -62,13 +62,13 @@ export const About = () => {
 
           <motion.p
             variants={itemVariants}
-            className="block lg:hidden text-lg md:text-xl text-muted-foreground leading-snug whitespace-pre-line"
+            className="block lg:hidden text-subtitle text-muted-foreground leading-snug whitespace-pre-line"
           >
             {about.descriptionMobile}
           </motion.p>
           <motion.p
             variants={itemVariants}
-            className="hidden lg:block text-lg md:text-xl text-muted-foreground leading-relaxed whitespace-pre-line"
+            className="hidden lg:block text-subtitle text-muted-foreground leading-relaxed whitespace-pre-line"
           >
             {about.description}
           </motion.p>
