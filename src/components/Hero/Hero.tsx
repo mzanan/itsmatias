@@ -8,9 +8,7 @@ import { GlassBadge } from "@/components/ui/GlassBadge"
 import { Pill } from "@/components/ui/Pill"
 import { LazyVideo } from "@/components/LazyVideo/LazyVideo"
 import { Title } from "@/components/Styles/Texts/Title/Title"
-
-const posterFor = (videoSrc: string) =>
-  videoSrc.replace("/videos/", "/videos/posters/").replace(/\.mp4$/, ".webp")
+import { posterFor } from "@/lib/video"
 
 const projects = [
   {

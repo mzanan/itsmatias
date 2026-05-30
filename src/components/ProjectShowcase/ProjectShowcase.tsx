@@ -8,14 +8,12 @@ import { LazyVideo } from "@/components/LazyVideo/LazyVideo"
 import { Pill } from "@/components/ui/Pill"
 import { FaArrowUpRightFromSquare } from "react-icons/fa6"
 import { FaArrowRight } from "react-icons/fa"
+import { posterFor } from "@/lib/video"
 
 type ProjectShowcaseProps = {
   project: Project
   isFirst?: boolean
 }
-
-const posterFor = (videoSrc: string) =>
-  videoSrc.replace("/videos/", "/videos/posters/").replace(/\.mp4$/, ".webp")
 
 export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcaseProps) => {
   const { ref, videoVariants, textVariants, animationState } = useProjectShowcase()

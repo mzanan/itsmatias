@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { useEffect } from "react";
 import { useContact } from "./useContact";
 import { Title } from "@/components/Styles/Texts/Title/Title";
+import { Pill } from "@/components/ui/Pill";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { FaArrowRight } from "react-icons/fa";
 import { fireConfetti } from "@/lib/confetti";
@@ -117,14 +118,17 @@ export const Contact = () => {
               <div className="text-sm text-red-400">Something went wrong. Please try again.</div>
             )}
 
-            <button
+            <Pill
+              as="button"
               type="submit"
+              variant="solid"
+              size="md"
               disabled={isSubmitting}
-              className="inline-flex items-center gap-3 rounded-full bg-white text-black px-6 py-3 text-sm font-medium shadow-lg transition-all active:scale-95 disabled:opacity-60 self-start"
+              Icon={FaArrowRight}
+              className="self-start"
             >
               {isSubmitting ? "Sending…" : "Send Message"}
-              <FaArrowRight className="h-3.5 w-3.5" />
-            </button>
+            </Pill>
           </motion.form>
 
           <motion.ul variants={itemVariants} className="flex flex-row gap-5 flex-wrap pt-2">
@@ -225,18 +229,21 @@ export const Contact = () => {
 
             {/* Bottom: Send button */}
             <motion.div variants={itemVariants}>
-              <button
+              <Pill
+                as="button"
                 type="button"
+                variant="solid"
+                size="lg"
                 disabled={isSubmitting}
                 onClick={() => {
                   const form = document.getElementById("name-d")?.closest("form");
                   form?.requestSubmit();
                 }}
-                className="group inline-flex items-center gap-3 rounded-full bg-white text-black px-7 py-3.5 text-base font-medium shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+                Icon={FaArrowRight}
+                className="hover:scale-[1.02]"
               >
                 {isSubmitting ? "Sending…" : "Send Message"}
-                <FaArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </button>
+              </Pill>
             </motion.div>
           </div>
 
