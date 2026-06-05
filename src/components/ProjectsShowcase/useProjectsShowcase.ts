@@ -58,7 +58,7 @@ export const useProjectsShowcase = () => {
         description:
           "A hosted social links page with custom URL, themes, and click analytics. Set up in minutes. Monthly subscription.",
         model: "subscription",
-        subscribeUrl: "https://links.itsmatias.com/#pricing",
+        subscribeUrl: "https://links.itsmatias.com/",
       },
     ],
     [],
