@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { URLS } from "@/lib/urls";
 
 export const metadata: Metadata = {
   title: "Terms & License",
   description:
     "License terms for products purchased on itsmatias.com — full website templates, landing pages, and add-ons.",
-  alternates: { canonical: "https://itsmatias.com/terms" },
+  alternates: { canonical: `${URLS.site}/terms` },
   robots: { index: true, follow: true },
 };
 

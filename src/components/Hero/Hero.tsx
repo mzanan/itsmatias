@@ -9,25 +9,26 @@ import { Pill } from "@/components/ui/Pill"
 import { LazyVideo } from "@/components/LazyVideo/LazyVideo"
 import { Title } from "@/components/Styles/Texts/Title/Title"
 import { posterFor } from "@/lib/video"
+import { URLS } from "@/lib/urls"
 
 const projects = [
   {
     desktop: "/videos/ecommerce.mp4",
     mobile: "/videos/ecommerce-mobile.mp4",
     label: "ecommerce",
-    href: "https://ecommerce.itsmatias.com",
+    href: URLS.ecommerce,
   },
   {
     desktop: "/videos/landing.mp4",
     mobile: "/videos/landing-mobile.mp4",
     label: "landing",
-    href: "https://landing.itsmatias.com",
+    href: URLS.landing,
   },
   {
     desktop: "/videos/links.mp4",
     mobile: "/videos/links-mobile.mp4",
     label: "social links",
-    href: "https://links.itsmatias.com",
+    href: URLS.links,
   },
 ]
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { URLS } from "@/lib/urls";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,7 +13,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_URL = "https://itsmatias.com";
+const SITE_URL = URLS.site;
 const SITE_NAME = "itsmatias";
 const SITE_TITLE = "Matias Zanan — Web Developer";
 const SITE_DESCRIPTION =

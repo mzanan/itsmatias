@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { URLS } from "@/lib/urls";
 
 type BaseProject = {
   id: string;
@@ -28,7 +29,7 @@ export const useProjectsShowcase = () => {
       {
         id: "1",
         title: "E-commerce & Admin Panel",
-        url: "https://ecommerce.itsmatias.com",
+        url: URLS.ecommerce,
         videoDesktop: "/videos/ecommerce.mp4",
         videoMobile: "/videos/ecommerce-mobile.mp4",
         description:
@@ -40,7 +41,7 @@ export const useProjectsShowcase = () => {
       {
         id: "2",
         title: "Landing Page",
-        url: "https://landing.itsmatias.com",
+        url: URLS.landing,
         videoDesktop: "/videos/landing.mp4",
         videoMobile: "/videos/landing-mobile.mp4",
         description:
@@ -52,13 +53,13 @@ export const useProjectsShowcase = () => {
       {
         id: "3",
         title: "Social Links",
-        url: "https://links.itsmatias.com",
+        url: URLS.links,
         videoDesktop: "/videos/links.mp4",
         videoMobile: "/videos/links-mobile.mp4",
         description:
           "A hosted social links page with custom URL, themes, and click analytics. Set up in minutes. Monthly subscription.",
         model: "subscription",
-        subscribeUrl: "https://links.itsmatias.com/",
+        subscribeUrl: `${URLS.links}/`,
       },
     ],
     [],
