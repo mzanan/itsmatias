@@ -1,10 +1,12 @@
 import { NextResponse } from 'next/server';
+import { buildVercelDeployUrl, repoExists } from '@/lib/sales/ephemeralFork';
 import {
   findOrderByCheckout,
   getCheckout,
   POLAR_PROD_API_BASE,
   POLAR_SANDBOX_API_BASE,
 } from '@/lib/sales/polarApi';
+import { getProductMap, type SalesEnv } from '@/lib/sales/productMap';
 
 type RepoAccessState = 'invited' | 'already_collaborator';
 
@@ -16,20 +18,36 @@ type OrderStatus = {
   productName?: string;
 };
 
-function pickEnv(req: Request): { token?: string; apiBase: string } {
+function pickEnv(req: Request): { env: SalesEnv; token?: string; apiBase: string } {
   const url = new URL(req.url);
   const isSandbox = url.searchParams.get('env') === 'sandbox';
   return isSandbox
-    ? { token: process.env.POLAR_ACCESS_TOKEN_SANDBOX, apiBase: POLAR_SANDBOX_API_BASE }
-    : { token: process.env.POLAR_ACCESS_TOKEN, apiBase: POLAR_PROD_API_BASE };
+    ? {
+        env: 'sandbox',
+        token: process.env.POLAR_ACCESS_TOKEN_SANDBOX,
+        apiBase: POLAR_SANDBOX_API_BASE,
+      }
+    : {
+        env: 'production',
+        token: process.env.POLAR_ACCESS_TOKEN,
+        apiBase: POLAR_PROD_API_BASE,
+      };
 }
 
 export async function GET(
   req: Request,
   { params }: { params: Promise<{ checkoutId: string }> },
 ): Promise<NextResponse> {
-  const { token, apiBase } = pickEnv(req);
+  const { env, token, apiBase } = pickEnv(req);
+  const deploysOrg = process.env.GITHUB_DEPLOYS_ORG ?? 'mzanan-deploys';
+  const githubOwner = process.env.GITHUB_OWNER ?? 'mzanan';
+  const deploysPat = process.env.GITHUB_DEPLOYS_PAT;
   if (!token) {
+    console.error('[order] missing polar token for env=', env);
+    return NextResponse.json({ state: 'failed' } satisfies OrderStatus, { status: 500 });
+  }
+  if (!deploysPat) {
+    console.error('[order] missing GITHUB_DEPLOYS_PAT');
     return NextResponse.json({ state: 'failed' } satisfies OrderStatus, { status: 500 });
   }
   const { checkoutId } = await params;
@@ -58,19 +76,36 @@ export async function GET(
     return NextResponse.json({ state: 'paid' } satisfies OrderStatus);
   }
 
-  const deployUrl = order.metadata?.deploy_url as string | undefined;
-  const repoUrl = order.metadata?.repo_url as string | undefined;
-  const repoAccessState = order.metadata?.repo_access_state as RepoAccessState | undefined;
-  const productName = order.metadata?.product_name as string | undefined;
-
-  if (deployUrl && repoUrl && repoAccessState) {
-    return NextResponse.json({
-      state: 'ready',
-      deployUrl,
-      repoUrl,
-      repoAccessState,
-      productName,
-    } satisfies OrderStatus);
+  const productMap = getProductMap(env);
+  const product = order.product_id ? productMap[order.product_id] : undefined;
+  const githubUsername = order.custom_field_data?.github_username;
+  if (!product || typeof githubUsername !== 'string') {
+    return NextResponse.json({ state: 'paid' } satisfies OrderStatus);
   }
-  return NextResponse.json({ state: 'paid' } satisfies OrderStatus);
+
+  const forkFullName = `${deploysOrg}/${order.id.slice(0, 8)}-${product.repo}`;
+  let forkReady = false;
+  try {
+    forkReady = await repoExists(forkFullName, deploysPat);
+  } catch {
+    return NextResponse.json({ state: 'paid' } satisfies OrderStatus);
+  }
+  if (!forkReady) {
+    return NextResponse.json({ state: 'paid' } satisfies OrderStatus);
+  }
+
+  const isOwner = githubUsername.toLowerCase() === githubOwner.toLowerCase();
+  const deployUrl = buildVercelDeployUrl(forkFullName, product.repo);
+  const repoUrl = isOwner
+    ? `https://github.com/${githubOwner}/${product.repo}`
+    : `https://github.com/${githubOwner}/${product.repo}/invitations`;
+  const repoAccessState: RepoAccessState = isOwner ? 'already_collaborator' : 'invited';
+
+  return NextResponse.json({
+    state: 'ready',
+    deployUrl,
+    repoUrl,
+    repoAccessState,
+    productName: product.displayName,
+  } satisfies OrderStatus);
 }

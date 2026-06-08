@@ -1,8 +1,8 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { Webhooks } from '@polar-sh/nextjs';
-import { buildOrderPaidHandler, type ProductConfig } from '@/lib/sales/orderPaidHandler';
-import { POLAR_PROD_API_BASE } from '@/lib/sales/polarApi';
+import { buildOrderPaidHandler } from '@/lib/sales/orderPaidHandler';
+import { getProductMap } from '@/lib/sales/productMap';
 
 function missing(name: string): never {
   throw new Error(`${name} env var is required for /api/webhooks/polar`);
@@ -10,7 +10,6 @@ function missing(name: string): never {
 
 function buildHandler() {
   const POLAR_WEBHOOK_SECRET = process.env.POLAR_WEBHOOK_SECRET ?? missing('POLAR_WEBHOOK_SECRET');
-  const POLAR_ACCESS_TOKEN = process.env.POLAR_ACCESS_TOKEN;
   const GITHUB_PAT = process.env.GITHUB_PAT ?? missing('GITHUB_PAT');
   const GITHUB_OWNER = process.env.GITHUB_OWNER ?? 'mzanan';
   const GITHUB_DEPLOYS_ORG = process.env.GITHUB_DEPLOYS_ORG ?? 'mzanan-deploys';
@@ -18,30 +17,17 @@ function buildHandler() {
   const RESEND_API_KEY = process.env.RESEND_API_KEY ?? missing('RESEND_API_KEY');
   const RESEND_FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? missing('RESEND_FROM_EMAIL');
   const MAX_FORK_AGE_HOURS = Number(process.env.MAX_FORK_AGE_HOURS) || 72;
-  const POLAR_PRODUCT_ID_ECOMMERCE = process.env.POLAR_PRODUCT_ID_ECOMMERCE;
-  const POLAR_PRODUCT_ID_LANDING = process.env.POLAR_PRODUCT_ID_LANDING;
-
-  const productMap: Record<string, ProductConfig> = {
-    ...(POLAR_PRODUCT_ID_ECOMMERCE
-      ? { [POLAR_PRODUCT_ID_ECOMMERCE]: { repo: 'full-ecommerce', displayName: 'Full Ecommerce' } }
-      : {}),
-    ...(POLAR_PRODUCT_ID_LANDING
-      ? { [POLAR_PRODUCT_ID_LANDING]: { repo: 'full-landing', displayName: 'Full Landing' } }
-      : {}),
-  };
 
   return Webhooks({
     webhookSecret: POLAR_WEBHOOK_SECRET,
     onOrderPaid: buildOrderPaidHandler({
-      productMap,
+      productMap: getProductMap('production'),
       githubOwner: GITHUB_OWNER,
       githubPat: GITHUB_PAT,
       deploysOrg: GITHUB_DEPLOYS_ORG,
       deploysPat: GITHUB_DEPLOYS_PAT,
       resendApiKey: RESEND_API_KEY,
       resendFromEmail: RESEND_FROM_EMAIL,
-      polarAccessToken: POLAR_ACCESS_TOKEN,
-      polarApiBase: POLAR_PROD_API_BASE,
       maxForkAgeHours: MAX_FORK_AGE_HOURS,
     }),
   });

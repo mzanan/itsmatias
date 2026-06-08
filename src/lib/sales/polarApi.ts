@@ -12,8 +12,6 @@ type CheckoutResponse = {
   metadata?: Record<string, string | number | boolean> | null;
 };
 
-type OrderMetadata = Record<string, string | number | boolean>;
-
 function authHeaders(token: string): HeadersInit {
   return {
     Accept: 'application/json',
@@ -37,41 +35,11 @@ export async function getCheckout(
   return (await res.json()) as CheckoutResponse;
 }
 
-export async function updateOrderMetadata(
-  orderId: string,
-  metadata: OrderMetadata,
-  token: string,
-  apiBase: string = POLAR_API_BASE,
-): Promise<void> {
-  const res = await fetch(`${apiBase}/orders/${orderId}`, {
-    method: 'PATCH',
-    headers: authHeaders(token),
-    body: JSON.stringify({ metadata }),
-  });
-  if (!res.ok) {
-    throw new Error(`Polar updateOrderMetadata failed (${res.status}): ${await res.text()}`);
-  }
-}
-
-type OrderResponse = {
+export type OrderResponse = {
   id: string;
-  metadata?: OrderMetadata | null;
+  product_id?: string | null;
+  custom_field_data?: Record<string, string | number | boolean> | null;
 };
-
-export async function getOrder(
-  orderId: string,
-  token: string,
-  apiBase: string = POLAR_API_BASE,
-): Promise<OrderResponse> {
-  const res = await fetch(`${apiBase}/orders/${orderId}`, {
-    headers: authHeaders(token),
-    cache: 'no-store',
-  });
-  if (!res.ok) {
-    throw new Error(`Polar getOrder failed (${res.status}): ${await res.text()}`);
-  }
-  return (await res.json()) as OrderResponse;
-}
 
 type OrdersListResponse = {
   items: OrderResponse[];

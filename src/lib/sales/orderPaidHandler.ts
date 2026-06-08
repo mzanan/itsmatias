@@ -1,12 +1,9 @@
 import type { Order } from '@polar-sh/sdk/models/components/order';
 import { buildVercelDeployUrl, createPublicFork } from './ephemeralFork';
 import { sendDeployInstructions } from './deployEmail';
-import { updateOrderMetadata } from './polarApi';
+import type { ProductConfig } from './productMap';
 
-export type ProductConfig = {
-  repo: string;
-  displayName: string;
-};
+export type { ProductConfig };
 
 export type OrderPaidConfig = {
   productMap: Record<string, ProductConfig>;
@@ -16,8 +13,6 @@ export type OrderPaidConfig = {
   deploysPat: string;
   resendApiKey: string;
   resendFromEmail: string;
-  polarAccessToken?: string;
-  polarApiBase?: string;
   maxForkAgeHours: number;
 };
 
@@ -46,7 +41,11 @@ async function addCollaborator(
   );
   if (res.status === 204) return { inviteUrl: null, alreadyCollaborator: true };
   if (!res.ok) {
-    throw new Error(`Collaborator add failed (${res.status}): ${await res.text()}`);
+    const errorBody = await res.text();
+    if (res.status === 422 && errorBody.includes('Repository owner cannot be a collaborator')) {
+      return { inviteUrl: null, alreadyCollaborator: true };
+    }
+    throw new Error(`Collaborator add failed (${res.status}): ${errorBody}`);
   }
   const body = (await res.json()) as { html_url?: string };
   return { inviteUrl: body.html_url ?? null, alreadyCollaborator: false };
@@ -109,24 +108,6 @@ export function buildOrderPaidHandler(config: OrderPaidConfig) {
     const repoAccessState: RepoAccessState = alreadyCollaborator
       ? 'already_collaborator'
       : 'invited';
-
-    if (config.polarAccessToken) {
-      try {
-        await updateOrderMetadata(
-          order.id,
-          {
-            deploy_url: deployUrl,
-            repo_url: repoUrl,
-            repo_access_state: repoAccessState,
-            product_name: product.displayName,
-          },
-          config.polarAccessToken,
-          config.polarApiBase,
-        );
-      } catch (err) {
-        console.error('[polar] updateOrderMetadata failed', err);
-      }
-    }
 
     await sendDeployInstructions(
       {
