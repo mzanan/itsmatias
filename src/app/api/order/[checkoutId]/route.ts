@@ -95,7 +95,7 @@ export async function GET(
   }
 
   const isOwner = githubUsername.toLowerCase() === githubOwner.toLowerCase();
-  const deployUrl = buildVercelDeployUrl(repoFullName, product.repo);
+  const deployUrl = buildVercelDeployUrl(repoFullName, product.repo, product.vercelDeploy);
   const repoUrl = isOwner
     ? `https://github.com/${githubOwner}/${product.repo}`
     : `https://github.com/${githubOwner}/${product.repo}/invitations`;

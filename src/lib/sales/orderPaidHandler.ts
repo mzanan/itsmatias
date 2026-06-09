@@ -107,7 +107,7 @@ export function buildOrderPaidHandler(config: OrderPaidConfig) {
       );
     }
 
-    const deployUrl = buildVercelDeployUrl(targetFullName, product.repo);
+    const deployUrl = buildVercelDeployUrl(targetFullName, product.repo, product.vercelDeploy);
     const repoUrl = alreadyCollaborator
       ? `https://github.com/${config.githubOwner}/${product.repo}`
       : (inviteUrl ?? `https://github.com/${config.githubOwner}/${product.repo}/invitations`);

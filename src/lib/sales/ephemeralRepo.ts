@@ -113,15 +113,26 @@ export function buildEphemeralRepoName(orderId: string, productRepo: string): st
   return `${orderId.slice(0, 8)}-${productRepo}`;
 }
 
+import type { VercelDeployConfig } from './productMap';
+
 export function buildVercelDeployUrl(
   repoFullName: string,
-  productName: string,
+  productRepo: string,
+  deploy: VercelDeployConfig = {},
 ): string {
-  const uniqueName = repoFullName.split('/')[1] ?? productName;
+  const uniqueName = repoFullName.split('/')[1] ?? productRepo;
   const params = new URLSearchParams({
     'repository-url': `https://github.com/${repoFullName}`,
     'project-name': uniqueName,
     'repository-name': uniqueName,
   });
+  if (deploy.stores && deploy.stores.length > 0) {
+    params.set('stores', JSON.stringify(deploy.stores));
+  }
+  if (deploy.env && deploy.env.length > 0) {
+    params.set('env', deploy.env.join(','));
+    if (deploy.envDescription) params.set('envDescription', deploy.envDescription);
+    if (deploy.envLink) params.set('envLink', deploy.envLink);
+  }
   return `https://vercel.com/new/clone?${params.toString()}`;
 }

@@ -1,13 +1,58 @@
+export type VercelStore =
+  | {
+      type: 'integration';
+      integrationSlug: string;
+      productSlug: string;
+      protocol: string;
+    }
+  | { type: 'blob'; access: 'public' | 'private' };
+
+export type VercelDeployConfig = {
+  stores?: VercelStore[];
+  env?: string[];
+  envDescription?: string;
+  envLink?: string;
+};
+
 export type ProductConfig = {
   repo: string;
   displayName: string;
+  vercelDeploy: VercelDeployConfig;
 };
 
 export type SalesEnv = 'sandbox' | 'production';
 
+const GITHUB_OWNER = 'mzanan';
+
+const ECOMMERCE_DEPLOY: VercelDeployConfig = {
+  stores: [
+    {
+      type: 'integration',
+      integrationSlug: 'neon',
+      productSlug: 'neon',
+      protocol: 'storage',
+    },
+    { type: 'blob', access: 'private' },
+  ],
+  env: ['NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY', 'CLERK_SECRET_KEY'],
+  envDescription:
+    'Clerk handles admin login. Create a free Clerk app and paste the publishable + secret keys here. Stripe, Resend and store branding are configured later from your Vercel project settings — see the repo README.',
+  envLink: `https://github.com/${GITHUB_OWNER}/full-ecommerce#readme`,
+};
+
+const LANDING_DEPLOY: VercelDeployConfig = {};
+
 const BASE_PRODUCTS = {
-  ecommerce: { repo: 'full-ecommerce', baseDisplayName: 'Full Ecommerce' },
-  landing: { repo: 'full-landing', baseDisplayName: 'Full Landing' },
+  ecommerce: {
+    repo: 'full-ecommerce',
+    baseDisplayName: 'Full Ecommerce',
+    vercelDeploy: ECOMMERCE_DEPLOY,
+  },
+  landing: {
+    repo: 'full-landing',
+    baseDisplayName: 'Full Landing',
+    vercelDeploy: LANDING_DEPLOY,
+  },
 } as const;
 
 export function getProductMap(env: SalesEnv): Record<string, ProductConfig> {
@@ -26,12 +71,14 @@ export function getProductMap(env: SalesEnv): Record<string, ProductConfig> {
     map[ecommerceId] = {
       repo: BASE_PRODUCTS.ecommerce.repo,
       displayName: `${BASE_PRODUCTS.ecommerce.baseDisplayName}${suffix}`,
+      vercelDeploy: BASE_PRODUCTS.ecommerce.vercelDeploy,
     };
   }
   if (landingId) {
     map[landingId] = {
       repo: BASE_PRODUCTS.landing.repo,
       displayName: `${BASE_PRODUCTS.landing.baseDisplayName}${suffix}`,
+      vercelDeploy: BASE_PRODUCTS.landing.vercelDeploy,
     };
   }
   return map;
