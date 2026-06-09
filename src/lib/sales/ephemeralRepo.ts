@@ -117,10 +117,11 @@ export function buildVercelDeployUrl(
   repoFullName: string,
   productName: string,
 ): string {
+  const uniqueName = repoFullName.split('/')[1] ?? productName;
   const params = new URLSearchParams({
     'repository-url': `https://github.com/${repoFullName}`,
-    'project-name': productName,
-    'repository-name': productName,
+    'project-name': uniqueName,
+    'repository-name': uniqueName,
   });
   return `https://vercel.com/new/clone?${params.toString()}`;
 }
