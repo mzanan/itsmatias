@@ -8,13 +8,9 @@ import {
 } from '@/lib/sales/polarApi';
 import { getProductMap, type SalesEnv } from '@/lib/sales/productMap';
 
-type RepoAccessState = 'invited' | 'already_collaborator';
-
 type OrderStatus = {
   state: 'pending' | 'paid' | 'ready' | 'failed';
   deployUrl?: string;
-  repoUrl?: string;
-  repoAccessState?: RepoAccessState;
   productName?: string;
 };
 
@@ -40,7 +36,6 @@ export async function GET(
 ): Promise<NextResponse> {
   const { env, token, apiBase } = pickEnv(req);
   const deploysOrg = process.env.GITHUB_DEPLOYS_ORG ?? 'mzanan-deploys';
-  const githubOwner = process.env.GITHUB_OWNER ?? 'mzanan';
   const deploysPat = process.env.GITHUB_DEPLOYS_PAT;
   if (!token) {
     console.error('[order] missing polar token for env=', env);
@@ -78,8 +73,7 @@ export async function GET(
 
   const productMap = getProductMap(env);
   const product = order.product_id ? productMap[order.product_id] : undefined;
-  const githubUsername = order.custom_field_data?.github_username;
-  if (!product || typeof githubUsername !== 'string') {
+  if (!product) {
     return NextResponse.json({ state: 'paid' } satisfies OrderStatus);
   }
 
@@ -94,18 +88,11 @@ export async function GET(
     return NextResponse.json({ state: 'paid' } satisfies OrderStatus);
   }
 
-  const isOwner = githubUsername.toLowerCase() === githubOwner.toLowerCase();
   const deployUrl = buildVercelDeployUrl(repoFullName, product.repo, product.vercelDeploy);
-  const repoUrl = isOwner
-    ? `https://github.com/${githubOwner}/${product.repo}`
-    : `https://github.com/${githubOwner}/${product.repo}/invitations`;
-  const repoAccessState: RepoAccessState = isOwner ? 'already_collaborator' : 'invited';
 
   return NextResponse.json({
     state: 'ready',
     deployUrl,
-    repoUrl,
-    repoAccessState,
     productName: product.displayName,
   } satisfies OrderStatus);
 }

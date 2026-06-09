@@ -5,8 +5,6 @@ type SendOptions = {
   to: string;
   productName: string;
   deployUrl: string;
-  repoUrl: string;
-  repoAccessState: 'invited' | 'already_collaborator';
   expiresInHours: number;
 };
 
@@ -22,8 +20,6 @@ export async function sendDeployInstructions(
     react: DeployInstructions({
       productName: options.productName,
       deployUrl: options.deployUrl,
-      repoUrl: options.repoUrl,
-      repoAccessState: options.repoAccessState,
       expiresInHours: options.expiresInHours,
     }),
   });

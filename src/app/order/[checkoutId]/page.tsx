@@ -6,16 +6,11 @@ import { useSearchParams } from "next/navigation"
 import { motion } from "motion/react"
 import { Pill } from "@/components/ui/Pill"
 import { FaArrowRight } from "react-icons/fa"
-import { FaGithub } from "react-icons/fa6"
 import { CONTACT_EMAIL } from "@/lib/urls"
-
-type RepoAccessState = "invited" | "already_collaborator"
 
 type OrderStatus = {
   state: "pending" | "paid" | "ready" | "failed"
   deployUrl?: string
-  repoUrl?: string
-  repoAccessState?: RepoAccessState
   productName?: string
 }
 
@@ -72,8 +67,6 @@ export default function OrderPage({ params }: PageProps) {
           <Ready
             productName={status.productName}
             deployUrl={status.deployUrl!}
-            repoUrl={status.repoUrl!}
-            repoAccessState={status.repoAccessState!}
           />
         ) : timedOut ? (
           <CheckEmail />
@@ -101,24 +94,15 @@ function Preparing({ state }: { state: "pending" | "paid" }) {
 function Ready({
   productName,
   deployUrl,
-  repoUrl,
-  repoAccessState,
 }: {
   productName?: string
   deployUrl: string
-  repoUrl: string
-  repoAccessState: RepoAccessState
 }) {
   const heading = productName ? `Your ${productName} is ready` : "Your site is ready"
-  const alreadyCollab = repoAccessState === "already_collaborator"
-  const repoLabel = alreadyCollab ? "Open repository" : "Accept GitHub invite"
-  const repoHelper = alreadyCollab
-    ? "You already have access to the private source. Use it to pull future updates."
-    : "Permanent read access to the private source. Use it to pull future updates."
   return (
     <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
       <h1 className="text-3xl md:text-4xl font-light text-white">{heading}.</h1>
-      <p className="mt-3 text-slate-400">Two steps and you are live.</p>
+      <p className="mt-3 text-slate-400">One click and you are live.</p>
 
       <div className="mt-12 flex flex-col items-center gap-4">
         <Pill as="a" href={deployUrl} target="_blank" rel="noopener noreferrer" variant="solid" size="lg" Icon={FaArrowRight}>
@@ -127,19 +111,10 @@ function Ready({
         <p className="text-xs text-slate-500 max-w-sm">
           Vercel will create a copy of the source in your own GitHub account and deploy it. The temporary public source link expires in 72h.
         </p>
-
-        <div className="mt-6 flex flex-col items-center gap-3">
-          <Pill as="a" href={repoUrl} target="_blank" rel="noopener noreferrer" variant="outline" size="md" Icon={FaGithub}>
-            {repoLabel}
-          </Pill>
-          <p className="text-xs text-slate-500 max-w-sm">
-            {repoHelper}
-          </p>
-        </div>
       </div>
 
       <p className="mt-16 text-xs text-slate-600">
-        We also emailed you these links. Safe to close this tab.
+        We also emailed you this link. Safe to close this tab.
       </p>
     </motion.div>
   )
