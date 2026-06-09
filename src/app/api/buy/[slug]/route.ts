@@ -66,6 +66,7 @@ export async function GET(
   }
 
   const successUrl = buildSuccessUrl(req, env);
+  const embedOrigin = originFrom(req);
 
   let res: Response;
   try {
@@ -76,7 +77,11 @@ export async function GET(
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ products: [productId], success_url: successUrl }),
+      body: JSON.stringify({
+        products: [productId],
+        success_url: successUrl,
+        embed_origin: embedOrigin,
+      }),
     });
   } catch (err) {
     console.error('[buy] checkout fetch failed', err);
@@ -89,11 +94,15 @@ export async function GET(
     return new Response('Checkout create failed', { status: 502 });
   }
 
-  const checkout = (await res.json()) as { url?: string };
-  if (!checkout.url) {
-    console.error('[buy] checkout response missing url', checkout);
-    return new Response('Checkout missing URL', { status: 502 });
+  const checkout = (await res.json()) as { id?: string; url?: string };
+  if (!checkout.url || !checkout.id) {
+    console.error('[buy] checkout response missing fields', checkout);
+    return new Response('Checkout missing fields', { status: 502 });
   }
 
-  return NextResponse.redirect(checkout.url, { status: 307 });
+  return NextResponse.json({
+    checkoutUrl: checkout.url,
+    checkoutId: checkout.id,
+    env,
+  });
 }

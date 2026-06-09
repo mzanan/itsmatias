@@ -9,6 +9,7 @@ import { Pill } from "@/components/ui/Pill"
 import { FaArrowUpRightFromSquare } from "react-icons/fa6"
 import { FaArrowRight } from "react-icons/fa"
 import { posterFor } from "@/lib/video"
+import { BuyFlow } from "@/components/BuyFlow/BuyFlow"
 
 type ProjectShowcaseProps = {
   project: Project
@@ -112,9 +113,13 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
             Visit live site
           </Pill>
           {project.model === "sale" ? (
-            <Pill as="a" href={project.buyUrl} target="_blank" rel="noopener noreferrer" variant="solid" size="md" Icon={FaArrowRight} className="w-full max-w-xs justify-center sm:w-auto">
-              Get the full website
-            </Pill>
+            <BuyFlow slug={project.slug}>
+              {({ onClick, loading }) => (
+                <Pill as="button" type="button" onClick={onClick} disabled={loading} variant="solid" size="md" Icon={FaArrowRight} className="w-full max-w-xs justify-center sm:w-auto">
+                  {loading ? "Loading…" : "Get the full website"}
+                </Pill>
+              )}
+            </BuyFlow>
           ) : (
             <Pill as="a" href={project.subscribeUrl} target="_blank" rel="noopener noreferrer" variant="solid" size="md" Icon={FaArrowRight} className="w-full max-w-xs justify-center sm:w-auto">
               Subscribe

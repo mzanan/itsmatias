@@ -13,7 +13,7 @@ type BaseProject = {
 
 type ForSaleProject = BaseProject & {
   model: "sale";
-  buyUrl: string;
+  slug: "ecommerce" | "landing";
 };
 
 type SubscriptionProject = BaseProject & {
@@ -36,7 +36,7 @@ export const useProjectsShowcase = () => {
           "A full ecommerce with admin panel, real-time stock, orders, and email notifications. One-click deploy to your Vercel. $990 one-time.",
         descriptionExtra: "Built with Next.js, Vercel Postgres, Clerk, and Stripe.",
         model: "sale",
-        buyUrl: "/api/buy/ecommerce",
+        slug: "ecommerce",
       },
       {
         id: "2",
@@ -48,7 +48,7 @@ export const useProjectsShowcase = () => {
           "A custom landing page with pixel-perfect design, animations, and email capture. One-click deploy to your Vercel. $49.99 one-time.",
         descriptionExtra: "Built with Next.js and Resend.",
         model: "sale",
-        buyUrl: "/api/buy/landing",
+        slug: "landing",
       },
       {
         id: "3",
