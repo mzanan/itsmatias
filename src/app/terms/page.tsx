@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { URLS } from "@/lib/urls";
+import { URLS, CONTACT_EMAIL } from "@/lib/urls";
 
 export const metadata: Metadata = {
   title: "Terms & License",
@@ -120,10 +120,10 @@ export default function TermsPage() {
           your payment clears, using the GitHub username you provide at
           checkout. If you don&apos;t receive an invite within 1 hour, email{" "}
           <a
-            href="mailto:matiaszanan@gmail.com"
+            href={`mailto:${CONTACT_EMAIL}`}
             className="underline hover:text-white"
           >
-            matiaszanan@gmail.com
+            {CONTACT_EMAIL}
           </a>{" "}
           with your receipt and GitHub username.
         </p>
@@ -180,10 +180,10 @@ git merge upstream/main   # resolve conflicts as needed`}</code>
         <p>
           Questions about this license:{" "}
           <a
-            href="mailto:matiaszanan@gmail.com"
+            href={`mailto:${CONTACT_EMAIL}`}
             className="underline hover:text-white"
           >
-            matiaszanan@gmail.com
+            {CONTACT_EMAIL}
           </a>
           .
         </p>

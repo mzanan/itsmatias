@@ -10,6 +10,7 @@ import {
   Section,
   Text,
 } from '@react-email/components';
+import { CONTACT_EMAIL } from '@/lib/urls';
 
 type Props = {
   productName: string;
@@ -63,7 +64,7 @@ export default function DeployInstructions({
 
           <Text style={footer}>
             Questions? Reply to this email or write to{' '}
-            <Link href="mailto:matiaszanan@gmail.com">matiaszanan@gmail.com</Link>.
+            <Link href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</Link>.
           </Text>
         </Container>
       </Body>

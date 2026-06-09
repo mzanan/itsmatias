@@ -7,6 +7,7 @@ import { motion } from "motion/react"
 import { Pill } from "@/components/ui/Pill"
 import { FaArrowRight } from "react-icons/fa"
 import { FaGithub } from "react-icons/fa6"
+import { CONTACT_EMAIL } from "@/lib/urls"
 
 type RepoAccessState = "invited" | "already_collaborator"
 
@@ -153,8 +154,8 @@ function CheckEmail() {
       </p>
       <p className="mt-6 text-sm text-slate-500">
         Nothing in your inbox after a few minutes? Email{" "}
-        <a className="underline hover:text-white" href="mailto:matiaszanan@gmail.com">
-          matiaszanan@gmail.com
+        <a className="underline hover:text-white" href={`mailto:${CONTACT_EMAIL}`}>
+          {CONTACT_EMAIL}
         </a>
         .
       </p>
@@ -168,8 +169,8 @@ function Failed() {
       <h1 className="text-3xl font-light text-white">Something went wrong.</h1>
       <p className="mt-3 text-slate-400">
         Reach me at{" "}
-        <a className="underline hover:text-white" href="mailto:matiaszanan@gmail.com">
-          matiaszanan@gmail.com
+        <a className="underline hover:text-white" href={`mailto:${CONTACT_EMAIL}`}>
+          {CONTACT_EMAIL}
         </a>{" "}
         with your receipt and I will sort it out.
       </p>

@@ -4,3 +4,5 @@ export const URLS = {
   landing: "https://landing.itsmatias.com",
   links: "https://links.itsmatias.com",
 } as const;
+
+export const CONTACT_EMAIL = "hello@itsmatias.com";
