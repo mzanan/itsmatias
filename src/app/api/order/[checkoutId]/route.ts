@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { buildVercelDeployUrl, repoExists } from '@/lib/sales/ephemeralFork';
+import { buildEphemeralRepoName, buildVercelDeployUrl, repoExists } from '@/lib/sales/ephemeralRepo';
 import {
   findOrderByCheckout,
   getCheckout,
@@ -83,19 +83,19 @@ export async function GET(
     return NextResponse.json({ state: 'paid' } satisfies OrderStatus);
   }
 
-  const forkFullName = `${deploysOrg}/${order.id.slice(0, 8)}-${product.repo}`;
-  let forkReady = false;
+  const repoFullName = `${deploysOrg}/${buildEphemeralRepoName(order.id, product.repo)}`;
+  let repoReady = false;
   try {
-    forkReady = await repoExists(forkFullName, deploysPat);
+    repoReady = await repoExists(repoFullName, deploysPat);
   } catch {
     return NextResponse.json({ state: 'paid' } satisfies OrderStatus);
   }
-  if (!forkReady) {
+  if (!repoReady) {
     return NextResponse.json({ state: 'paid' } satisfies OrderStatus);
   }
 
   const isOwner = githubUsername.toLowerCase() === githubOwner.toLowerCase();
-  const deployUrl = buildVercelDeployUrl(forkFullName, product.repo);
+  const deployUrl = buildVercelDeployUrl(repoFullName, product.repo);
   const repoUrl = isOwner
     ? `https://github.com/${githubOwner}/${product.repo}`
     : `https://github.com/${githubOwner}/${product.repo}/invitations`;

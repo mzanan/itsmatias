@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import {
   deleteRepo,
-  listExpiredForks,
-} from '@/lib/sales/ephemeralFork';
+  listExpiredRepos,
+} from '@/lib/sales/ephemeralRepo';
 
 const DEFAULT_MAX_AGE_HOURS = 72;
 
@@ -21,7 +21,7 @@ export async function GET(req: Request): Promise<NextResponse> {
 
   const maxAgeHours = Number(process.env.MAX_FORK_AGE_HOURS) || DEFAULT_MAX_AGE_HOURS;
 
-  const expired = await listExpiredForks(deploysOrg, maxAgeHours, pat);
+  const expired = await listExpiredRepos(deploysOrg, maxAgeHours, pat);
   const deleted: string[] = [];
   const failed: { repo: string; error: string }[] = [];
   for (const repo of expired) {

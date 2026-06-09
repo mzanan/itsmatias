@@ -1,12 +1,12 @@
 const GITHUB_API = 'https://api.github.com';
 
-type ForkOptions = {
-  sourceOwner: string;
-  sourceRepo: string;
+type EphemeralRepoOptions = {
+  templateOwner: string;
+  templateRepo: string;
   targetName: string;
 };
 
-type ForkResult = {
+type EphemeralRepoResult = {
   fullName: string;
   htmlUrl: string;
 };
@@ -36,43 +36,32 @@ async function waitForRepoReady(
     if (await repoExists(fullName, pat)) return;
     await new Promise((resolve) => setTimeout(resolve, intervalMs));
   }
-  throw new Error(`Fork ${fullName} did not become available within ${attempts * intervalMs}ms`);
+  throw new Error(`Repo ${fullName} did not become available within ${attempts * intervalMs}ms`);
 }
 
-async function setRepoPublic(fullName: string, pat: string): Promise<void> {
-  const res = await fetch(`${GITHUB_API}/repos/${fullName}`, {
-    method: 'PATCH',
-    headers: { ...authHeaders(pat), 'Content-Type': 'application/json' },
-    body: JSON.stringify({ private: false }),
-  });
-  if (!res.ok) {
-    throw new Error(`Set repo public failed (${res.status}): ${await res.text()}`);
-  }
-}
-
-export async function createPublicFork(
-  options: ForkOptions,
+export async function createEphemeralRepo(
+  options: EphemeralRepoOptions,
   { deploysOrg, pat }: { deploysOrg: string; pat: string },
-): Promise<ForkResult> {
-  const { sourceOwner, sourceRepo, targetName } = options;
+): Promise<EphemeralRepoResult> {
+  const { templateOwner, templateRepo, targetName } = options;
   const res = await fetch(
-    `${GITHUB_API}/repos/${sourceOwner}/${sourceRepo}/forks`,
+    `${GITHUB_API}/repos/${templateOwner}/${templateRepo}/generate`,
     {
       method: 'POST',
       headers: { ...authHeaders(pat), 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        organization: deploysOrg,
+        owner: deploysOrg,
         name: targetName,
-        default_branch_only: true,
+        private: false,
+        include_all_branches: false,
       }),
     },
   );
-  if (!res.ok && res.status !== 202) {
-    throw new Error(`Fork failed (${res.status}): ${await res.text()}`);
+  if (!res.ok) {
+    throw new Error(`Repo generate failed (${res.status}): ${await res.text()}`);
   }
   const body = (await res.json()) as { full_name: string; html_url: string };
   await waitForRepoReady(body.full_name, pat);
-  await setRepoPublic(body.full_name, pat);
   return { fullName: body.full_name, htmlUrl: body.html_url };
 }
 
@@ -91,7 +80,7 @@ export async function deleteRepo(
 
 type RepoListItem = { full_name: string; created_at: string };
 
-export async function listExpiredForks(
+export async function listExpiredRepos(
   deploysOrg: string,
   maxAgeHours: number,
   pat: string,
@@ -120,12 +109,16 @@ export async function listExpiredForks(
   return expired;
 }
 
+export function buildEphemeralRepoName(orderId: string, productRepo: string): string {
+  return `${orderId.slice(0, 8)}-${productRepo}`;
+}
+
 export function buildVercelDeployUrl(
-  forkFullName: string,
+  repoFullName: string,
   productName: string,
 ): string {
   const params = new URLSearchParams({
-    'repository-url': `https://github.com/${forkFullName}`,
+    'repository-url': `https://github.com/${repoFullName}`,
     'project-name': productName,
     'repository-name': productName,
   });

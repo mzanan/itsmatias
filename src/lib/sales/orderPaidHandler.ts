@@ -1,5 +1,10 @@
 import type { Order } from '@polar-sh/sdk/models/components/order';
-import { buildVercelDeployUrl, createPublicFork } from './ephemeralFork';
+import {
+  buildEphemeralRepoName,
+  buildVercelDeployUrl,
+  createEphemeralRepo,
+  repoExists,
+} from './ephemeralRepo';
 import { sendDeployInstructions } from './deployEmail';
 import type { ProductConfig } from './productMap';
 
@@ -59,10 +64,6 @@ function pickGithubUsername(order: Order): string | null {
   return trimmed;
 }
 
-function buildForkName(order: Order, product: ProductConfig): string {
-  return `${order.id.slice(0, 8)}-${product.repo}`;
-}
-
 export function buildOrderPaidHandler(config: OrderPaidConfig) {
   return async function handleOrderPaid(payload: { data: Order }): Promise<void> {
     const order = payload.data;
@@ -92,16 +93,21 @@ export function buildOrderPaidHandler(config: OrderPaidConfig) {
       return;
     }
 
-    const fork = await createPublicFork(
-      {
-        sourceOwner: config.githubOwner,
-        sourceRepo: product.repo,
-        targetName: buildForkName(order, product),
-      },
-      { deploysOrg: config.deploysOrg, pat: config.deploysPat },
-    );
+    const targetName = buildEphemeralRepoName(order.id, product.repo);
+    const targetFullName = `${config.deploysOrg}/${targetName}`;
+    const alreadyProvisioned = await repoExists(targetFullName, config.deploysPat);
+    if (!alreadyProvisioned) {
+      await createEphemeralRepo(
+        {
+          templateOwner: config.githubOwner,
+          templateRepo: product.repo,
+          targetName,
+        },
+        { deploysOrg: config.deploysOrg, pat: config.deploysPat },
+      );
+    }
 
-    const deployUrl = buildVercelDeployUrl(fork.fullName, product.repo);
+    const deployUrl = buildVercelDeployUrl(targetFullName, product.repo);
     const repoUrl = alreadyCollaborator
       ? `https://github.com/${config.githubOwner}/${product.repo}`
       : (inviteUrl ?? `https://github.com/${config.githubOwner}/${product.repo}/invitations`);
@@ -121,6 +127,8 @@ export function buildOrderPaidHandler(config: OrderPaidConfig) {
       { apiKey: config.resendApiKey, from: config.resendFromEmail },
     );
 
-    console.log(`[polar] order ${order.id}: fork ${fork.fullName}, email to ${email}`);
+    console.log(
+      `[polar] order ${order.id}: repo ${targetFullName}${alreadyProvisioned ? ' (existing)' : ''}, email to ${email}`,
+    );
   };
 }
