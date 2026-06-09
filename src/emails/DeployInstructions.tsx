@@ -37,7 +37,7 @@ export default function DeployInstructions({
               Deploy with Vercel
             </Button>
             <Text style={small}>
-              This link clones a temporary public source into your own GitHub account and deploys it to your Vercel. The source link expires in {expiresInHours}h — click it before then. After the deploy completes the site is fully yours.
+              This link clones a temporary public source into your own GitHub account and deploys it to your Vercel. The source link expires in {expiresInHours}h: click it before then. After the deploy completes the site is fully yours.
             </Text>
           </Section>
 

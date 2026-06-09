@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 const SITE_URL = URLS.site;
 const SITE_NAME = "itsmatias";
-const SITE_TITLE = "Matias Zanan — Web Developer";
+const SITE_TITLE = "Matias Zanan: Web Developer";
 const SITE_DESCRIPTION =
   "I build production websites end-to-end: design, code, deploy. Remote, traveling, made with care. Hi, I'm Matias.";
 const PERSON_NAME = "Matias Zanan";

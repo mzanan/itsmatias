@@ -36,7 +36,7 @@ const ECOMMERCE_DEPLOY: VercelDeployConfig = {
   ],
   env: ['NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY', 'CLERK_SECRET_KEY'],
   envDescription:
-    'Clerk handles admin login. Create a free Clerk app and paste the publishable + secret keys here. Stripe, Resend and store branding are configured later from your Vercel project settings — see the repo README.',
+    'Clerk handles admin login. Create a free Clerk app and paste the publishable + secret keys here. Stripe, Resend and store branding are configured later from your Vercel project settings: see the repo README.',
   envLink: `https://github.com/${GITHUB_OWNER}/full-ecommerce#readme`,
 };
 

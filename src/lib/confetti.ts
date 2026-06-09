@@ -5,7 +5,7 @@ const PLATINUM_COLORS = ["#ffffff", "#f1f5f9", "#cbd5e1", "#94a3b8"];
 export const fireConfetti = () => {
   if (typeof window === "undefined") return;
 
-  // Central burst — big, satisfying pop
+  // Central burst: big, satisfying pop
   confetti({
     particleCount: 90,
     spread: 110,

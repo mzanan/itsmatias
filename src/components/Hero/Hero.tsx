@@ -132,7 +132,7 @@ export const Hero = () => {
 
   return (
     <section ref={sectionRef} id="home" className="relative h-dvh flex flex-col justify-center items-center text-center snap-start overflow-hidden w-full max-w-full">
-      <h1 className="sr-only">Matias Zanan — Web Developer</h1>
+      <h1 className="sr-only">Matias Zanan: Web Developer</h1>
       <div ref={vantaRef} className="absolute inset-0 z-0 w-full h-full" />
 
       <div className="relative z-10 w-full h-full flex flex-col items-center justify-center gap-8">

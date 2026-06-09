@@ -30,7 +30,7 @@
   --chart-4: oklch(0.55 0.19 270);
   --chart-5: oklch(0.62 0.21 280);
   --radius: 0.625rem;
-  /* Brand tone — single platinum gradient used across text, borders, glows */
+  /* Brand tone: single platinum gradient used across text, borders, glows */
   --brand-from: oklch(0.97 0.005 264);
   --brand-via:  oklch(1 0 0);
   --brand-to:   oklch(0.88 0.01 264);
@@ -141,7 +141,7 @@
     position: relative;
   }
 
-  /* Ambient background — aurora-like spots fixed to viewport. Visible sin overpower. */
+  /* Ambient background: aurora-like spots fixed to viewport. Visible sin overpower. */
   body::before {
     content: "";
     position: fixed;
@@ -246,7 +246,7 @@
     }
   }
 
-  /* QR share button — sutil halo platino que palpita para llamar atención sin ser molesto */
+  /* QR share button: sutil halo platino que palpita para llamar atención sin ser molesto */
   .qr-pulse {
     animation: qr-pulse 3.5s ease-in-out infinite;
   }

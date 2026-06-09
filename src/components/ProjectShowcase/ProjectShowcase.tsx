@@ -9,7 +9,6 @@ import { Pill } from "@/components/ui/Pill"
 import { FaArrowUpRightFromSquare } from "react-icons/fa6"
 import { FaArrowRight } from "react-icons/fa"
 import { posterFor } from "@/lib/video"
-import { BuyFlow } from "@/components/BuyFlow/BuyFlow"
 
 type ProjectShowcaseProps = {
   project: Project
@@ -76,7 +75,7 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
                 className="hidden md:block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
 
-              {/* Desktop hover dim — subtle feedback that the card is clickable */}
+              {/* Desktop hover dim: subtle feedback that the card is clickable */}
               <div className="hidden md:block absolute inset-0 z-10 bg-black/0 group-hover:bg-black/15 transition-colors duration-300 pointer-events-none" />
 
             </div>
@@ -89,7 +88,7 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
           initial="hiddenEnter"
           animate={animationState}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.05 }}
-          className="flex flex-col items-center gap-1 px-4 max-w-2xl text-center"
+          className="flex flex-col items-center gap-1 w-full max-w-5xl px-4 md:px-6 text-center"
         >
           <p className="text-sm md:text-base text-white/80">
             {project.description}
@@ -113,13 +112,9 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
             Visit live site
           </Pill>
           {project.model === "sale" ? (
-            <BuyFlow slug={project.slug}>
-              {({ onClick, loading }) => (
-                <Pill as="button" type="button" onClick={onClick} disabled={loading} variant="solid" size="md" Icon={FaArrowRight} className="w-full max-w-xs justify-center sm:w-auto">
-                  {loading ? "Loading…" : "Get the full website"}
-                </Pill>
-              )}
-            </BuyFlow>
+            <Pill as="a" href={project.buyUrl} target="_blank" rel="noopener noreferrer" variant="solid" size="md" Icon={FaArrowRight} className="w-full max-w-xs justify-center sm:w-auto">
+              Get the full website
+            </Pill>
           ) : (
             <Pill as="a" href={project.subscribeUrl} target="_blank" rel="noopener noreferrer" variant="solid" size="md" Icon={FaArrowRight} className="w-full max-w-xs justify-center sm:w-auto">
               Subscribe

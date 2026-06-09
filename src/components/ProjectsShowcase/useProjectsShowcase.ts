@@ -13,7 +13,7 @@ type BaseProject = {
 
 type ForSaleProject = BaseProject & {
   model: "sale";
-  slug: "ecommerce" | "landing";
+  buyUrl: string;
 };
 
 type SubscriptionProject = BaseProject & {
@@ -34,9 +34,10 @@ export const useProjectsShowcase = () => {
         videoMobile: "/videos/ecommerce-mobile.mp4",
         description:
           "A full ecommerce with admin panel, real-time stock, orders, and email notifications. One-click deploy to your Vercel. $990 one-time.",
-        descriptionExtra: "Built with Next.js, Vercel Postgres, Clerk, and Stripe.",
+        descriptionExtra:
+          "Built with Next.js. Database, storage and Vercel Blob auto-provisioned. Connect your Clerk, Stripe and Resend accounts when ready.",
         model: "sale",
-        slug: "ecommerce",
+        buyUrl: "/api/buy/ecommerce",
       },
       {
         id: "2",
@@ -46,9 +47,10 @@ export const useProjectsShowcase = () => {
         videoMobile: "/videos/landing-mobile.mp4",
         description:
           "A custom landing page with pixel-perfect design, animations, and email capture. One-click deploy to your Vercel. $49.99 one-time.",
-        descriptionExtra: "Built with Next.js and Resend.",
+        descriptionExtra:
+          "Built with Next.js. Connect your Resend account for email capture.",
         model: "sale",
-        slug: "landing",
+        buyUrl: "/api/buy/landing",
       },
       {
         id: "3",

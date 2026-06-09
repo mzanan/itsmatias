@@ -5,7 +5,7 @@ import { URLS, CONTACT_EMAIL } from "@/lib/urls";
 export const metadata: Metadata = {
   title: "Terms & License",
   description:
-    "License terms for products purchased on itsmatias.com — full website templates, landing pages, and add-ons.",
+    "License terms for products purchased on itsmatias.com: full website templates, landing pages, and add-ons.",
   alternates: { canonical: `${URLS.site}/terms` },
   robots: { index: true, follow: true },
 };
@@ -85,20 +85,20 @@ export default function TermsPage() {
         </p>
         <ul className="list-disc pl-6 space-y-1">
           <li>
-            <a
-              href="https://buy.polar.sh/polar_cl_mK3kO9gASJE62I0Udu2QOgaBFpvHK2wERyVOP43h2YW"
+            <Link
+              href="/api/buy/remove-attribution-ecommerce"
               className="underline hover:text-white"
             >
-              Remove attribution — Ecommerce ($99)
-            </a>
+              Remove attribution: Ecommerce ($99)
+            </Link>
           </li>
           <li>
-            <a
-              href="https://buy.polar.sh/polar_cl_9XlnRlzyF6WGKbTYu8dpBpu5tVPa8ljLt2FnJ3H82WF"
+            <Link
+              href="/api/buy/remove-attribution-landing"
               className="underline hover:text-white"
             >
-              Remove attribution — Landing ($19)
-            </a>
+              Remove attribution: Landing ($19)
+            </Link>
           </li>
         </ul>
         <p>
