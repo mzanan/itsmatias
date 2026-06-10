@@ -29,7 +29,9 @@ export async function GET(req: Request): Promise<NextResponse> {
       await deleteRepo(repo, pat);
       deleted.push(repo);
     } catch (err) {
-      failed.push({ repo, error: err instanceof Error ? err.message : String(err) });
+      const message = err instanceof Error ? err.message : String(err);
+      console.error(`[cleanup-deploys] delete failed for ${repo}: ${message}`);
+      failed.push({ repo, error: message });
     }
   }
 
