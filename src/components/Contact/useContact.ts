@@ -24,7 +24,9 @@ type Social = {
 
 export const useContact = () => {
   const [formData, setFormData] = useState<FormData>({ name: "", email: "", message: "" });
-  const [state, handleSubmit] = useForm("mblvrwdy");
+  const [state, handleSubmit] = useForm(
+    process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID ?? "mblvrwdy"
+  );
 
   useEffect(() => {
     if (state.succeeded) {
