@@ -35,7 +35,7 @@ export const useProjectsShowcase = () => {
         description:
           "A full ecommerce with admin panel, real-time stock, orders, and email notifications. One-click deploy to your Vercel. $990 one-time.",
         descriptionExtra:
-          "Built with Next.js. Database, storage and Vercel Blob auto-provisioned. Connect your Clerk, Stripe and Resend accounts when ready.",
+          "Built with Next.js. Database, storage and admin login auto-provisioned, no external auth service. Connect Stripe and Resend when ready.",
         model: "sale",
         buyUrl: "/api/buy/ecommerce",
       },
