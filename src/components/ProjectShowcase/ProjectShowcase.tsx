@@ -51,6 +51,7 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`Visit ${project.title} live site`}
             className={cardClasses}
             suppressHydrationWarning
           >
