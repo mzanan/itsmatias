@@ -16,8 +16,6 @@ const SLUGS: ReadonlySet<string> = new Set<Slug>([
 ]);
 
 function pickEnv(req: Request): Env {
-  const url = new URL(req.url);
-  if (url.searchParams.get('env') === 'sandbox') return 'sandbox';
   const host = (req.headers.get('host') ?? '').toLowerCase();
   const isLocalhost =
     host.startsWith('localhost') || host.startsWith('127.0.0.1') || host.endsWith('.local');
