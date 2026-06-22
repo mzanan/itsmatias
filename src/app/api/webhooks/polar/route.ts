@@ -4,6 +4,9 @@ import { Webhooks } from '@polar-sh/nextjs';
 import { buildOrderPaidHandler } from '@/lib/sales/orderPaidHandler';
 import { getProductMap } from '@/lib/sales/productMap';
 
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 function missing(name: string): never {
   throw new Error(`${name} env var is required for /api/webhooks/polar`);
 }

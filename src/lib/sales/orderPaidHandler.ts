@@ -62,8 +62,10 @@ export function buildOrderPaidHandler(config: OrderPaidConfig) {
       { apiKey: config.resendApiKey, from: config.resendFromEmail },
     );
 
-    console.log(
-      `[polar] order ${order.id}: repo ${targetFullName}${alreadyProvisioned ? ' (existing)' : ''}, email to ${email}`,
-    );
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(
+        `[polar] order ${order.id}: repo ${targetFullName}${alreadyProvisioned ? ' (existing)' : ''}, email to ${email}`,
+      );
+    }
   };
 }

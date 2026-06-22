@@ -4,6 +4,9 @@ import {
   listExpiredRepos,
 } from '@/lib/sales/ephemeralRepo';
 
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 const DEFAULT_MAX_AGE_HOURS = 72;
 
 export async function GET(req: Request): Promise<NextResponse> {

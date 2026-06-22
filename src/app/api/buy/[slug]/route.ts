@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { POLAR_PROD_API_BASE, POLAR_SANDBOX_API_BASE } from '@/lib/sales/polarApi';
 
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 type Slug =
   | 'ecommerce'
   | 'landing'

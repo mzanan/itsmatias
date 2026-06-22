@@ -8,6 +8,9 @@ import {
 } from '@/lib/sales/polarApi';
 import { getProductMap, type SalesEnv } from '@/lib/sales/productMap';
 
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 type OrderStatus = {
   state: 'pending' | 'paid' | 'ready' | 'failed';
   deployUrl?: string;
