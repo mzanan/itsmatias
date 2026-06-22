@@ -47,7 +47,7 @@ export default async function Image() {
 
         <div
           style={{
-            marginTop: "auto",
+            margin: "auto 0",
             display: "flex",
             flexDirection: "column",
           }}
@@ -78,16 +78,6 @@ export default async function Image() {
             }}
           >
             I build smooth, elegant, pixel-perfect websites.
-          </div>
-          <div
-            style={{
-              fontSize: 26,
-              color: "#94a3b8",
-              marginTop: 18,
-              letterSpacing: "0.01em",
-            }}
-          >
-            Designed, coded, and shipped by me.
           </div>
         </div>
       </div>
