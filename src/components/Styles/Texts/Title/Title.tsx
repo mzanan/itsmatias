@@ -49,7 +49,7 @@ export const Title = ({
 
 return (
     <div className={className}>
-        <HeadingTag className={`${variantSize[variant]} font-bold tracking-tight text-balance ${showUnderline ? "mb-4" : ""} ${centered ? "text-center" : ""}`}>
+        <HeadingTag className={`${variantSize[variant]} font-display font-semibold tracking-tight text-balance ${showUnderline ? "mb-4" : ""} ${centered ? "text-center" : ""}`}>
             {content}
         </HeadingTag>
         {showUnderline && <div className={underlineClassName} />}
