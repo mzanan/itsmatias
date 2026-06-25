@@ -91,7 +91,7 @@ export const BeforeAfter = ({
         tone="solid"
         size="lg"
         className={cn(
-          "absolute left-3 top-3 z-20 pointer-events-none uppercase tracking-wider font-semibold shadow-lg transition-opacity duration-200",
+          "absolute left-3 top-14 z-20 pointer-events-none uppercase tracking-wider font-semibold shadow-lg transition-opacity duration-200",
           pos < 8 && "opacity-0",
         )}
       >
@@ -101,7 +101,7 @@ export const BeforeAfter = ({
         tone="accent"
         size="lg"
         className={cn(
-          "absolute right-3 top-3 z-20 pointer-events-none uppercase tracking-wider font-semibold shadow-lg transition-opacity duration-200",
+          "absolute right-3 top-14 z-20 pointer-events-none uppercase tracking-wider font-semibold shadow-lg transition-opacity duration-200",
           pos > 92 && "opacity-0",
         )}
       >
