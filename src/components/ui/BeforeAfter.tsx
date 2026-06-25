@@ -90,14 +90,20 @@ export const BeforeAfter = ({
       <GlassBadge
         tone="solid"
         size="lg"
-        className="absolute left-3 top-3 z-20 pointer-events-none uppercase tracking-wider font-semibold shadow-lg"
+        className={cn(
+          "absolute left-3 top-3 z-20 pointer-events-none uppercase tracking-wider font-semibold shadow-lg transition-opacity duration-200",
+          pos < 8 && "opacity-0",
+        )}
       >
         {beforeLabel}
       </GlassBadge>
       <GlassBadge
         tone="accent"
         size="lg"
-        className="absolute right-3 top-3 z-20 pointer-events-none uppercase tracking-wider font-semibold shadow-lg"
+        className={cn(
+          "absolute right-3 top-3 z-20 pointer-events-none uppercase tracking-wider font-semibold shadow-lg transition-opacity duration-200",
+          pos > 92 && "opacity-0",
+        )}
       >
         {afterLabel}
       </GlassBadge>
