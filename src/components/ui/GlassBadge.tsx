@@ -3,8 +3,8 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-type Tone = "dark" | "light";
-type Size = "sm" | "md";
+type Tone = "dark" | "light" | "solid" | "accent";
+type Size = "sm" | "md" | "lg";
 
 type Props = {
   children: React.ReactNode;
@@ -18,11 +18,14 @@ type Props = {
 const toneClasses: Record<Tone, string> = {
   dark: "bg-black/55 backdrop-blur-md border border-white/15 text-white/90",
   light: "bg-white/10 backdrop-blur-md border border-white/20 text-white",
+  solid: "bg-black/80 backdrop-blur-md border border-white/10 text-white",
+  accent: "bg-secondary backdrop-blur-md border border-white/15 text-secondary-foreground",
 };
 
 const sizeClasses: Record<Size, string> = {
   sm: "px-2 py-0.5 text-[10px] gap-1",
   md: "px-2.5 py-1 text-xs gap-1.5",
+  lg: "px-3 py-1 text-sm gap-1.5",
 };
 
 export const GlassBadge = ({
