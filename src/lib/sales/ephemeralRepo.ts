@@ -78,7 +78,14 @@ export async function deleteRepo(
   }
 }
 
-type RepoListItem = { full_name: string; created_at: string };
+const EPHEMERAL_REPO_NAME = /^[0-9a-f]{8}-/;
+
+type RepoListItem = {
+  name: string;
+  full_name: string;
+  created_at: string;
+  is_template: boolean;
+};
 
 export async function listExpiredRepos(
   deploysOrg: string,
@@ -99,6 +106,8 @@ export async function listExpiredRepos(
     const batch = (await res.json()) as RepoListItem[];
     if (batch.length === 0) break;
     for (const repo of batch) {
+      if (repo.is_template) continue;
+      if (!EPHEMERAL_REPO_NAME.test(repo.name)) continue;
       if (new Date(repo.created_at).getTime() < cutoff) {
         expired.push(repo.full_name);
       }
