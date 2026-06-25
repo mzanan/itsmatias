@@ -8,8 +8,8 @@ type Frame = { width: number; height: number; scale: number };
 
 export const useBeforeAfter = (initial: number, designWidth?: number) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
-  const draggingRef = React.useRef(false);
   const [pos, setPos] = React.useState(clamp(initial));
+  const [dragging, setDragging] = React.useState(false);
   const [live, setLive] = React.useState(false);
   const [frame, setFrame] = React.useState<Frame | null>(null);
 
@@ -50,25 +50,32 @@ export const useBeforeAfter = (initial: number, designWidth?: number) => {
     setPos(clamp(((clientX - rect.left) / rect.width) * 100));
   }, []);
 
-  const onPointerDown = (e: React.PointerEvent) => {
-    draggingRef.current = true;
-    e.currentTarget.setPointerCapture(e.pointerId);
-    updateFromClientX(e.clientX);
-  };
+  React.useEffect(() => {
+    if (!dragging) return;
+    const onMove = (e: PointerEvent) => updateFromClientX(e.clientX);
+    const onUp = () => setDragging(false);
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+    window.addEventListener("pointercancel", onUp);
+    return () => {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+      window.removeEventListener("pointercancel", onUp);
+    };
+  }, [dragging, updateFromClientX]);
 
-  const onPointerMove = (e: React.PointerEvent) => {
-    if (draggingRef.current) updateFromClientX(e.clientX);
-  };
-
-  const onPointerUp = (e: React.PointerEvent) => {
-    draggingRef.current = false;
-    e.currentTarget.releasePointerCapture(e.pointerId);
-  };
+  const startDrag = React.useCallback(
+    (clientX: number) => {
+      setDragging(true);
+      updateFromClientX(clientX);
+    },
+    [updateFromClientX],
+  );
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowLeft") setPos((p) => clamp(p - 2));
     if (e.key === "ArrowRight") setPos((p) => clamp(p + 2));
   };
 
-  return { containerRef, pos, live, frame, onPointerDown, onPointerMove, onPointerUp, onKeyDown };
+  return { containerRef, pos, dragging, live, frame, startDrag, onKeyDown };
 };
