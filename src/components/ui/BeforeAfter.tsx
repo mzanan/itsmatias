@@ -32,7 +32,7 @@ export const BeforeAfter = ({
   designWidth,
   className,
 }: Props) => {
-  const { containerRef, pos, dragging, live, frame, startDrag, onKeyDown } = useBeforeAfter(
+  const { containerRef, pos, dragging, live, frame, hinting, startDrag, onKeyDown } = useBeforeAfter(
     initial,
     designWidth,
   );
@@ -112,6 +112,14 @@ export const BeforeAfter = ({
         className="absolute inset-y-0 z-30 w-px -translate-x-1/2 bg-white/70 pointer-events-none"
         style={{ left: `${pos}%` }}
       />
+
+      {hinting && (
+        <span
+          aria-hidden
+          className="absolute top-1/2 z-20 h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/30 animate-ping pointer-events-none"
+          style={{ left: `${pos}%` }}
+        />
+      )}
 
       <button
         type="button"
