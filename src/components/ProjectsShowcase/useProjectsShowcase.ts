@@ -101,8 +101,8 @@ export const useProjectsShowcase = () => {
           },
         },
         description:
-          "A community events platform for Da Nang, rebuilt from a client's legacy no-code site: paid registration with QR check-in, galleries and an admin panel.",
-        descriptionExtra: "Drag the slider to compare the original and the redesign. Self-hosted on an owned stack.",
+          "A community events platform for Da Nang, rebuilt from the client's original site: paid registration with QR check-in, galleries and an admin panel.",
+        descriptionExtra: "Drag the slider to compare the original and the redesign. Built with Next.js and Neon Postgres.",
         model: "showcase",
       },
     ],
