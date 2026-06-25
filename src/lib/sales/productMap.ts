@@ -22,7 +22,7 @@ export type ProductConfig = {
 
 export type SalesEnv = 'sandbox' | 'production';
 
-const GITHUB_OWNER = 'mzanan';
+const GITHUB_OWNER = 'mzanan-deploys';
 
 const ECOMMERCE_DEPLOY: VercelDeployConfig = {
   stores: [

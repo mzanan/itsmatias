@@ -14,7 +14,7 @@ function missing(name: string): never {
 function buildHandler() {
   const POLAR_WEBHOOK_SECRET_SANDBOX =
     process.env.POLAR_WEBHOOK_SECRET_SANDBOX ?? missing('POLAR_WEBHOOK_SECRET_SANDBOX');
-  const GITHUB_OWNER = process.env.GITHUB_OWNER ?? 'mzanan';
+  const GITHUB_OWNER = process.env.GITHUB_OWNER ?? 'mzanan-deploys';
   const GITHUB_DEPLOYS_ORG = process.env.GITHUB_DEPLOYS_ORG ?? 'mzanan-deploys';
   const GITHUB_DEPLOYS_PAT = process.env.GITHUB_DEPLOYS_PAT ?? missing('GITHUB_DEPLOYS_PAT');
   const RESEND_API_KEY = process.env.RESEND_API_KEY ?? missing('RESEND_API_KEY');
