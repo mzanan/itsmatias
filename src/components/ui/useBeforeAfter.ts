@@ -12,6 +12,7 @@ export const useBeforeAfter = (initial: number, designWidth?: number) => {
   const [dragging, setDragging] = React.useState(false);
   const [live, setLive] = React.useState(false);
   const [frame, setFrame] = React.useState<Frame | null>(null);
+  const [interacted, setInteracted] = React.useState(false);
 
   React.useEffect(() => {
     const el = containerRef.current;
@@ -64,18 +65,33 @@ export const useBeforeAfter = (initial: number, designWidth?: number) => {
     };
   }, [dragging, updateFromClientX]);
 
+  React.useEffect(() => {
+    if (!live || interacted) return;
+    const t = window.setTimeout(() => setInteracted(true), 5000);
+    return () => window.clearTimeout(t);
+  }, [live, interacted]);
+
   const startDrag = React.useCallback(
     (clientX: number) => {
       setDragging(true);
+      setInteracted(true);
       updateFromClientX(clientX);
     },
     [updateFromClientX],
   );
 
   const onKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "ArrowLeft") setPos((p) => clamp(p - 2));
-    if (e.key === "ArrowRight") setPos((p) => clamp(p + 2));
+    if (e.key === "ArrowLeft") {
+      setInteracted(true);
+      setPos((p) => clamp(p - 2));
+    }
+    if (e.key === "ArrowRight") {
+      setInteracted(true);
+      setPos((p) => clamp(p + 2));
+    }
   };
 
-  return { containerRef, pos, dragging, live, frame, startDrag, onKeyDown };
+  const hinting = live && !interacted;
+
+  return { containerRef, pos, dragging, live, frame, hinting, startDrag, onKeyDown };
 };
