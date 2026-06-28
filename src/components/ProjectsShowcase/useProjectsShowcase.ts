@@ -86,7 +86,7 @@ export const useProjectsShowcase = () => {
       {
         id: "4",
         title: "Nomad Events",
-        url: URLS.hangout,
+        url: URLS.hangoutAfter,
         media: {
           kind: "beforeAfter",
           before: {
