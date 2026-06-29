@@ -13,6 +13,7 @@ export const useBeforeAfter = (initial: number, designWidth?: number) => {
   const [live, setLive] = React.useState(false);
   const [frame, setFrame] = React.useState<Frame | null>(null);
   const [interacted, setInteracted] = React.useState(false);
+  const nudgedRef = React.useRef(false);
 
   React.useEffect(() => {
     const el = containerRef.current;
@@ -66,10 +67,23 @@ export const useBeforeAfter = (initial: number, designWidth?: number) => {
   }, [dragging, updateFromClientX]);
 
   React.useEffect(() => {
-    if (!live || interacted) return;
-    const t = window.setTimeout(() => setInteracted(true), 5000);
-    return () => window.clearTimeout(t);
-  }, [live, interacted]);
+    if (!live || interacted || nudgedRef.current) return;
+    nudgedRef.current = true;
+    let raf = 0;
+    let start = 0;
+    const step = (ts: number) => {
+      if (!start) start = ts;
+      const t = (ts - start) / 2800;
+      if (t >= 1) {
+        setPos(clamp(initial));
+        return;
+      }
+      setPos(clamp(initial + Math.sin(t * 4 * Math.PI) * 12 * (1 - t)));
+      raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [live, interacted, initial]);
 
   const startDrag = React.useCallback(
     (clientX: number) => {

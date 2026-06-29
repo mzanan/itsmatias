@@ -5,6 +5,7 @@ import Image from "next/image";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { cn } from "@/lib/utils";
 import { GlassBadge } from "./GlassBadge";
+import { PointerHandIcon } from "./PointerHandIcon";
 import { useBeforeAfter } from "./useBeforeAfter";
 
 type Side = { poster: string; src: string; alt: string };
@@ -85,7 +86,7 @@ export const BeforeAfter = ({
       {renderSide(after, false)}
       {renderSide(before, true)}
 
-      {dragging && <div className="absolute inset-0 z-40 cursor-ew-resize" />}
+      {dragging && <div className="absolute inset-0 z-40 cursor-pointer" />}
 
       <GlassBadge
         tone="solid"
@@ -113,12 +114,28 @@ export const BeforeAfter = ({
         style={{ left: `${pos}%` }}
       />
 
+      {hinting &&
+        [0, 1.1].map((delay) => (
+          <span
+            key={delay}
+            aria-hidden
+            style={{ left: `${pos}%`, animationDelay: `${delay}s`, animationDuration: "2.2s" }}
+            className="absolute top-1/2 z-20 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/40 ring-2 ring-white/70 animate-ping pointer-events-none"
+          />
+        ))}
+
       {hinting && (
         <span
           aria-hidden
-          className="absolute top-1/2 z-20 h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/30 animate-ping pointer-events-none"
           style={{ left: `${pos}%` }}
-        />
+          className="absolute top-1/2 z-30 -translate-x-1/2 translate-y-6 pointer-events-none"
+        >
+          <PointerHandIcon
+            strokeWidth={8}
+            strokeLinejoin="round"
+            className="h-7 w-7 fill-white stroke-black"
+          />
+        </span>
       )}
 
       <button
@@ -131,7 +148,7 @@ export const BeforeAfter = ({
         onPointerDown={(e) => startDrag(e.clientX)}
         onKeyDown={onKeyDown}
         style={{ left: `${pos}%` }}
-        className="absolute top-1/2 z-30 grid h-10 w-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-primary/60 bg-black/60 text-white shadow-lg backdrop-blur-md cursor-ew-resize touch-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+        className="absolute top-1/2 z-30 grid h-10 w-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-primary/60 bg-black/60 text-white shadow-lg backdrop-blur-md cursor-pointer touch-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
       >
         <span className="flex items-center gap-0.5">
           <FaChevronLeft className="h-3 w-3" />
