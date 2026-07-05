@@ -110,13 +110,13 @@ export async function GET(
 
   if (!res.ok) {
     const body = await res.text();
-    console.error('[buy] checkout create failed', res.status, body);
+    console.error('[buy] checkout create failed', res.status, body.slice(0, 200));
     return new Response('Checkout create failed', { status: 502 });
   }
 
   const checkout = (await res.json()) as { url?: string };
   if (!checkout.url) {
-    console.error('[buy] checkout response missing url', checkout);
+    console.error('[buy] checkout response missing url');
     return new Response('Checkout missing URL', { status: 502 });
   }
 
