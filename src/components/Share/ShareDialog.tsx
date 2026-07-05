@@ -42,7 +42,7 @@ export const ShareDialog = ({ open, onOpenChange }: Props) => {
         </DialogHeader>
 
         <div className="flex flex-col items-center mt-2">
-          <div className="relative p-1 rounded-2xl bg-gradient-to-br from-slate-200/70 via-white/40 to-slate-300/70 shadow-[0_10px_40px_-15px_rgba(241,245,249,0.45)]">
+          <div className="relative p-1 rounded-2xl bg-gradient-to-br from-sheen-start via-sheen-mid to-sheen-end shadow-glow">
             <div className="bg-white p-5 rounded-[14px]">
               <QRCodeSVG value={url} size={176} level="M" />
             </div>

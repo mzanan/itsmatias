@@ -124,6 +124,10 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-sheen-start: rgb(226 232 240 / 0.7);
+  --color-sheen-mid: rgb(255 255 255 / 0.4);
+  --color-sheen-end: rgb(203 213 225 / 0.7);
+  --shadow-glow: 0 10px 40px -15px rgb(241 245 249 / 0.45);
 }
 
 @layer base {
