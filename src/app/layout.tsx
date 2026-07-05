@@ -109,6 +109,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-scroll-behavior="smooth">
+      <head>
+        <link rel="preconnect" href={URLS.hangoutBefore} />
+        <link rel="preconnect" href={URLS.hangoutAfter} />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
