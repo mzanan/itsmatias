@@ -55,7 +55,7 @@ export const Header = () => {
             })}
           </div>
           <div className="relative">
-            <Share isInHero={isInHero} />
+            <Share />
             <ShareHint />
           </div>
         </div>

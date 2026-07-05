@@ -10,6 +10,7 @@ type CommonProps = {
   variant?: Variant;
   size?: Size;
   Icon?: React.ComponentType<{ className?: string }>;
+  iconPosition?: "left" | "right";
   iconClassName?: string;
   className?: string;
   children?: React.ReactNode;
@@ -72,6 +73,7 @@ export const Pill = (props: PillProps) => {
     variant = "outline",
     size = "md",
     Icon,
+    iconPosition = "right",
     iconClassName,
     className,
     children,
@@ -86,14 +88,23 @@ export const Pill = (props: PillProps) => {
     className,
   );
   const icon = Icon ? (
-    <Icon className={cn(iconSize[size], "transition-transform group-hover:translate-x-1", iconClassName)} />
+    <Icon
+      className={cn(
+        iconSize[size],
+        iconPosition === "right" && "transition-transform group-hover:translate-x-1",
+        iconClassName,
+      )}
+    />
   ) : null;
+  const leading = iconPosition === "left" ? icon : null;
+  const trailing = iconPosition === "right" ? icon : null;
 
   if (as === "a") {
     return (
       <a {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)} className={classes}>
+        {leading}
         {children}
-        {icon}
+        {trailing}
       </a>
     );
   }
@@ -101,8 +112,9 @@ export const Pill = (props: PillProps) => {
   if (as === "span") {
     return (
       <span {...(rest as React.HTMLAttributes<HTMLSpanElement>)} className={classes}>
+        {leading}
         {children}
-        {icon}
+        {trailing}
       </span>
     );
   }
@@ -110,8 +122,9 @@ export const Pill = (props: PillProps) => {
   const buttonRest = rest as React.ButtonHTMLAttributes<HTMLButtonElement>;
   return (
     <button type={buttonRest.type ?? "button"} {...buttonRest} className={classes}>
+      {leading}
       {children}
-      {icon}
+      {trailing}
     </button>
   );
 };

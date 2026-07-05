@@ -5,6 +5,8 @@ import dynamic from "next/dynamic";
 import { FaQrcode } from "react-icons/fa";
 import { FaShareNodes } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
+import { Pill } from "@/components/ui/Pill";
+import { cn } from "@/lib/utils";
 import { fireConfetti } from "@/lib/confetti";
 
 const ShareDialog = dynamic(
@@ -13,14 +15,12 @@ const ShareDialog = dynamic(
 );
 
 type ShareProps = {
-  isInHero?: boolean;
   label?: string;
   asButton?: boolean;
   className?: string;
 };
 
 export const Share = ({
-  isInHero = false,
   label = "Share",
   asButton = false,
   className = "",
@@ -33,14 +33,6 @@ export const Share = ({
     setOpen(true);
     fireConfetti();
   };
-
-  const pillBase =
-    "inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer hover:scale-[1.03]";
-  const pillColors = isInHero
-    ? "border-white/25 text-white bg-white/5 hover:bg-white/10 hover:border-white/50"
-    : "border-white/20 text-white/85 bg-white/5 hover:bg-white/10 hover:border-white/45";
-  const pillPulse = isAnimated ? "qr-pulse" : "";
-  const pillClassName = `${pillBase} ${pillColors} ${pillPulse} ${className}`;
 
   return (
     <>
@@ -55,15 +47,17 @@ export const Share = ({
           <FaShareNodes className="ml-2 h-5 w-5 transition-transform group-hover:scale-110" />
         </Button>
       ) : (
-        <button
-          type="button"
-          className={pillClassName}
+        <Pill
+          variant="outline"
+          size="sm"
+          Icon={FaQrcode}
+          iconPosition="left"
+          className={cn("sm:text-sm", isAnimated && "qr-pulse", className)}
           onClick={handleClick}
           aria-label="Share"
         >
-          <FaQrcode className="h-3.5 w-3.5" />
-          <span>{label}</span>
-        </button>
+          {label}
+        </Pill>
       )}
       {open && <ShareDialog open={open} onOpenChange={setOpen} />}
     </>
