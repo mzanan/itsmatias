@@ -23,6 +23,55 @@ type Props = {
 const sizes = "(max-width: 768px) 100vw, 1024px";
 const iframeSandbox =
   "allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox";
+const REVEAL_TIMEOUT_MS = 10_000;
+
+type BeforeAfterSideProps = {
+  side: Side;
+  clipped: boolean;
+  pos: number;
+  live: boolean;
+  frameStyle: React.CSSProperties;
+};
+
+const BeforeAfterSide = ({ side, clipped, pos, live, frameStyle }: BeforeAfterSideProps) => {
+  const [loaded, setLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!live || loaded) return;
+    const timeout = window.setTimeout(() => setLoaded(true), REVEAL_TIMEOUT_MS);
+    return () => window.clearTimeout(timeout);
+  }, [live, loaded]);
+
+  return (
+    <div
+      className="absolute inset-0 overflow-hidden bg-black"
+      style={clipped ? { clipPath: `inset(0 ${100 - pos}% 0 0)` } : undefined}
+    >
+      {live && (
+        <iframe
+          src={side.src}
+          title={side.alt}
+          loading="lazy"
+          sandbox={iframeSandbox}
+          style={frameStyle}
+          className="border-0"
+          onLoad={() => setLoaded(true)}
+        />
+      )}
+      <Image
+        src={side.poster}
+        alt={side.alt}
+        fill
+        sizes={sizes}
+        className={cn(
+          "object-cover object-top select-none transition-opacity duration-300 ease-out",
+          loaded ? "pointer-events-none opacity-0" : "opacity-100",
+        )}
+        draggable={false}
+      />
+    </div>
+  );
+};
 
 export const BeforeAfter = ({
   before,
@@ -48,33 +97,6 @@ export const BeforeAfter = ({
       }
     : { width: "100%", height: "100%", overscrollBehavior: "contain" };
 
-  const renderSide = (side: Side, clipped: boolean) => (
-    <div
-      className="absolute inset-0 overflow-hidden bg-black"
-      style={clipped ? { clipPath: `inset(0 ${100 - pos}% 0 0)` } : undefined}
-    >
-      {live ? (
-        <iframe
-          src={side.src}
-          title={side.alt}
-          loading="lazy"
-          sandbox={iframeSandbox}
-          style={frameStyle}
-          className="border-0"
-        />
-      ) : (
-        <Image
-          src={side.poster}
-          alt={side.alt}
-          fill
-          sizes={sizes}
-          className="object-cover object-top select-none"
-          draggable={false}
-        />
-      )}
-    </div>
-  );
-
   return (
     <div
       ref={containerRef}
@@ -83,8 +105,8 @@ export const BeforeAfter = ({
         className,
       )}
     >
-      {renderSide(after, false)}
-      {renderSide(before, true)}
+      <BeforeAfterSide side={after} clipped={false} pos={pos} live={live} frameStyle={frameStyle} />
+      <BeforeAfterSide side={before} clipped pos={pos} live={live} frameStyle={frameStyle} />
 
       {dragging && <div className="absolute inset-0 z-40 cursor-pointer" />}
 
