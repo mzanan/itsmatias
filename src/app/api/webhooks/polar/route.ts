@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { Webhooks } from '@polar-sh/nextjs';
 import { buildOrderPaidHandler } from '@/lib/sales/orderPaidHandler';
-import { getProductMap } from '@/lib/sales/productMap';
+import { getAttributionProductMap, getProductMap } from '@/lib/sales/productMap';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -24,6 +24,7 @@ function buildHandler() {
     webhookSecret: POLAR_WEBHOOK_SECRET,
     onOrderPaid: buildOrderPaidHandler({
       productMap: getProductMap('production'),
+      attributionProductMap: getAttributionProductMap('production'),
       githubOwner: GITHUB_OWNER,
       deploysOrg: GITHUB_DEPLOYS_ORG,
       deploysPat: GITHUB_DEPLOYS_PAT,

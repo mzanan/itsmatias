@@ -26,31 +26,25 @@ function pickEnv(req: Request): Env {
   return isLocalhost || isPreview ? 'sandbox' : 'prod';
 }
 
+const PRODUCT_ID_ENV_KEY: Record<Slug, { prod: string; sandbox: string }> = {
+  ecommerce: { prod: 'POLAR_PRODUCT_ID_ECOMMERCE', sandbox: 'POLAR_PRODUCT_ID_ECOMMERCE_SANDBOX' },
+  landing: { prod: 'POLAR_PRODUCT_ID_LANDING', sandbox: 'POLAR_PRODUCT_ID_LANDING_SANDBOX' },
+  'remove-attribution-ecommerce': {
+    prod: 'POLAR_PRODUCT_ID_REMOVE_ATTRIBUTION_ECOMMERCE',
+    sandbox: 'POLAR_PRODUCT_ID_REMOVE_ATTRIBUTION_ECOMMERCE_SANDBOX',
+  },
+  'remove-attribution-landing': {
+    prod: 'POLAR_PRODUCT_ID_REMOVE_ATTRIBUTION_LANDING',
+    sandbox: 'POLAR_PRODUCT_ID_REMOVE_ATTRIBUTION_LANDING_SANDBOX',
+  },
+};
+
 function pickConfig(env: Env, slug: Slug): { token?: string; apiBase: string; productId?: string } {
-  if (env === 'sandbox') {
-    return {
-      token: process.env.POLAR_ACCESS_TOKEN_SANDBOX,
-      apiBase: POLAR_SANDBOX_API_BASE,
-      productId:
-        slug === 'ecommerce'
-          ? process.env.POLAR_PRODUCT_ID_ECOMMERCE_SANDBOX
-          : slug === 'landing'
-            ? process.env.POLAR_PRODUCT_ID_LANDING_SANDBOX
-            : undefined,
-    };
-  }
-  return {
-    token: process.env.POLAR_ACCESS_TOKEN,
-    apiBase: POLAR_PROD_API_BASE,
-    productId:
-      slug === 'ecommerce'
-        ? process.env.POLAR_PRODUCT_ID_ECOMMERCE
-        : slug === 'landing'
-          ? process.env.POLAR_PRODUCT_ID_LANDING
-          : slug === 'remove-attribution-ecommerce'
-            ? process.env.POLAR_PRODUCT_ID_REMOVE_ATTRIBUTION_ECOMMERCE
-            : process.env.POLAR_PRODUCT_ID_REMOVE_ATTRIBUTION_LANDING,
-  };
+  const envKey = env === 'sandbox' ? 'sandbox' : 'prod';
+  const productId = process.env[PRODUCT_ID_ENV_KEY[slug][envKey]];
+  return env === 'sandbox'
+    ? { token: process.env.POLAR_ACCESS_TOKEN_SANDBOX, apiBase: POLAR_SANDBOX_API_BASE, productId }
+    : { token: process.env.POLAR_ACCESS_TOKEN, apiBase: POLAR_PROD_API_BASE, productId };
 }
 
 function originFrom(req: Request): string {
@@ -65,7 +59,8 @@ function originFrom(req: Request): string {
 function buildSuccessUrl(req: Request, env: Env, slug: Slug): string {
   const origin = originFrom(req);
   if (slug.startsWith('remove-attribution-')) {
-    return `${origin}/?thanks=${slug}`;
+    const product = slug.replace('remove-attribution-', '');
+    return `${origin}/attribution-removed/${product}`;
   }
   const path = `/order/{CHECKOUT_ID}`;
   return env === 'sandbox' ? `${origin}${path}?env=sandbox` : `${origin}${path}`;
@@ -81,9 +76,6 @@ export async function GET(
   }
   const typedSlug = slug as Slug;
   const env = pickEnv(req);
-  if (env === 'sandbox' && typedSlug.startsWith('remove-attribution-')) {
-    return new Response('Add-on not available in sandbox', { status: 404 });
-  }
   const { token, apiBase, productId } = pickConfig(env, typedSlug);
   if (!token || !productId) {
     console.error('[buy] missing config', { env, slug, hasToken: !!token, hasProductId: !!productId });

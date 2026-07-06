@@ -2,11 +2,11 @@
 
 import { use } from "react"
 import { useSearchParams } from "next/navigation"
-import Link from "next/link"
-import { motion } from "motion/react"
 import { Pill } from "@/components/ui/Pill"
-import { FaArrowRight, FaArrowLeft } from "react-icons/fa"
+import { FaArrowRight } from "react-icons/fa"
 import { CONTACT_EMAIL } from "@/lib/urls"
+import { SalesPageShell } from "@/components/Sales/SalesPageShell"
+import { ConfirmationCard } from "@/components/Sales/ConfirmationCard"
 import { useOrderStatus } from "./useOrderStatus"
 
 type PageProps = {
@@ -20,57 +20,25 @@ export default function OrderPage({ params }: PageProps) {
   const { status, timedOut } = useOrderStatus(checkoutId, envQuery)
 
   return (
-    <div className="min-h-dvh flex flex-col text-slate-200">
-      <header className="w-full">
-        <nav className="container mx-auto flex h-16 items-center px-4 sm:px-6 lg:px-8">
-          <Link href="/" className="text-lg font-bold gradient-text transition-all hover:opacity-80">
-            itsmatias
-          </Link>
-        </nav>
-      </header>
-
-      <main className="flex-1 flex items-center justify-center px-4 sm:px-6 py-10">
-        {status.state === "failed" ? (
-          <Card showBack>
-            <Failed />
-          </Card>
-        ) : status.state === "ready" ? (
-          <Card showBack>
-            <Ready productName={status.productName} deployUrl={status.deployUrl!} />
-          </Card>
-        ) : timedOut ? (
-          <Card showBack>
-            <CheckEmail />
-          </Card>
-        ) : (
-          <div className="w-full max-w-lg text-center">
-            <Preparing state={status.state} />
-          </div>
-        )}
-      </main>
-    </div>
-  )
-}
-
-function Card({ children, showBack }: { children: React.ReactNode; showBack: boolean }) {
-  return (
-    <motion.section
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="w-full max-w-lg rounded-2xl border border-white/15 bg-black/55 backdrop-blur-xl px-6 py-8 md:px-10 md:py-10 shadow-2xl shadow-black/50"
-    >
-      {showBack && (
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-xs text-slate-500 hover:text-slate-200 transition-colors"
-        >
-          <FaArrowLeft className="h-3 w-3" />
-          Back to itsmatias.com
-        </Link>
+    <SalesPageShell>
+      {status.state === "failed" ? (
+        <ConfirmationCard showBack>
+          <Failed />
+        </ConfirmationCard>
+      ) : status.state === "ready" ? (
+        <ConfirmationCard showBack>
+          <Ready productName={status.productName} deployUrl={status.deployUrl!} />
+        </ConfirmationCard>
+      ) : timedOut ? (
+        <ConfirmationCard showBack>
+          <CheckEmail />
+        </ConfirmationCard>
+      ) : (
+        <div className="w-full max-w-lg text-center">
+          <Preparing state={status.state} />
+        </div>
       )}
-      <div className={`${showBack ? "mt-6" : ""} text-center`}>{children}</div>
-    </motion.section>
+    </SalesPageShell>
   )
 }
 
