@@ -11,6 +11,7 @@ export const useBeforeAfter = (initial: number, designWidth?: number) => {
   const [pos, setPos] = React.useState(clamp(initial));
   const [dragging, setDragging] = React.useState(false);
   const [live, setLive] = React.useState(false);
+  const [inView, setInView] = React.useState(false);
   const [frame, setFrame] = React.useState<Frame | null>(null);
   const [interacted, setInteracted] = React.useState(false);
   const nudgedRef = React.useRef(false);
@@ -19,16 +20,30 @@ export const useBeforeAfter = (initial: number, designWidth?: number) => {
     const el = containerRef.current;
     if (!el || !("IntersectionObserver" in window)) {
       setLive(true);
+      setInView(true);
       return;
     }
-    const io = new IntersectionObserver(
+    const warmIo = new IntersectionObserver(
       (entries) => {
-        for (const entry of entries) setLive(entry.isIntersecting);
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setLive(true);
+          warmIo.disconnect();
+        }
+      },
+      { rootMargin: "100% 0px" },
+    );
+    const viewIo = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) setInView(entry.isIntersecting);
       },
       { threshold: 0.35 },
     );
-    io.observe(el);
-    return () => io.disconnect();
+    warmIo.observe(el);
+    viewIo.observe(el);
+    return () => {
+      warmIo.disconnect();
+      viewIo.disconnect();
+    };
   }, []);
 
   React.useEffect(() => {
@@ -67,7 +82,7 @@ export const useBeforeAfter = (initial: number, designWidth?: number) => {
   }, [dragging, updateFromClientX]);
 
   React.useEffect(() => {
-    if (!live || interacted || nudgedRef.current) return;
+    if (!inView || interacted || nudgedRef.current) return;
     nudgedRef.current = true;
     let raf = 0;
     let start = 0;
@@ -83,7 +98,7 @@ export const useBeforeAfter = (initial: number, designWidth?: number) => {
     };
     raf = requestAnimationFrame(step);
     return () => cancelAnimationFrame(raf);
-  }, [live, interacted, initial]);
+  }, [inView, interacted, initial]);
 
   const startDrag = React.useCallback(
     (clientX: number) => {
@@ -105,7 +120,7 @@ export const useBeforeAfter = (initial: number, designWidth?: number) => {
     }
   };
 
-  const hinting = live && !interacted;
+  const hinting = inView && !interacted;
 
   return { containerRef, pos, dragging, live, frame, hinting, startDrag, onKeyDown };
 };
