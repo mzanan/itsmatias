@@ -6,12 +6,14 @@ import {
   repoExists,
 } from './ephemeralRepo';
 import { sendDeployInstructions } from './deployEmail';
-import type { ProductConfig } from './productMap';
+import { sendAttributionRemovedInstructions } from './attributionEmail';
+import type { AttributionProduct, ProductConfig } from './productMap';
 
 export type { ProductConfig };
 
 export type OrderPaidConfig = {
   productMap: Record<string, ProductConfig>;
+  attributionProductMap: Record<string, AttributionProduct>;
   githubOwner: string;
   deploysOrg: string;
   deploysPat: string;
@@ -24,15 +26,25 @@ export function buildOrderPaidHandler(config: OrderPaidConfig) {
   return async function handleOrderPaid(payload: { data: Order }): Promise<void> {
     const order = payload.data;
     const productId = order.product?.id ?? order.productId;
-    const product = productId ? config.productMap[productId] : undefined;
     const email = order.customer?.email;
 
-    if (!product) {
-      console.error('[polar] no product mapped', productId);
-      return;
-    }
     if (!email) {
       console.error('[polar] order without email, skipping', order.id);
+      return;
+    }
+
+    const attributionProduct = productId ? config.attributionProductMap[productId] : undefined;
+    if (attributionProduct) {
+      await sendAttributionRemovedInstructions(
+        { to: email, productName: attributionProduct.displayName },
+        { apiKey: config.resendApiKey, from: config.resendFromEmail },
+      );
+      return;
+    }
+
+    const product = productId ? config.productMap[productId] : undefined;
+    if (!product) {
+      console.error('[polar] no product mapped', productId);
       return;
     }
 

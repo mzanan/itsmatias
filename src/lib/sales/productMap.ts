@@ -22,6 +22,10 @@ export type ProductConfig = {
 
 export type SalesEnv = 'sandbox' | 'production';
 
+export type AttributionProduct = {
+  displayName: string;
+};
+
 const GITHUB_OWNER = 'mzanan-deploys';
 
 const ECOMMERCE_DEPLOY: VercelDeployConfig = {
@@ -80,6 +84,27 @@ export function getProductMap(env: SalesEnv): Record<string, ProductConfig> {
       displayName: `${BASE_PRODUCTS.landing.baseDisplayName}${suffix}`,
       vercelDeploy: BASE_PRODUCTS.landing.vercelDeploy,
     };
+  }
+  return map;
+}
+
+export function getAttributionProductMap(env: SalesEnv): Record<string, AttributionProduct> {
+  const suffix = env === 'sandbox' ? ' (sandbox)' : '';
+  const ecommerceId =
+    env === 'sandbox'
+      ? process.env.POLAR_PRODUCT_ID_REMOVE_ATTRIBUTION_ECOMMERCE_SANDBOX
+      : process.env.POLAR_PRODUCT_ID_REMOVE_ATTRIBUTION_ECOMMERCE;
+  const landingId =
+    env === 'sandbox'
+      ? process.env.POLAR_PRODUCT_ID_REMOVE_ATTRIBUTION_LANDING_SANDBOX
+      : process.env.POLAR_PRODUCT_ID_REMOVE_ATTRIBUTION_LANDING;
+
+  const map: Record<string, AttributionProduct> = {};
+  if (ecommerceId) {
+    map[ecommerceId] = { displayName: `${BASE_PRODUCTS.ecommerce.baseDisplayName}${suffix}` };
+  }
+  if (landingId) {
+    map[landingId] = { displayName: `${BASE_PRODUCTS.landing.baseDisplayName}${suffix}` };
   }
   return map;
 }
