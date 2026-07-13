@@ -23,6 +23,7 @@ export const useAbout = () => {
   const [displayedImages, setDisplayedImages] = useState<string[]>(ABOUT_IMAGES);
 
   useEffect(() => {
+    if (!isInView) return;
     const interval = setInterval(() => {
       setDisplayedImages((current) => {
         let next = shuffle(current);
@@ -34,7 +35,7 @@ export const useAbout = () => {
     }, 2000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isInView]);
 
   const about: AboutData = useMemo(
     () => ({

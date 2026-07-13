@@ -28,29 +28,41 @@ export const LazyVideo = ({ src, poster, className, playbackRate = 1 }: Props) =
       el.dataset.loaded = "true";
       el.src = src;
       el.load();
-      el.play().catch(() => {});
     };
 
     if (!("IntersectionObserver" in window)) {
       load();
+      el.play().catch(() => {});
       return;
     }
 
-    const io = new IntersectionObserver(
+    const loadIo = new IntersectionObserver(
       (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            load();
-            io.disconnect();
-            break;
-          }
+        if (entries.some((entry) => entry.isIntersecting)) {
+          load();
+          loadIo.disconnect();
         }
       },
       { rootMargin: "50% 0px" },
     );
 
-    io.observe(el);
-    return () => io.disconnect();
+    const playbackIo = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          load();
+          el.play().catch(() => {});
+        } else {
+          el.pause();
+        }
+      }
+    });
+
+    loadIo.observe(el);
+    playbackIo.observe(el);
+    return () => {
+      loadIo.disconnect();
+      playbackIo.disconnect();
+    };
   }, [src]);
 
   return (
