@@ -91,7 +91,7 @@ export const useHero = (vantaRef: React.RefObject<HTMLDivElement | null>) => {
     if (!container) return;
 
     const renderer = new Renderer({
-      dpr: Math.min(window.devicePixelRatio, 2),
+      dpr: Math.min(window.devicePixelRatio, 1),
       alpha: false,
       antialias: false,
     });
@@ -165,20 +165,59 @@ export const useHero = (vantaRef: React.RefObject<HTMLDivElement | null>) => {
     container.addEventListener("touchmove", onTouchMove, { passive: true });
 
     let raf = 0;
-    const start = performance.now();
-    const loop = () => {
-      const t = (performance.now() - start) * 0.001;
-      mouseCurrent.x += (mouseTarget.x - mouseCurrent.x) * 0.05;
-      mouseCurrent.y += (mouseTarget.y - mouseCurrent.y) * 0.05;
-      program.uniforms.uTime.value = t;
+    let elapsed = 0;
+    let last = performance.now();
+    let inView = true;
+    const reduceMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const renderFrame = () => {
+      program.uniforms.uTime.value = elapsed;
       program.uniforms.uMouse.value = [mouseCurrent.x, mouseCurrent.y];
       renderer.render({ scene, camera });
-      raf = requestAnimationFrame(loop);
     };
-    raf = requestAnimationFrame(loop);
+
+    const minFrameMs = 1000 / 30 - 3;
+    const loop = () => {
+      raf = requestAnimationFrame(loop);
+      const now = performance.now();
+      const delta = now - last;
+      if (delta < minFrameMs) return;
+      elapsed += delta * 0.001;
+      last = now;
+      const smoothing = 1 - Math.exp(-delta * 0.003);
+      mouseCurrent.x += (mouseTarget.x - mouseCurrent.x) * smoothing;
+      mouseCurrent.y += (mouseTarget.y - mouseCurrent.y) * smoothing;
+      renderFrame();
+    };
+
+    const sync = () => {
+      const shouldRun = inView && !document.hidden && !reduceMq.matches;
+      if (shouldRun && raf === 0) {
+        last = performance.now();
+        raf = requestAnimationFrame(loop);
+      } else if (!shouldRun && raf !== 0) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      }
+    };
+
+    const io = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      sync();
+    });
+    io.observe(container);
+    const onVisibilityChange = () => sync();
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    reduceMq.addEventListener("change", sync);
+
+    renderFrame();
+    sync();
 
     return () => {
       cancelAnimationFrame(raf);
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      reduceMq.removeEventListener("change", sync);
       ro.disconnect();
       container.removeEventListener("mousemove", onMouseMove);
       container.removeEventListener("touchmove", onTouchMove);

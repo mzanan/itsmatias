@@ -265,6 +265,20 @@
   }
 
 
+  @media (prefers-reduced-motion: reduce) {
+    html,
+    main {
+      scroll-behavior: auto;
+    }
+
+    .shiny-text.text-white,
+    .shiny-text.text-muted-foreground,
+    .shiny-border,
+    .qr-pulse {
+      animation: none;
+    }
+  }
+
   .glass-effect {
     @apply bg-white/10 backdrop-blur-md border border-white/20;
   }
