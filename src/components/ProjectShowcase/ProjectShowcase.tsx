@@ -15,6 +15,7 @@ type ProjectShowcaseProps = {
   isFirst?: boolean
 }
 
+const mediaWidth = "w-full max-w-5xl md:max-w-[min(64rem,calc((100dvh-320px)*16/9))]"
 const baseCard =
   "relative block w-full shadow-2xl rounded-2xl aspect-[9/16] md:aspect-video max-h-[calc(100dvh-440px)] md:max-h-none"
 const linkCard =
@@ -60,7 +61,7 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
           initial="hiddenEnter"
           animate={animationState}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="w-full max-w-5xl px-4 md:px-6"
+          className={cn(mediaWidth, "px-4 md:px-6")}
         >
           {isComparison ? (
             <div className={baseCard}>{mediaInner}</div>
@@ -83,7 +84,7 @@ export const ProjectShowcase = ({ project, isFirst = false }: ProjectShowcasePro
           initial="hiddenEnter"
           animate={animationState}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.05 }}
-          className="flex flex-col items-center gap-1 w-full max-w-5xl px-4 md:px-6 text-center"
+          className={cn(mediaWidth, "flex flex-col items-center gap-1 px-4 md:px-6 text-center")}
         >
           <p className="text-sm md:text-base text-white/80">
             {project.description}
