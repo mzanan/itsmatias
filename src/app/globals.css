@@ -137,7 +137,8 @@
 
   html,
   body {
-    @apply overflow-x-hidden;
+    @apply overflow-x-hidden overflow-y-hidden;
+    height: 100%;
   }
 
   body {
