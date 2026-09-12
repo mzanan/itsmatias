@@ -53,7 +53,7 @@ const BASE_PRODUCTS = {
     vercelDeploy: ECOMMERCE_DEPLOY,
   },
   landing: {
-    repo: 'landing',
+    repo: 'ecommerce-landing',
     baseDisplayName: 'Full Landing',
     vercelDeploy: LANDING_DEPLOY,
   },
