@@ -41,19 +41,19 @@ const ECOMMERCE_DEPLOY: VercelDeployConfig = {
   env: ['BETTER_AUTH_SECRET'],
   envDescription:
     'Session secret for the self-hosted admin login: paste any long random string (e.g. run `openssl rand -base64 32`). Stripe, Resend and store branding are configured later from your Vercel project settings: see the repo README.',
-  envLink: `https://github.com/${GITHUB_OWNER}/full-ecommerce#readme`,
+  envLink: `https://github.com/${GITHUB_OWNER}/ecommerce#readme`,
 };
 
 const LANDING_DEPLOY: VercelDeployConfig = {};
 
 const BASE_PRODUCTS = {
   ecommerce: {
-    repo: 'full-ecommerce',
+    repo: 'ecommerce',
     baseDisplayName: 'Full Ecommerce',
     vercelDeploy: ECOMMERCE_DEPLOY,
   },
   landing: {
-    repo: 'full-landing',
+    repo: 'landing',
     baseDisplayName: 'Full Landing',
     vercelDeploy: LANDING_DEPLOY,
   },
