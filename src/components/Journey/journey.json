@@ -1,0 +1,149 @@
+{
+  "intro": {
+    "life": {
+      "label": "About me",
+      "headline": "Full-stack developer, since 2020, from Buenos Aires to Southeast Asia.",
+      "hint": "Scroll through the path. Each dot is a stop."
+    },
+    "work": {
+      "label": "Projects",
+      "headline": "Things I built along the way.",
+      "hint": "Scroll through the path. Each dot is a project."
+    }
+  },
+  "life": [
+    {
+      "id": "buenos-aires",
+      "label": "Buenos Aires",
+      "title": "Buenos Aires",
+      "period": "",
+      "summary": "Where I'm from and where I started writing code for a living in 2020.",
+      "body": "Born and raised in Buenos Aires. In 2020 I started building websites professionally, first for local clients, then remotely.",
+      "image": "/about/1.jpg"
+    },
+    {
+      "id": "rome",
+      "label": "Rome",
+      "title": "Rome",
+      "period": "",
+      "summary": "First stop of a trip with two friends.",
+      "body": "Left Argentina with two friends. Rome was the first city, working from cafés between walks.",
+      "image": "/about/2.jpg"
+    },
+    {
+      "id": "madrid",
+      "label": "Madrid",
+      "title": "Madrid",
+      "period": "",
+      "summary": "Second European stop before heading to Asia.",
+      "body": "A few weeks in Madrid, still travelling with the same two friends, before the jump to Southeast Asia.",
+      "image": "/about/3.jpg"
+    },
+    {
+      "id": "bangkok",
+      "label": "Bangkok",
+      "title": "Bangkok",
+      "period": "",
+      "summary": "First stop in Asia. This is where the nomad chapter really began.",
+      "body": "Bangkok was the entry point to Asia and the start of a fully remote routine: coworkings, night markets and shipping code across time zones.",
+      "image": "/about/4.jpg"
+    },
+    {
+      "id": "japan",
+      "label": "Japan",
+      "title": "Japan",
+      "period": "",
+      "summary": "Trains, detail and quiet focus.",
+      "body": "Japan set the bar for attention to detail. A lot of that ended up in how I build interfaces.",
+      "image": "/about/1.jpg"
+    },
+    {
+      "id": "bali",
+      "label": "Bali",
+      "title": "Bali",
+      "period": "",
+      "summary": "Island life and long working sessions.",
+      "body": "Bali mixed surf mornings with long afternoons of deep work.",
+      "image": "/about/2.jpg"
+    },
+    {
+      "id": "vietnam",
+      "label": "Vietnam",
+      "title": "Vietnam",
+      "period": "",
+      "summary": "Home base today.",
+      "body": "Da Nang is where I live and work now. Most of the projects on the other tab were built from here.",
+      "image": "/about/3.jpg"
+    },
+    {
+      "id": "thailand",
+      "label": "Thailand",
+      "title": "Thailand",
+      "period": "",
+      "summary": "Back and forth from Vietnam.",
+      "body": "Thailand keeps pulling me back between projects.",
+      "image": "/about/4.jpg"
+    }
+  ],
+  "work": [
+    {
+      "id": "nomad-events",
+      "label": "Nomad Events",
+      "title": "Nomad Events",
+      "period": "",
+      "summary": "Community events platform for Da Nang, rebuilt from the client's original site.",
+      "body": "Paid registration with QR check-in, galleries and an admin panel. Built with Next.js and Neon Postgres.",
+      "image": "/showcase/hangout-after-desktop.webp",
+      "url": "hangoutAfter",
+      "tags": [
+        "Next.js",
+        "Postgres",
+        "Stripe"
+      ]
+    },
+    {
+      "id": "ecommerce",
+      "label": "E-commerce",
+      "title": "E-commerce & Admin Panel",
+      "period": "",
+      "summary": "A full store with admin panel, real-time stock, orders and email notifications.",
+      "body": "Built with Next.js. Database, storage and admin login auto-provisioned, Stripe and Resend for payments and email.",
+      "image": "/videos/posters/ecommerce.webp",
+      "url": "ecommerce",
+      "tags": [
+        "Next.js",
+        "Stripe",
+        "Resend"
+      ]
+    },
+    {
+      "id": "landing",
+      "label": "Landing Page",
+      "title": "Landing Page",
+      "period": "",
+      "summary": "A custom landing page with animations and email capture.",
+      "body": "Pixel-perfect layout, motion on scroll and a Resend-backed email capture form.",
+      "image": "/videos/posters/landing.webp",
+      "url": "landing",
+      "tags": [
+        "Next.js",
+        "Motion",
+        "Resend"
+      ]
+    },
+    {
+      "id": "links",
+      "label": "Social Links",
+      "title": "Social Links",
+      "period": "",
+      "summary": "A hosted social links page with custom URL, themes and click analytics.",
+      "body": "Multi-tenant links page: custom slug, themes and per-link click analytics.",
+      "image": "/videos/posters/links.webp",
+      "url": "links",
+      "tags": [
+        "Next.js",
+        "Supabase"
+      ]
+    }
+  ]
+}

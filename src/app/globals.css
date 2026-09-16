@@ -42,6 +42,12 @@
   --sidebar-accent-foreground: oklch(0.08 0 0);
   --sidebar-border: oklch(0.18 0.03 264);
   --sidebar-ring: oklch(0.6 0.2 264);
+  --journey-bg: oklch(0.15 0.003 285);
+  --journey-fg: oklch(0.955 0.006 95);
+  --journey-muted: oklch(0.63 0.01 285);
+  --journey-dim: oklch(0.38 0.01 285);
+  --journey-line: oklch(0.25 0.005 285);
+  --journey-accent: oklch(0.8 0.16 90);
 }
 
 .dark {
@@ -83,6 +89,21 @@
 @theme inline {
   --font-sans: "Geist", "Geist Fallback";
   --font-mono: "Geist Mono", "Geist Mono Fallback";
+  --font-display: var(--font-dm-serif), Georgia, serif;
+  --font-body: var(--font-manrope), system-ui, sans-serif;
+  --color-journey-bg: var(--journey-bg);
+  --color-journey-fg: var(--journey-fg);
+  --color-journey-muted: var(--journey-muted);
+  --color-journey-dim: var(--journey-dim);
+  --color-journey-line: var(--journey-line);
+  --color-journey-accent: var(--journey-accent);
+  --shadow-journey-card: 0 40px 80px -40px rgb(0 0 0 / 0.9), 0 0 0 1px rgb(255 255 255 / 0.06);
+  --shadow-journey-dot: 0 0 0 5px var(--journey-bg), 0 0 0 6.5px var(--journey-accent), 0 0 40px oklch(0.8 0.16 90 / 0.45);
+  --animate-journey-halo: journey-halo 2s ease-out infinite;
+  @keyframes journey-halo {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(2.6); opacity: 0; }
+  }
   --text-display: clamp(2.75rem, 6vw + 1rem, 4.5rem);
   --text-display--line-height: 1.05;
   --text-heading: clamp(2.25rem, 4vw + 1rem, 3.75rem);
