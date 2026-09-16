@@ -3,14 +3,13 @@ import {
   useMotionValueEvent,
   useReducedMotion,
   useScroll,
-  useSpring,
   useTransform,
 } from "motion/react";
 import {
   indexFromProgress,
   progressFromIndex,
-  reachFromProgress,
   resolveJourneyStops,
+  stopProgressFromProgress,
   type JourneyStop,
   type RawJourneyStop,
 } from "@/lib/journey";
@@ -48,8 +47,7 @@ export const useJourney = () => {
     setActiveIndex((current) => (current === next ? current : next));
   });
 
-  const rawReach = useTransform(scrollYProgress, (p) => reachFromProgress(p, count));
-  const pathReach = useSpring(rawReach, { stiffness: 120, damping: 24, mass: 0.6 });
+  const stopProgress = useTransform(scrollYProgress, (p) => stopProgressFromProgress(p, count));
 
   const scrollToIndex = useCallback(
     (index: number) => {
@@ -94,6 +92,7 @@ export const useJourney = () => {
   );
 
   return {
+    scrollProgress: scrollYProgress,
     containerRef,
     trackRef,
     tabs,
@@ -104,7 +103,7 @@ export const useJourney = () => {
     active,
     activeIndex,
     intro,
-    pathReach,
+    stopProgress,
     scrollToIndex,
     expanded,
     open,

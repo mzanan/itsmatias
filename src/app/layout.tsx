@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, DM_Serif_Display, Manrope } from "next/font/google";
 import "./globals.css";
 import { URLS } from "@/lib/urls";
@@ -58,6 +58,10 @@ const jsonLd = {
       inLanguage: "en",
     },
   ],
+};
+
+export const viewport: Viewport = {
+  viewportFit: "cover",
 };
 
 export const metadata: Metadata = {

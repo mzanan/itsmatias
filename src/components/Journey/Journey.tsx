@@ -1,15 +1,18 @@
 "use client";
 
-import { AnimatePresence, LayoutGroup } from "motion/react";
+import { AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 import { useJourney } from "./useJourney";
 import { JourneyNav } from "./JourneyNav";
-import { JourneyPath } from "./JourneyPath";
-import { JourneyCard } from "./JourneyCard";
+import { JourneyProgress } from "./JourneyProgress";
+import { JourneyBackdrop } from "./JourneyBackdrop";
+import { JourneyStopInfo } from "./JourneyStopInfo";
+import { JourneyGallery } from "./JourneyGallery";
 import { JourneyExpanded } from "./JourneyExpanded";
 
 export const Journey = () => {
   const {
+    scrollProgress,
     containerRef,
     trackRef,
     tabs,
@@ -19,8 +22,7 @@ export const Journey = () => {
     count,
     active,
     activeIndex,
-    intro,
-    pathReach,
+    stopProgress,
     scrollToIndex,
     expanded,
     open,
@@ -29,7 +31,7 @@ export const Journey = () => {
   } = useJourney();
 
   return (
-    <LayoutGroup>
+    <>
       <main
         ref={containerRef}
         className={cn(
@@ -38,31 +40,24 @@ export const Journey = () => {
         )}
       >
         <div ref={trackRef} style={{ height: `${count * 100}dvh` }}>
-          <div className="sticky top-0 flex h-dvh flex-col">
-            <JourneyNav tabs={tabs} track={track} onSelect={selectTrack} />
-            <section className="flex min-h-0 flex-1 items-center gap-6 px-5 pb-6 pt-6 sm:gap-10 sm:px-10 lg:gap-24 lg:px-16 lg:pb-14 lg:pt-12">
-              <JourneyPath
-                stops={stops}
-                activeIndex={activeIndex}
-                pathReach={pathReach}
-                onSelect={scrollToIndex}
-                reducedMotion={reducedMotion}
-              />
-              <div className="hidden w-72 shrink-0 flex-col gap-3.5 lg:flex">
-                <span className="text-xs font-medium uppercase tracking-[0.08em] text-journey-muted">{intro.label}</span>
-                <p className="font-display text-3xl leading-tight text-journey-fg">{intro.headline}</p>
-                <p className="text-base leading-relaxed text-journey-muted">{intro.hint}</p>
-              </div>
-              <div className="flex min-w-0 flex-1 items-center justify-center">
-                <JourneyCard stop={active} onOpen={open} />
-              </div>
-            </section>
+          <div className="sticky top-0 h-dvh">
+            <JourneyBackdrop stops={stops} activeIndex={activeIndex} scrollProgress={scrollProgress} reducedMotion={reducedMotion} />
+            <div className="relative z-10 flex h-full flex-col pt-[env(safe-area-inset-top)]">
+              <JourneyNav tabs={tabs} track={track} onSelect={selectTrack} />
+              <JourneyProgress stops={stops} activeIndex={activeIndex} stopProgress={stopProgress} onSelect={scrollToIndex} />
+              <section className="flex min-h-0 flex-1 flex-col justify-end gap-6 px-5 pb-[calc(1.5rem+env(safe-area-inset-bottom))] sm:px-10 lg:flex-row lg:items-end lg:gap-16 lg:pl-40 lg:pr-16 lg:pb-12">
+                <JourneyStopInfo stop={active} onOpen={open} stopProgress={stopProgress} reducedMotion={reducedMotion} />
+                {active.gallery && (
+                  <JourneyGallery key={active.id} items={active.gallery} stopProgress={stopProgress} reducedMotion={reducedMotion} />
+                )}
+              </section>
+            </div>
           </div>
         </div>
       </main>
       <AnimatePresence>
         {expanded && <JourneyExpanded stop={active} index={activeIndex} onClose={close} />}
       </AnimatePresence>
-    </LayoutGroup>
+    </>
   );
 };

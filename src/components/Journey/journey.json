@@ -19,7 +19,18 @@
       "period": "",
       "summary": "Where I'm from and where I started writing code for a living in 2020.",
       "body": "Born and raised in Buenos Aires. In 2020 I started building websites professionally, first for local clients, then remotely.",
-      "image": "/about/1.jpg"
+      "image": "/about/1.jpg",
+      "gallery": [
+        {
+          "image": "/about/2.jpg"
+        },
+        {
+          "image": "/about/3.jpg"
+        },
+        {
+          "image": "/about/4.jpg"
+        }
+      ]
     },
     {
       "id": "rome",
@@ -28,7 +39,18 @@
       "period": "",
       "summary": "First stop of a trip with two friends.",
       "body": "Left Argentina with two friends. Rome was the first city, working from cafés between walks.",
-      "image": "/about/2.jpg"
+      "image": "/about/2.jpg",
+      "gallery": [
+        {
+          "image": "/about/3.jpg"
+        },
+        {
+          "image": "/about/4.jpg"
+        },
+        {
+          "image": "/about/1.jpg"
+        }
+      ]
     },
     {
       "id": "madrid",
@@ -37,7 +59,18 @@
       "period": "",
       "summary": "Second European stop before heading to Asia.",
       "body": "A few weeks in Madrid, still travelling with the same two friends, before the jump to Southeast Asia.",
-      "image": "/about/3.jpg"
+      "image": "/about/3.jpg",
+      "gallery": [
+        {
+          "image": "/about/4.jpg"
+        },
+        {
+          "image": "/about/1.jpg"
+        },
+        {
+          "image": "/about/2.jpg"
+        }
+      ]
     },
     {
       "id": "bangkok",
@@ -46,7 +79,18 @@
       "period": "",
       "summary": "First stop in Asia. This is where the nomad chapter really began.",
       "body": "Bangkok was the entry point to Asia and the start of a fully remote routine: coworkings, night markets and shipping code across time zones.",
-      "image": "/about/4.jpg"
+      "image": "/about/4.jpg",
+      "gallery": [
+        {
+          "image": "/about/1.jpg"
+        },
+        {
+          "image": "/about/2.jpg"
+        },
+        {
+          "image": "/about/3.jpg"
+        }
+      ]
     },
     {
       "id": "japan",
@@ -55,7 +99,18 @@
       "period": "",
       "summary": "Trains, detail and quiet focus.",
       "body": "Japan set the bar for attention to detail. A lot of that ended up in how I build interfaces.",
-      "image": "/about/1.jpg"
+      "image": "/about/1.jpg",
+      "gallery": [
+        {
+          "image": "/about/2.jpg"
+        },
+        {
+          "image": "/about/3.jpg"
+        },
+        {
+          "image": "/about/4.jpg"
+        }
+      ]
     },
     {
       "id": "bali",
@@ -64,7 +119,18 @@
       "period": "",
       "summary": "Island life and long working sessions.",
       "body": "Bali mixed surf mornings with long afternoons of deep work.",
-      "image": "/about/2.jpg"
+      "image": "/about/2.jpg",
+      "gallery": [
+        {
+          "image": "/about/3.jpg"
+        },
+        {
+          "image": "/about/4.jpg"
+        },
+        {
+          "image": "/about/1.jpg"
+        }
+      ]
     },
     {
       "id": "vietnam",
@@ -73,7 +139,18 @@
       "period": "",
       "summary": "Home base today.",
       "body": "Da Nang is where I live and work now. Most of the projects on the other tab were built from here.",
-      "image": "/about/3.jpg"
+      "image": "/about/3.jpg",
+      "gallery": [
+        {
+          "image": "/about/4.jpg"
+        },
+        {
+          "image": "/about/1.jpg"
+        },
+        {
+          "image": "/about/2.jpg"
+        }
+      ]
     },
     {
       "id": "thailand",
@@ -82,7 +159,18 @@
       "period": "",
       "summary": "Back and forth from Vietnam.",
       "body": "Thailand keeps pulling me back between projects.",
-      "image": "/about/4.jpg"
+      "image": "/about/4.jpg",
+      "gallery": [
+        {
+          "image": "/about/1.jpg"
+        },
+        {
+          "image": "/about/2.jpg"
+        },
+        {
+          "image": "/about/3.jpg"
+        }
+      ]
     }
   ],
   "work": [
@@ -99,6 +187,17 @@
         "Next.js",
         "Postgres",
         "Stripe"
+      ],
+      "gallery": [
+        {
+          "image": "/showcase/hangout-before-desktop.webp"
+        },
+        {
+          "image": "/showcase/hangout-after-mobile.webp"
+        },
+        {
+          "image": "/showcase/hangout-before-mobile.webp"
+        }
       ]
     },
     {
@@ -114,6 +213,27 @@
         "Next.js",
         "Stripe",
         "Resend"
+      ],
+      "video": {
+        "desktop": "/videos/ecommerce.mp4",
+        "mobile": "/videos/ecommerce-mobile.mp4"
+      },
+      "gallery": [
+        {
+          "video": {
+            "desktop": "/videos/ecommerce.mp4",
+            "mobile": "/videos/ecommerce-mobile.mp4"
+          }
+        },
+        {
+          "image": "/videos/posters/ecommerce.webp"
+        },
+        {
+          "video": {
+            "desktop": "/videos/ecommerce-mobile.mp4",
+            "mobile": "/videos/ecommerce-mobile.mp4"
+          }
+        }
       ]
     },
     {
@@ -129,6 +249,27 @@
         "Next.js",
         "Motion",
         "Resend"
+      ],
+      "video": {
+        "desktop": "/videos/landing.mp4",
+        "mobile": "/videos/landing-mobile.mp4"
+      },
+      "gallery": [
+        {
+          "video": {
+            "desktop": "/videos/landing.mp4",
+            "mobile": "/videos/landing-mobile.mp4"
+          }
+        },
+        {
+          "image": "/videos/posters/landing.webp"
+        },
+        {
+          "video": {
+            "desktop": "/videos/landing-mobile.mp4",
+            "mobile": "/videos/landing-mobile.mp4"
+          }
+        }
       ]
     },
     {
@@ -143,6 +284,27 @@
       "tags": [
         "Next.js",
         "Supabase"
+      ],
+      "video": {
+        "desktop": "/videos/links.mp4",
+        "mobile": "/videos/links-mobile.mp4"
+      },
+      "gallery": [
+        {
+          "video": {
+            "desktop": "/videos/links.mp4",
+            "mobile": "/videos/links-mobile.mp4"
+          }
+        },
+        {
+          "image": "/videos/posters/links.webp"
+        },
+        {
+          "video": {
+            "desktop": "/videos/links-mobile.mp4",
+            "mobile": "/videos/links-mobile.mp4"
+          }
+        }
       ]
     }
   ]

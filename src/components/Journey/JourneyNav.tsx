@@ -14,7 +14,7 @@ export const JourneyNav = ({ tabs, track, onSelect }: JourneyNavProps) => (
   <header className="flex items-start justify-between gap-6 px-5 pt-6 sm:px-10 sm:pt-8 lg:px-16 lg:pt-10">
     <div className="flex flex-col gap-1">
       <h1 className="font-display text-xl text-journey-fg sm:text-2xl">Matías Zanan</h1>
-      <p className="hidden text-sm text-journey-muted sm:block">
+      <p className="hidden text-sm text-journey-fg/70 sm:block">
         Full-stack developer since 2020. From Buenos Aires to Southeast Asia.
       </p>
     </div>
@@ -29,7 +29,7 @@ export const JourneyNav = ({ tabs, track, onSelect }: JourneyNavProps) => (
             "border-b pb-1.5 transition-colors",
             track === tab.id
               ? "border-journey-fg text-journey-fg"
-              : "border-transparent text-journey-dim hover:text-journey-muted",
+              : "border-transparent text-journey-fg/55 hover:text-journey-fg/85",
           )}
         >
           {tab.label}
@@ -38,7 +38,7 @@ export const JourneyNav = ({ tabs, track, onSelect }: JourneyNavProps) => (
     </nav>
     <a
       href={`mailto:${CONTACT_EMAIL}`}
-      className="hidden text-sm font-medium text-journey-fg underline underline-offset-[5px] transition-colors hover:text-journey-muted sm:block"
+      className="hidden text-sm font-medium text-journey-fg underline underline-offset-[5px] transition-colors hover:text-journey-fg/70 sm:block"
     >
       Let&apos;s talk
     </a>

@@ -4,7 +4,6 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import { FaArrowRight, FaTimes } from "react-icons/fa";
 import { Pill } from "@/components/ui/Pill";
-import { JOURNEY_CARD_LAYOUT_ID } from "@/lib/journey";
 import type { JourneyStop } from "./useJourney";
 
 type JourneyExpandedProps = {
@@ -26,7 +25,10 @@ export const JourneyExpanded = ({ stop, index, onClose }: JourneyExpandedProps) 
     aria-label={stop.title}
   >
     <motion.div
-      layoutId={JOURNEY_CARD_LAYOUT_ID}
+      initial={{ opacity: 0, scale: 0.96, y: 16 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.98, y: 8 }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       onClick={(e) => e.stopPropagation()}
       className="relative flex h-full max-h-[720px] w-full max-w-6xl flex-col overflow-hidden rounded-3xl bg-journey-bg shadow-journey-card lg:flex-row"
     >

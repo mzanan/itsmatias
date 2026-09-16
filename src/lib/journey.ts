@@ -1,7 +1,5 @@
 import { URLS } from "@/lib/urls";
 
-export const JOURNEY_CARD_LAYOUT_ID = "journey-card";
-
 export type JourneyStop = {
   id: string;
   label: string;
@@ -13,7 +11,20 @@ export type JourneyStop = {
   url?: string;
   tags?: string[];
   stats?: JourneyStat[];
+  video?: JourneyVideo;
+  gallery?: JourneyMedia[];
 };
+
+export type JourneyMedia = { image: string; video?: undefined } | { video: JourneyVideo; image?: undefined };
+
+export const GALLERY_REVEAL: [number, number][] = [
+  [0.18, 0.34],
+  [0.34, 0.5],
+  [0.5, 0.66],
+];
+
+
+export type JourneyVideo = { desktop: string; mobile: string };
 
 export type JourneyStat = { value: string; label: string };
 
@@ -21,37 +32,6 @@ export type RawJourneyStop = Omit<JourneyStop, "url"> & { url?: keyof typeof URL
 
 export const resolveJourneyStops = (stops: RawJourneyStop[]): JourneyStop[] =>
   stops.map((stop) => ({ ...stop, url: stop.url ? URLS[stop.url] : undefined }));
-
-export type JourneyPoint = { x: number; y: number };
-
-export type JourneyGeometry = {
-  d: string;
-  points: JourneyPoint[];
-  segments: number;
-};
-
-export const buildJourneyGeometry = (
-  count: number,
-  width: number,
-  height: number,
-  padding = 8,
-): JourneyGeometry => {
-  const segments = Math.max(count - 1, 1);
-  const cx = width / 2;
-  const amplitude = width / 2 - padding;
-  const step = (height - padding * 2) / segments;
-  const points: JourneyPoint[] = Array.from({ length: count }, (_, i) => ({
-    x: cx - Math.sin((i * Math.PI) / 2) * amplitude,
-    y: padding + i * step,
-  }));
-  const d = points.reduce((acc, p, i) => {
-    if (i === 0) return `M${p.x} ${p.y}`;
-    const prev = points[i - 1];
-    const k = (p.y - prev.y) * 0.5;
-    return `${acc} C ${prev.x} ${prev.y + k}, ${p.x} ${p.y - k}, ${p.x} ${p.y}`;
-  }, "");
-  return { d, points, segments };
-};
 
 export const indexFromProgress = (progress: number, count: number): number => {
   if (count <= 1) return 0;
@@ -63,7 +43,26 @@ export const progressFromIndex = (index: number, count: number): number => {
   return index / count;
 };
 
-export const reachFromProgress = (progress: number, count: number): number => {
+export const stopProgressFromProgress = (progress: number, count: number): number => {
   if (count <= 1) return 0;
-  return Math.min(count - 1, Math.max(0, progress * count));
+  const scaled = Math.min(count - 0.0001, Math.max(0, progress * count));
+  return scaled - Math.floor(scaled);
+};
+
+export const CROSSFADE_FRACTION = 0.45;
+
+export type BackdropKeyframes = { opacityIn: number[]; opacityOut: number[]; scaleIn: number[]; scaleOut: number[] };
+
+export const backdropKeyframes = (index: number, count: number): BackdropKeyframes => {
+  const len = 1 / Math.max(count, 1);
+  const half = (len * CROSSFADE_FRACTION) / 2;
+  const start = index * len;
+  const end = (index + 1) * len;
+  const isFirst = index === 0;
+  const isLast = index === count - 1;
+  const opacityIn = [isFirst ? 0 : start - half, isFirst ? 0 : start + half, isLast ? 1 : end - half, isLast ? 1 : end + half];
+  const opacityOut = [isFirst ? 1 : 0, 1, 1, isLast ? 1 : 0];
+  const scaleIn = [isFirst ? 0 : start - half, isLast ? 1 : end + half];
+  const scaleOut = [1, 1.1];
+  return { opacityIn, opacityOut, scaleIn, scaleOut };
 };
