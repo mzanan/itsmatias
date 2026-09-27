@@ -4,8 +4,8 @@
     "label": "Money Tracker",
     "href": "https://money.itsmatias.com",
     "media": {
-      "kind": "image",
-      "src": "/work/money-tracker-card.webp"
+      "kind": "video",
+      "src": "/videos/money-tracker.mp4"
     },
     "className": "left-0 top-0 w-[min(calc(60cqh*16/9),78cqw)] aspect-video",
     "float": 7,
