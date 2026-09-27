@@ -30,4 +30,5 @@ Hereda el estándar transversal de `personal/CLAUDE.md` (reuse/SRP/DRY/tokens/es
 - Animation variants compartidas en `lib/motion.ts`.
 - Trabajo pesado del cliente (shaders en `lib/shaders.ts` montados por `hooks/useShaderCanvas.ts` + `lib/shaderCanvas.ts`, carga de videos en `useLazyVideo`) arranca después de `load` + idle vía `lib/idle.ts`. Nunca montarlo en la hidratación: bloqueaba el primer paint en prod hasta 2.7s.
 - Copy de Hero/Work/Lab/About: confirmar antes de tocar.
+- Before/after (`ui/BeforeAfter`): en mobile los iframes van a ancho nativo, nunca con `designWidth`. Con el layout de 1728px, dos iframes agotan la memoria de Safari iPhone y la pestaña se recarga (bug 2026-09-27).
 - Las tarjetas del hero usan imágenes propias (`public/work/*-card.webp`): next/image detecta el LCP por `src`, y compartirla con la instancia lazy de Work dispara el warning de LCP.
