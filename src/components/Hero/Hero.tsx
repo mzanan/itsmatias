@@ -55,8 +55,8 @@ const SPEED_DESKTOP = 90;
 const SPEED_MOBILE = 100;
 
 export const Hero = () => {
-  const vantaRef = useRef<HTMLDivElement>(null);
-  const { scrollIndicatorVariants } = useHero(vantaRef);
+  const wavesRef = useRef<HTMLDivElement>(null);
+  const { scrollIndicatorVariants } = useHero(wavesRef, posterFor(cards[0].src));
 
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -153,7 +153,7 @@ export const Hero = () => {
     >
       <h1 className="sr-only">Matias Zanan: Web Developer</h1>
       <div
-        ref={vantaRef}
+        ref={wavesRef}
         className="absolute inset-x-0 bottom-0 z-0 h-[70%] mask-[linear-gradient(to_bottom,transparent,black_45%)]"
       />
 

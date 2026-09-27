@@ -5,8 +5,8 @@ A modern, premium portfolio website built with Next.js, featuring smooth animati
 ## Features
 
 - **Modern Design**: Clean, minimal interface with premium aesthetics
-- **Interactive Background**: Vanta.js Waves animated background on hero section
-- **Smooth Animations**: Scroll-triggered animations using Framer Motion
+- **Interactive Background**: custom OGL (WebGL) waves shader on the hero, mounted after page load so it never delays the first paint
+- **Smooth Animations**: Scroll-triggered animations using Motion
 - **Snap Scroll**: Section-based snap scrolling for better UX
 - **Responsive**: Fully responsive design for all devices
 - **Contact Form**: Integrated contact form using Formspree
@@ -17,9 +17,8 @@ A modern, premium portfolio website built with Next.js, featuring smooth animati
 - **Framework**: Next.js 16
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
-- **Animations**: Framer Motion
-- **Background Effects**: Vanta.js (Waves)
-- **3D Graphics**: Three.js
+- **Animations**: Motion (`motion/react`)
+- **Background Effects**: OGL custom shader (`src/lib/heroWaves.ts`)
 - **Icons**: React Icons
 - **UI Components**: ShadCN UI
 - **Form Handling**: Formspree
@@ -36,7 +35,7 @@ src/
 │   ├── About/              # About section (component + hook)
 │   ├── Contact/            # Contact section with form (component + hook)
 │   ├── Header/             # Navigation header (component + hook)
-│   ├── Hero/               # Hero section with Vanta.js background (component + hook)
+│   ├── Hero/               # Hero section with the OGL waves background (component + hook)
 │   ├── ProjectShowcase/    # Individual project showcase (component + hook)
 │   ├── ProjectsShowcase/   # Projects container (component + hook)
 │   └── ui/                 # UI components (ShadCN)
@@ -114,10 +113,11 @@ This separation ensures:
 
 Each component has its own hook file located in the same directory:
 - `useHeader`: Manages header scroll state and navigation
-- `useHero`: Initializes Vanta.js Waves background and manages hero animations
+- `useHero`: Preloads the hero LCP poster and mounts the OGL waves (`lib/heroWaves.ts`) after load + idle (`lib/idle.ts`)
 - `useAbout`: Manages about section data, animations, and scroll
 - `useContact`: Handles contact form state and submission
-- `useProjectShowcase`: Manages project showcase animations and video controls
+- `useProjectShowcase`: Manages project showcase entrance animations
+- `useLazyVideo`: Loads, plays and pauses videos by visibility, starting after load + idle
 - `useProjectsShowcase`: Provides project data
 
 ## Styling

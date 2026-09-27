@@ -1,11 +1,11 @@
-import confetti from "canvas-confetti";
-
 const PLATINUM_COLORS = ["#ffffff", "#f1f5f9", "#cbd5e1", "#94a3b8"];
 
-export const fireConfetti = () => {
+export const fireConfetti = async () => {
   if (typeof window === "undefined") return;
+  const confettiModule = await import("canvas-confetti").catch(() => null);
+  if (!confettiModule) return;
+  const confetti = confettiModule.default;
 
-  // Central burst: big, satisfying pop
   confetti({
     particleCount: 90,
     spread: 110,
@@ -16,7 +16,6 @@ export const fireConfetti = () => {
     ticks: 220,
   });
 
-  // Left + right cannons shoot toward center a moment later
   window.setTimeout(() => {
     confetti({
       particleCount: 55,
