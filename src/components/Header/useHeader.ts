@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 
-const SECTION_IDS = ["home", "projects", "about", "contact"] as const;
+const SECTION_IDS = ["home", "work", "lab", "about", "contact"] as const;
 type SectionId = (typeof SECTION_IDS)[number];
 
 export const useHeader = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isInHero, setIsInHero] = useState(true);
-    const [activeSection, setActiveSection] = useState<SectionId>("home");
+    const [activeSection, setActiveSection] = useState<string>("home");
 
     useEffect(() => {
         const mainElement = document.querySelector("main");

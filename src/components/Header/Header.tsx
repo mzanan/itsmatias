@@ -1,14 +1,16 @@
 "use client"
 
+import Link from "next/link"
 import { useHeader } from "./useHeader"
 import { Share } from "@/components/Share/Share"
 import { ShareHint } from "./ShareHint"
 
 const NAV_ITEMS = [
-  { label: "Home", id: "home" },
-  { label: "Projects", id: "projects" },
-  { label: "About", id: "about" },
-  { label: "Contact", id: "contact" },
+  { label: "Work", id: "work", href: "/#work" },
+  { label: "Lab", id: "lab", href: "/#lab" },
+  { label: "About", id: "about", href: "/#about" },
+  { label: "Contact", id: "contact", href: "/#contact" },
+  { label: "Templates", id: "templates", href: "/templates" },
 ] as const
 
 export const Header = () => {
@@ -22,21 +24,21 @@ export const Header = () => {
         }`}
     >
       <nav className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
-        <a
-          href="#home"
+        <Link
+          href="/"
           className="text-lg font-bold gradient-text transition-all hover:opacity-80"
         >
           itsmatias
-        </a>
+        </Link>
         <div className="flex items-center gap-4 md:gap-8">
           <div className="hidden md:flex items-center gap-4 md:gap-8">
-            {NAV_ITEMS.map(({ label, id }) => {
+            {NAV_ITEMS.map(({ label, id, href }) => {
               const isActive = activeSection === id
               const baseColor = isInHero ? "text-white/70" : "text-muted-foreground"
               return (
-                <a
+                <Link
                   key={id}
-                  href={`#${id}`}
+                  href={href}
                   aria-current={isActive ? "page" : undefined}
                   className={`relative text-sm font-medium transition-all duration-300 hover:scale-105 ${
                     isActive
@@ -50,7 +52,7 @@ export const Header = () => {
                       isActive ? "w-full opacity-100" : "w-0 opacity-0"
                     }`}
                   />
-                </a>
+                </Link>
               )
             })}
           </div>

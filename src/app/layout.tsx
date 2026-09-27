@@ -16,9 +16,9 @@ const geistMono = Geist_Mono({
 
 const SITE_URL = URLS.site;
 const SITE_NAME = "itsmatias";
-const SITE_TITLE = "Matias Zanan: Web Developer";
+const SITE_TITLE = "Matias Zanan: Design Engineer";
 const SITE_DESCRIPTION =
-  "I build production websites end-to-end: design, code, deploy. Remote, traveling, made with care. Hi, I'm Matias.";
+  "Design engineer. I design and build interfaces end to end: design tokens, motion and the production code behind them.";
 const PERSON_NAME = "Matias Zanan";
 
 const jsonLd = {
@@ -30,7 +30,7 @@ const jsonLd = {
       name: PERSON_NAME,
       url: SITE_URL,
       image: `${SITE_URL}/opengraph-image`,
-      jobTitle: "Web Developer",
+      jobTitle: "Design Engineer",
       description: SITE_DESCRIPTION,
       sameAs: [
         "https://linkedin.com/in/matiaszanan",
@@ -63,6 +63,7 @@ export const metadata: Metadata = {
   keywords: [
     "Matias Zanan",
     "itsmatias",
+    "design engineer",
     "web developer",
     "freelance web developer",
     "Next.js developer",
