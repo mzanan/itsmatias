@@ -18,12 +18,19 @@ export const Work = () => (
         />
         <WorkCard item={lead} fit="always" />
       </div>
-      <div className="grid grid-cols-1 gap-x-8 gap-y-16 pt-16 pb-24 md:snap-start md:grid-cols-2 md:gap-y-24 md:pb-32">
-        {grid.map((item) => (
-          <WorkCard key={item.id} item={item} />
-        ))}
+      <div className="flex flex-col gap-16 pt-16 pb-24 md:gap-24 md:pb-32">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-16 md:snap-start md:scroll-mt-24 md:grid-cols-2">
+          {grid.map((item) => (
+            <WorkCard key={item.id} item={item} />
+          ))}
+        </div>
         {closing.map((item) => (
-          <WorkCard key={item.id} item={item} />
+          <WorkCard
+            key={item.id}
+            item={item}
+            fit="desktop"
+            className="md:h-[calc(100dvh-8rem)] md:snap-start md:scroll-mt-24"
+          />
         ))}
       </div>
     </div>
