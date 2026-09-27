@@ -2,7 +2,9 @@ const PLATINUM_COLORS = ["#ffffff", "#f1f5f9", "#cbd5e1", "#94a3b8"];
 
 export const fireConfetti = async () => {
   if (typeof window === "undefined") return;
-  const { default: confetti } = await import("canvas-confetti");
+  const confettiModule = await import("canvas-confetti").catch(() => null);
+  if (!confettiModule) return;
+  const confetti = confettiModule.default;
 
   confetti({
     particleCount: 90,
