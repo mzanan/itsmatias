@@ -13,36 +13,16 @@ const frame = cn(
   "group relative block transition-colors duration-300 hover:border-white/25"
 );
 
-type Fit = "always" | "desktop";
+type Props = { item: WorkItem };
 
-const fitClasses: Record<
-  Fit,
-  { article: string; stage: string; media: string }
-> = {
-  always: {
-    article: "min-h-0 flex-1",
-    stage: "flex min-h-0 flex-1 items-end [container-type:size]",
-    media: "w-[min(100cqw,calc(100cqh*16/9))]",
-  },
-  desktop: {
-    article: "md:min-h-0 md:flex-1",
-    stage: "md:flex md:min-h-0 md:flex-1 md:items-end md:[container-type:size]",
-    media: "md:w-[min(100cqw,calc(100cqh*16/9))]",
-  },
-};
-
-type Props = { item: WorkItem; fit?: Fit; className?: string };
-
-export const WorkCard = ({ item, fit, className }: Props) => {
-  const fitted = fit ? fitClasses[fit] : undefined;
+export const WorkCard = ({ item }: Props) => {
   const isComparison = item.media.kind === "beforeAfter";
   const sizes = item.featured
     ? "(max-width: 768px) 100vw, 1152px"
     : "(max-width: 768px) 100vw, 560px";
   const aspect = cn(
     "aspect-video",
-    isComparison && "aspect-[4/5] sm:aspect-video",
-    fitted?.media
+    isComparison && "aspect-[4/5] sm:aspect-video"
   );
 
   return (
@@ -53,28 +33,25 @@ export const WorkCard = ({ item, fit, className }: Props) => {
       viewport={{ once: true, amount: 0.25 }}
       className={cn(
         "flex flex-col gap-5",
-        item.featured && "md:col-span-2",
-        fitted?.article,
-        className
+        item.featured &&
+          "md:col-span-2 md:w-[min(100%,calc((100dvh-18rem)*16/9))]"
       )}
     >
-      <div className={fitted?.stage}>
-        {isComparison ? (
-          <div className={cn(frame, aspect)}>
-            <Media media={item.media} title={item.title} sizes={sizes} />
-          </div>
-        ) : (
-          <a
-            href={item.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Open ${item.title}`}
-            className={cn(frame, aspect)}
-          >
-            <Media media={item.media} title={item.title} sizes={sizes} />
-          </a>
-        )}
-      </div>
+      {isComparison ? (
+        <div className={cn(frame, aspect)}>
+          <Media media={item.media} title={item.title} sizes={sizes} />
+        </div>
+      ) : (
+        <a
+          href={item.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Open ${item.title}`}
+          className={cn(frame, aspect)}
+        >
+          <Media media={item.media} title={item.title} sizes={sizes} />
+        </a>
+      )}
 
       <div
         className={cn(
