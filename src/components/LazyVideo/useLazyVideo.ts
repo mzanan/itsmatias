@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import { runAfterLoadWhenIdle } from "@/lib/idle";
 
+const PLAY_THRESHOLD = 0.25;
+
 export const useLazyVideo = (src: string, playbackRate: number) => {
   const ref = useRef<HTMLVideoElement>(null);
 
@@ -42,16 +44,19 @@ export const useLazyVideo = (src: string, playbackRate: number) => {
         { rootMargin: "50% 0px" },
       );
 
-      playbackIo = new IntersectionObserver((entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            load();
-            el.play().catch(() => {});
-          } else {
-            el.pause();
+      playbackIo = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.intersectionRatio >= PLAY_THRESHOLD) {
+              load();
+              el.play().catch(() => {});
+            } else {
+              el.pause();
+            }
           }
-        }
-      });
+        },
+        { threshold: [0, PLAY_THRESHOLD] },
+      );
 
       loadIo.observe(el);
       playbackIo.observe(el);
