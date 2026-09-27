@@ -34,7 +34,7 @@ export const WorkCard = ({ item }: Props) => {
       className={cn(
         "flex flex-col gap-5",
         item.featured &&
-          "md:col-span-2 md:w-[min(100%,calc((100dvh-18rem)*16/9))]"
+          "@container md:col-span-2 md:w-[min(100%,calc((100dvh-18rem)*16/9))] md:justify-self-center"
       )}
     >
       {isComparison ? (
@@ -57,7 +57,7 @@ export const WorkCard = ({ item }: Props) => {
         className={cn(
           "flex shrink-0 flex-col gap-3",
           item.featured &&
-            "md:flex-row md:items-start md:justify-between md:gap-10"
+            "@3xl:flex-row @3xl:items-start @3xl:justify-between @3xl:gap-10"
         )}
       >
         <div className="flex max-w-xl flex-col gap-2">
@@ -82,7 +82,7 @@ export const WorkCard = ({ item }: Props) => {
         <dl
           className={cn(
             "grid shrink-0 grid-cols-[auto_1fr] gap-x-4 gap-y-1 font-mono text-xs text-muted-foreground",
-            item.featured && "md:min-w-56"
+            item.featured && "@3xl:min-w-56"
           )}
         >
           <dt className="text-foreground/40">Role</dt>
