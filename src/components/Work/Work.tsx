@@ -7,7 +7,7 @@ import type { WorkItem } from "./types";
 const items = workData as WorkItem[];
 
 export const Work = () => (
-  <section id="work" className="w-full px-6 py-24 md:px-10 md:py-32">
+  <section id="work" className="w-full snap-start px-6 py-24 md:px-10 md:py-32">
     <div className="mx-auto flex max-w-6xl flex-col gap-14 md:gap-20">
       <FadeIn>
         <SectionHeader
