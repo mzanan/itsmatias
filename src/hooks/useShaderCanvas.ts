@@ -25,11 +25,15 @@ export const useShaderCanvas = (
         import("@/lib/shaderCanvas"),
         import("@/lib/shaders"),
       ]);
-      if (!cancelled)
+      if (cancelled) return;
+      try {
         unmount = mountShader(container, SHADER_FRAGMENTS[shader], {
           maxDpr,
           fps,
         });
+      } catch {
+        unmount = undefined;
+      }
     });
 
     return () => {
