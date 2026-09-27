@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { runAfterLoadWhenIdle } from "@/lib/idle";
+import { getScrollParent } from "@/lib/scroll";
 
 const PLAY_THRESHOLD = 0.25;
 
@@ -41,7 +42,7 @@ export const useLazyVideo = (src: string, playbackRate: number) => {
             loadIo?.disconnect();
           }
         },
-        { rootMargin: "50% 0px" },
+        { root: getScrollParent(el), rootMargin: "50% 0px" },
       );
 
       playbackIo = new IntersectionObserver(
