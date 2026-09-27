@@ -16,7 +16,8 @@ const NAV_ITEMS = [
 const SECONDARY_LINK = { label: "Templates", href: "/templates" } as const
 
 export const Header = () => {
-  const { isScrolled, isInHero, activeSection, scrollToTop } = useHeader()
+  const { isScrolled, isInHero, activeSection, scrollToTop, pathname } = useHeader()
+  const isSecondaryActive = pathname === SECONDARY_LINK.href
 
   return (
     <header
@@ -67,9 +68,19 @@ export const Header = () => {
             <span aria-hidden className="h-4 w-px bg-white/15" />
             <Link
               href={SECONDARY_LINK.href}
-              className="text-sm text-muted-foreground/70 transition-colors hover:text-white"
+              aria-current={isSecondaryActive ? "page" : undefined}
+              className={cn(
+                "relative text-sm transition-colors hover:text-white",
+                isSecondaryActive ? "text-white" : "text-muted-foreground/70"
+              )}
             >
               {SECONDARY_LINK.label}
+              <span
+                className={cn(
+                  "pointer-events-none absolute -bottom-1 left-0 h-0.5 rounded-full bg-current transition-all duration-300",
+                  isSecondaryActive ? "w-full opacity-100" : "w-0 opacity-0"
+                )}
+              />
             </Link>
           </div>
           <div className="relative">
