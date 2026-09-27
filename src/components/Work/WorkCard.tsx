@@ -21,12 +21,12 @@ const fitClasses: Record<
 > = {
   always: {
     article: "min-h-0 flex-1",
-    stage: "[container-type:size] min-h-0 flex-1",
+    stage: "flex min-h-0 flex-1 items-end [container-type:size]",
     media: "w-[min(100cqw,calc(100cqh*16/9))]",
   },
   desktop: {
     article: "md:min-h-0 md:flex-1",
-    stage: "md:[container-type:size] md:min-h-0 md:flex-1",
+    stage: "md:flex md:min-h-0 md:flex-1 md:items-end md:[container-type:size]",
     media: "md:w-[min(100cqw,calc(100cqh*16/9))]",
   },
 };
