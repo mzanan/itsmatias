@@ -16,7 +16,7 @@ export const Lab = () => {
   return (
     <section
       id="lab"
-      className="flex h-dvh w-full snap-start flex-col px-6 pt-24 pb-8 md:px-10 md:pt-28 md:pb-12"
+      className="flex min-h-dvh w-full snap-start flex-col px-6 pt-24 pb-8 md:px-10 md:pt-28 md:pb-12"
     >
       <div className="mx-auto flex min-h-0 w-full max-w-6xl flex-1 flex-col gap-8 md:gap-10">
         <FadeIn className="shrink-0">
