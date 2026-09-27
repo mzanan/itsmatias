@@ -9,7 +9,7 @@ import type { WorkItem } from "./types";
 const [lead, ...rest] = workData as WorkItem[];
 
 export const Work = () => (
-  <section id="work" className="w-full snap-start px-6 md:px-10 md:py-32">
+  <section id="work" className="w-full px-6 md:snap-start md:px-10 md:py-32">
     <div className="mx-auto grid max-w-6xl grid-cols-1 gap-x-8 md:grid-cols-2 md:gap-y-24">
       <div data-slide className={cn(mobileSlide, "max-md:gap-8 md:contents")}>
         <FadeIn className="md:col-span-2 md:-mb-4">

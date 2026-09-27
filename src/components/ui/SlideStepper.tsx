@@ -1,6 +1,6 @@
 "use client";
 
-import { useActiveSlide } from "@/hooks/useActiveSlide";
+import { useActiveSlide } from "./useActiveSlide";
 import { SLIDE_SELECTOR } from "@/lib/slide";
 import { cn } from "@/lib/utils";
 
