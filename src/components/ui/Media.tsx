@@ -26,7 +26,7 @@ export const Media = ({ media, title, sizes, eager = false }: Props) => {
         src={media.mobileVideo}
         poster={posterFor(media.mobileVideo)}
         playbackRate={1.25}
-        className="h-full w-full object-cover object-top"
+        className="h-full w-full object-cover"
       />
     );
   }

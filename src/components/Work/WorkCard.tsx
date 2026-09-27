@@ -22,7 +22,6 @@ export const WorkCard = ({ item }: Props) => {
     : "(max-width: 768px) 100vw, 560px";
   const aspect = cn(
     "aspect-video",
-    isComparison && "aspect-[4/5] sm:aspect-video",
     item.featured && "md:w-[min(100%,calc((100dvh-18rem)*16/9))] md:shrink-0"
   );
 
