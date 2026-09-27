@@ -27,4 +27,5 @@ Hereda el estándar transversal de `personal/CLAUDE.md` (reuse/SRP/DRY/tokens/es
 
 - Videos en `/public/videos/` (mobile/desktop por proyecto); poster `.webp` derivado vía `lib/video.ts` (`posterFor`).
 - Animation variants compartidas en `lib/motion.ts`.
+- Trabajo pesado del cliente (WebGL del hero en `lib/heroWaves.ts`, carga de videos en `useLazyVideo`) arranca después de `load` + idle vía `lib/idle.ts`. Nunca montarlo en la hidratación: bloqueaba el primer paint en prod hasta 2.7s.
 - Copy de Hero/About/Projects: confirmar antes de tocar.
