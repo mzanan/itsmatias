@@ -60,7 +60,10 @@ export const HeroStack = ({ className }: { className?: string }) => {
           }
           transition={{ type: "spring", stiffness: 260, damping: 24 }}
           whileHover={{ scale: 1.2, rotate: 0, zIndex: 20 }}
-          className={cn("group absolute block", card.className)}
+          className={cn(
+            "group absolute block [@media(hover:none)]:pointer-events-none",
+            card.className
+          )}
         >
           <motion.div
             animate={{ y: [0, -6, 0] }}
