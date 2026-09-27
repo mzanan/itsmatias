@@ -15,9 +15,9 @@ export const Lab = () => {
   return (
     <section
       id="lab"
-      className="w-full snap-start px-6 py-24 md:px-10 md:py-32"
+      className="flex h-dvh w-full snap-start flex-col px-6 pt-24 pb-8 md:px-10 md:pt-28 md:pb-12"
     >
-      <div className="mx-auto flex max-w-6xl flex-col gap-12 md:gap-16">
+      <div className="mx-auto flex min-h-0 w-full max-w-6xl flex-1 flex-col gap-8 md:gap-10">
         <SectionHeader
           index="02"
           label="Lab"
@@ -28,7 +28,7 @@ export const Lab = () => {
         <div
           className={cn(
             surface(),
-            "relative aspect-4/5 sm:aspect-video w-full"
+            "relative min-h-48 w-full flex-1"
           )}
         >
           <div
@@ -95,7 +95,7 @@ export const Lab = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+        <div className="flex shrink-0 flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <p className="max-w-2xl text-sm text-muted-foreground leading-relaxed text-pretty">
             The lab compared bundle size and GPU frame time across three
             renderers. This page applies the result: a 10 KB WebGL layer instead
