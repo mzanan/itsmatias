@@ -82,7 +82,8 @@
         "posterMobile": "/showcase/hangout-after-mobile.webp",
         "alt": "Nomad Events redesign"
       },
-      "designWidth": 1728
+      "designWidth": 1728,
+      "mobileVideo": "/videos/nomad-events.mp4"
     }
   }
 ]

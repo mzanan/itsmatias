@@ -20,6 +20,17 @@ const DESKTOP_QUERY = "(min-width: 768px)";
 export const Media = ({ media, title, sizes, eager = false }: Props) => {
   const isDesktop = useMediaQuery(DESKTOP_QUERY);
 
+  if (media.kind === "beforeAfter" && !isDesktop && media.mobileVideo) {
+    return (
+      <LazyVideo
+        src={media.mobileVideo}
+        poster={posterFor(media.mobileVideo)}
+        playbackRate={1.25}
+        className="h-full w-full object-cover"
+      />
+    );
+  }
+
   if (media.kind === "beforeAfter") {
     return (
       <BeforeAfter
