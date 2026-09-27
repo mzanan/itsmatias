@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useReducedMotion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
+import { useInView, useReducedMotion } from "motion/react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { stackPhase } from "@/lib/heroStack";
 
@@ -11,7 +11,9 @@ export const useHeroStack = (count: number) => {
   const [step, setStep] = useState(0);
   const isTouch = useMediaQuery(TOUCH_QUERY);
   const reducedMotion = useReducedMotion();
-  const autoplay = isTouch && !reducedMotion;
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref);
+  const autoplay = isTouch && !reducedMotion && inView;
 
   useEffect(() => {
     if (!autoplay) return;
@@ -22,6 +24,7 @@ export const useHeroStack = (count: number) => {
   const phase = autoplay ? stackPhase(step, count) : null;
 
   return {
+    ref,
     open: phase ? phase.open : hovered,
     focus: phase ? phase.focus : null,
     onHoverStart: () => setHovered(true),

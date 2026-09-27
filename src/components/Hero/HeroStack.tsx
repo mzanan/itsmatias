@@ -24,10 +24,13 @@ type StackCard = {
 const cards = stackData as StackCard[];
 
 export const HeroStack = ({ className }: { className?: string }) => {
-  const { open, focus, onHoverStart, onHoverEnd } = useHeroStack(cards.length);
+  const { ref, open, focus, onHoverStart, onHoverEnd } = useHeroStack(
+    cards.length
+  );
 
   return (
     <motion.div
+      ref={ref}
       variants={fadeInUp}
       onHoverStart={onHoverStart}
       onHoverEnd={onHoverEnd}
