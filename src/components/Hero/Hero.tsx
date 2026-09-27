@@ -8,19 +8,22 @@ import { fadeInUp, staggerContainer } from "@/lib/motion";
 import { URLS } from "@/lib/urls";
 import { HeroStack } from "./HeroStack";
 import { useHero } from "./useHero";
+import { useHeroSnap } from "./useHeroSnap";
 
 const STACK = ["Next.js", "React", "TypeScript", "Tailwind", "WebGL"];
 const LOCATION = { city: "Da Nang, Vietnam", timeZone: "Asia/Ho_Chi_Minh" };
 const CURRENTLY = { label: "Money Tracker", href: URLS.money };
+const SNAP_THRESHOLD = 0.5;
 
 export const Hero = () => {
   const shaderRef = useShaderCanvas("hero");
   const { clock } = useHero(LOCATION.timeZone);
+  useHeroSnap("work", SNAP_THRESHOLD);
 
   return (
     <section
       id="home"
-      className="relative h-dvh w-full snap-start overflow-hidden"
+      className="relative h-dvh w-full overflow-hidden"
     >
       <div ref={shaderRef} aria-hidden className="absolute inset-0 z-0" />
       <div
