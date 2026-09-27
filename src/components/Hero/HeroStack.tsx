@@ -24,7 +24,7 @@ type StackCard = {
 const cards = stackData as StackCard[];
 
 export const HeroStack = ({ className }: { className?: string }) => {
-  const { open, onHoverStart, onHoverEnd } = useHeroStack();
+  const { open, focus, onHoverStart, onHoverEnd } = useHeroStack(cards.length);
 
   return (
     <motion.div
@@ -41,11 +41,23 @@ export const HeroStack = ({ className }: { className?: string }) => {
           rel="noopener noreferrer"
           aria-label={`Open ${card.label}`}
           initial={{ rotate: card.rotate }}
-          animate={{
-            rotate: open ? card.rotate * 1.6 : card.rotate,
-            x: open ? card.spread.x : 0,
-            y: open ? card.spread.y : 0,
-          }}
+          animate={
+            focus === i
+              ? {
+                  rotate: 0,
+                  scale: 1.2,
+                  zIndex: 20,
+                  x: card.spread.x,
+                  y: card.spread.y,
+                }
+              : {
+                  rotate: open ? card.rotate * 1.6 : card.rotate,
+                  scale: 1,
+                  zIndex: 0,
+                  x: open ? card.spread.x : 0,
+                  y: open ? card.spread.y : 0,
+                }
+          }
           transition={{ type: "spring", stiffness: 260, damping: 24 }}
           whileHover={{ scale: 1.2, rotate: 0, zIndex: 20 }}
           className={cn("group absolute block", card.className)}
