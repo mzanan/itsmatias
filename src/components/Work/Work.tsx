@@ -18,7 +18,7 @@ export const Work = () => (
         />
         <WorkCard item={lead} fit="always" />
       </div>
-      <div className="grid grid-cols-1 gap-x-8 gap-y-16 pt-16 pb-24 md:grid-cols-2 md:gap-y-24 md:pb-32">
+      <div className="grid grid-cols-1 gap-x-8 gap-y-16 pt-16 pb-24 md:snap-start md:grid-cols-2 md:gap-y-24 md:pb-32">
         {grid.map((item) => (
           <WorkCard key={item.id} item={item} />
         ))}
