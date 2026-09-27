@@ -5,9 +5,12 @@ A modern, premium portfolio website built with Next.js, featuring smooth animati
 ## Features
 
 - **Modern Design**: Clean, minimal interface with premium aesthetics
-- **Interactive Background**: custom OGL (WebGL) waves shader on the hero, mounted after page load so it never delays the first paint
+- **Interactive Background**: custom OGL (WebGL) fbm shader on the hero, mounted after page load so it never delays the first paint
+- **Project fan**: hero cards of live projects that spread on hover
+- **Lab**: four live GLSL shaders ported from the `labs` repo (p4-shader-page-cost)
+- **Templates**: the sellable websites live at `/templates` (Polar checkout)
 - **Smooth Animations**: Scroll-triggered animations using Motion
-- **Snap Scroll**: Section-based snap scrolling for better UX
+- **Snap Scroll**: proximity snap on the home sections
 - **Responsive**: Fully responsive design for all devices
 - **Contact Form**: Integrated contact form using Formspree
 - **Performance Optimized**: Built with Next.js for optimal performance
@@ -18,7 +21,7 @@ A modern, premium portfolio website built with Next.js, featuring smooth animati
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **Animations**: Motion (`motion/react`)
-- **Background Effects**: OGL custom shader (`src/lib/heroWaves.ts`)
+- **Background Effects**: OGL shaders (`src/lib/shaders.ts`, mounted by `src/lib/shaderCanvas.ts`)
 - **Icons**: React Icons
 - **UI Components**: ShadCN UI
 - **Form Handling**: Formspree
@@ -35,9 +38,11 @@ src/
 │   ├── About/              # About section (component + hook)
 │   ├── Contact/            # Contact section with form (component + hook)
 │   ├── Header/             # Navigation header (component + hook)
-│   ├── Hero/               # Hero section with the OGL waves background (component + hook)
-│   ├── ProjectShowcase/    # Individual project showcase (component + hook)
-│   ├── ProjectsShowcase/   # Projects container (component + hook)
+│   ├── Hero/               # Hero with shader background, project fan and info column
+│   ├── Work/               # Selected work grid (data in work.json)
+│   ├── Lab/                # Live shader lab
+│   ├── ProjectShowcase/    # Template showcase used by /templates
+│   ├── ProjectsShowcase/   # Template list used by /templates
 │   └── ui/                 # UI components (ShadCN)
 ├── types/                  # TypeScript type definitions
 │   └── vanta.d.ts          # Vanta.js type definitions
@@ -113,12 +118,15 @@ This separation ensures:
 
 Each component has its own hook file located in the same directory:
 - `useHeader`: Manages header scroll state and navigation
-- `useHero`: Preloads the hero LCP poster and mounts the OGL waves (`lib/heroWaves.ts`) after load + idle (`lib/idle.ts`)
+- `useShaderCanvas` (`hooks/`): mounts an OGL shader after load + idle (`lib/idle.ts`), used by Hero and Lab
+- `useHero`: live local clock for the hero info column
+- `useHeroStack`: hover state that spreads the project fan
+- `useLab`: selected lab shader
 - `useAbout`: Manages about section data, animations, and scroll
 - `useContact`: Handles contact form state and submission
 - `useProjectShowcase`: Manages project showcase entrance animations
 - `useLazyVideo`: Loads, plays and pauses videos by visibility, starting after load + idle
-- `useProjectsShowcase`: Provides project data
+- `useProjectsShowcase`: Provides template data for `/templates`
 
 ## Styling
 
