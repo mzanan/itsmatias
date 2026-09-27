@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, type MouseEvent } from "react";
+import { usePathname } from "next/navigation";
 
 const SECTION_IDS = ["home", "work", "lab", "about", "contact"] as const;
 type SectionId = (typeof SECTION_IDS)[number];
@@ -7,6 +8,15 @@ export const useHeader = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isInHero, setIsInHero] = useState(true);
     const [activeSection, setActiveSection] = useState<SectionId>("home");
+    const pathname = usePathname();
+
+    const scrollToTop = (event: MouseEvent<HTMLAnchorElement>) => {
+        if (pathname !== "/") return;
+        const mainElement = document.querySelector("main");
+        if (!mainElement) return;
+        event.preventDefault();
+        mainElement.scrollTo({ top: 0, behavior: "smooth" });
+    };
 
     useEffect(() => {
         const mainElement = document.querySelector("main");
@@ -40,9 +50,7 @@ export const useHeader = () => {
 
         const observer = new IntersectionObserver(
             (entries) => {
-                const visible = entries
-                    .filter((e) => e.isIntersecting)
-                    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+                const visible = entries.find((e) => e.isIntersecting);
                 if (!visible) return;
 
                 const id = visible.target.id as SectionId;
@@ -58,7 +66,8 @@ export const useHeader = () => {
             },
             {
                 root: mainElement,
-                threshold: [0.4, 0.6],
+                rootMargin: "-50% 0px -50% 0px",
+                threshold: 0,
             }
         );
 
@@ -66,5 +75,5 @@ export const useHeader = () => {
         return () => observer.disconnect();
     }, []);
 
-    return { isScrolled, isInHero, activeSection };
+    return { isScrolled, isInHero, activeSection, scrollToTop };
 };

@@ -47,7 +47,10 @@ export const Contact = () => {
         className="container mx-auto max-w-6xl relative z-10 w-full"
       >
         {/* ====================== MOBILE ====================== */}
-        <div className="md:hidden flex flex-col gap-8">
+        <motion.div
+          variants={containerVariants}
+          className="md:hidden flex flex-col gap-8"
+        >
           <motion.div variants={itemVariants}>
             <Title>Let&apos;s talk.</Title>
             <p className="mt-4 text-subtitle text-muted-foreground leading-relaxed">
@@ -147,10 +150,13 @@ export const Contact = () => {
               </li>
             ))}
           </motion.ul>
-        </div>
+        </motion.div>
 
         {/* ====================== DESKTOP ====================== */}
-        <div className="hidden md:grid md:grid-cols-[1fr_auto] gap-12 lg:gap-16 items-end">
+        <motion.div
+          variants={containerVariants}
+          className="hidden md:grid md:grid-cols-[1fr_auto] gap-12 lg:gap-16 items-end"
+        >
           <div className="flex flex-col gap-10 lg:gap-12">
             {/* Top: heading */}
             <motion.div variants={itemVariants}>
@@ -267,7 +273,7 @@ export const Contact = () => {
               </li>
             ))}
           </motion.ul>
-        </div>
+        </motion.div>
       </motion.div>
     </section>
   );

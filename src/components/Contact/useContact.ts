@@ -59,7 +59,7 @@ export const useContact = () => {
   const submitStatus = state.succeeded ? "success" : state.errors ? "error" : "idle";
 
   const ref = useRef<HTMLElement>(null);
-  const isInView = useInView(ref, { margin: "-20% 0px", once: false });
+  const isInView = useInView(ref, { amount: 0.25, once: false });
 
   return {
     contact,
