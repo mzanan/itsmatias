@@ -13,7 +13,7 @@ export default function TemplatesPage() {
   return (
     <>
       <Header />
-      <main className="snap-y snap-proximity overflow-y-scroll overflow-x-hidden h-[100dvh] w-full">
+      <main className="md:snap-y md:snap-proximity overflow-y-scroll overflow-x-hidden h-[100dvh] w-full">
         <ProjectsShowcase />
       </main>
     </>

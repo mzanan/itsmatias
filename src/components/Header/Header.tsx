@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils"
 import { useHeader } from "./useHeader"
 import { Share } from "@/components/Share/Share"
 import { ShareHint } from "./ShareHint"
+import { NavLink } from "./NavLink"
 
 const NAV_ITEMS = [
   { label: "Work", id: "work", href: "/#work" },
@@ -16,7 +17,8 @@ const NAV_ITEMS = [
 const SECONDARY_LINK = { label: "Templates", href: "/templates" } as const
 
 export const Header = () => {
-  const { isScrolled, isInHero, activeSection, scrollToTop } = useHeader()
+  const { isScrolled, isInHero, activeSection, scrollToTop, pathname } = useHeader()
+  const isSecondaryActive = pathname === SECONDARY_LINK.href
 
   return (
     <header
@@ -42,35 +44,25 @@ export const Header = () => {
         </Link>
         <div className="flex items-center gap-4 md:gap-8">
           <div className="hidden md:flex items-center gap-4 md:gap-8">
-            {NAV_ITEMS.map(({ label, id, href }) => {
-              const isActive = activeSection === id
-              const baseColor = isInHero ? "text-white/70" : "text-muted-foreground"
-              return (
-                <Link
-                  key={id}
-                  href={href}
-                  aria-current={isActive ? "page" : undefined}
-                  className={cn(
-                    "relative text-sm font-medium transition-colors duration-300",
-                    isActive ? "text-white" : cn(baseColor, "hover:text-white")
-                  )}
-                >
-                  {label}
-                  <span
-                    className={`pointer-events-none absolute -bottom-1 left-0 h-0.5 rounded-full bg-current transition-all duration-300 ${
-                      isActive ? "w-full opacity-100" : "w-0 opacity-0"
-                    }`}
-                  />
-                </Link>
-              )
-            })}
+            {NAV_ITEMS.map(({ label, id, href }) => (
+              <NavLink
+                key={id}
+                href={href}
+                label={label}
+                isActive={activeSection === id}
+                className="font-medium"
+                idleClassName={
+                  isInHero ? "text-white/70" : "text-muted-foreground"
+                }
+              />
+            ))}
             <span aria-hidden className="h-4 w-px bg-white/15" />
-            <Link
+            <NavLink
               href={SECONDARY_LINK.href}
-              className="text-sm text-muted-foreground/70 transition-colors hover:text-white"
-            >
-              {SECONDARY_LINK.label}
-            </Link>
+              label={SECONDARY_LINK.label}
+              isActive={isSecondaryActive}
+              idleClassName="text-muted-foreground/70"
+            />
           </div>
           <div className="relative">
             <Share />

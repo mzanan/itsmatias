@@ -24,10 +24,13 @@ type StackCard = {
 const cards = stackData as StackCard[];
 
 export const HeroStack = ({ className }: { className?: string }) => {
-  const { open, focus, onHoverStart, onHoverEnd } = useHeroStack(cards.length);
+  const { ref, open, focus, onHoverStart, onHoverEnd } = useHeroStack(
+    cards.length
+  );
 
   return (
     <motion.div
+      ref={ref}
       variants={fadeInUp}
       onHoverStart={onHoverStart}
       onHoverEnd={onHoverEnd}
@@ -60,7 +63,10 @@ export const HeroStack = ({ className }: { className?: string }) => {
           }
           transition={{ type: "spring", stiffness: 260, damping: 24 }}
           whileHover={{ scale: 1.2, rotate: 0, zIndex: 20 }}
-          className={cn("group absolute block", card.className)}
+          className={cn(
+            "group absolute block [@media(hover:none)]:pointer-events-none",
+            card.className
+          )}
         >
           <motion.div
             animate={{ y: [0, -6, 0] }}

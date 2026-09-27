@@ -75,5 +75,5 @@ export const useHeader = () => {
         return () => observer.disconnect();
     }, []);
 
-    return { isScrolled, isInHero, activeSection, scrollToTop };
+    return { isScrolled, isInHero, activeSection, scrollToTop, pathname };
 };
