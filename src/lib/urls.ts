@@ -3,6 +3,7 @@ export const URLS = {
   ecommerce: "https://ecommerce.itsmatias.com",
   landing: "https://landing.itsmatias.com",
   links: "https://links.itsmatias.com",
+  money: "https://money.itsmatias.com",
   hangoutBefore: process.env.NEXT_PUBLIC_HANGOUT_BEFORE_URL ?? "https://before.events.itsmatias.com",
   hangoutAfter: process.env.NEXT_PUBLIC_HANGOUT_AFTER_URL ?? "https://events.itsmatias.com",
 } as const;

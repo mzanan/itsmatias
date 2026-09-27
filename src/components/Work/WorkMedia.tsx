@@ -11,9 +11,10 @@ type Props = {
   media: WorkMediaType;
   title: string;
   sizes: string;
+  eager?: boolean;
 };
 
-export const WorkMedia = ({ media, title, sizes }: Props) => {
+export const WorkMedia = ({ media, title, sizes, eager = false }: Props) => {
   if (media.kind === "beforeAfter") {
     return (
       <BeforeAfter
@@ -39,6 +40,7 @@ export const WorkMedia = ({ media, title, sizes }: Props) => {
         alt={`${title} screenshot`}
         fill
         sizes={sizes}
+        loading={eager ? "eager" : "lazy"}
         className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
       />
     );
