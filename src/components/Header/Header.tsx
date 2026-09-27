@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 import { useHeader } from "./useHeader"
 import { Share } from "@/components/Share/Share"
 import { ShareHint } from "./ShareHint"
@@ -18,12 +19,19 @@ export const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full max-w-full ${isScrolled
-        ? "border-b border-border/40 bg-background/80 backdrop-blur-lg supports-backdrop-filter:bg-background/60"
-        : "border-b border-transparent bg-transparent"
-        }`}
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 flex justify-center transition-[padding] duration-500 ease-out",
+        isScrolled && "px-3 pt-3"
+      )}
     >
-      <nav className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+      <nav
+        className={cn(
+          "flex h-16 w-full items-center justify-between border px-4 sm:px-6 lg:px-8 transition-[max-width,height,border-radius,background-color,border-color,box-shadow] duration-500 ease-out",
+          isScrolled
+            ? "h-14 max-w-4xl rounded-[28px] border-white/10 bg-background/70 shadow-lg shadow-black/30 backdrop-blur-lg"
+            : "max-w-full rounded-none border-transparent bg-transparent"
+        )}
+      >
         <Link
           href="/"
           onClick={scrollToTop}
