@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { LazyVideo } from "@/components/LazyVideo/LazyVideo";
 import { BeforeAfter } from "@/components/ui/BeforeAfter";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { comparisonSide } from "@/lib/media";
 import { posterFor } from "@/lib/video";
 import type { MediaSource } from "@/types/media";
 
@@ -13,13 +15,18 @@ type Props = {
   eager?: boolean;
 };
 
+const DESKTOP_QUERY = "(min-width: 768px)";
+
 export const Media = ({ media, title, sizes, eager = false }: Props) => {
+  const isDesktop = useMediaQuery(DESKTOP_QUERY);
+
   if (media.kind === "beforeAfter") {
     return (
       <BeforeAfter
-        before={media.before}
-        after={media.after}
-        designWidth={media.designWidth}
+        key={isDesktop ? "desktop" : "mobile"}
+        before={comparisonSide(media.before, isDesktop)}
+        after={comparisonSide(media.after, isDesktop)}
+        designWidth={isDesktop ? media.designWidth : undefined}
       />
     );
   }

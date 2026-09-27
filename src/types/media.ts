@@ -1,6 +1,7 @@
 export type ComparisonSide = {
   src: string;
   poster: string;
+  posterMobile: string;
   alt: string;
 };
 
