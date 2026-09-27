@@ -1,39 +1,16 @@
-import { useEffect, useMemo } from "react";
-import { preload } from "react-dom";
-import { runAfterLoadWhenIdle } from "@/lib/idle";
+import { useEffect, useState } from "react";
+import { formatClock } from "@/lib/time";
 
-export const useHero = (
-  wavesRef: React.RefObject<HTMLDivElement | null>,
-  lcpPoster: string,
-) => {
-  preload(lcpPoster, { as: "image", fetchPriority: "high" });
+const TICK_MS = 30_000;
 
+export const useHero = (timeZone: string) => {
+  const [clock, setClock] = useState<string | null>(null);
   useEffect(() => {
-    const container = wavesRef.current;
-    if (!container) return;
+    const update = () => setClock(formatClock(new Date(), timeZone));
+    update();
+    const id = window.setInterval(update, TICK_MS);
+    return () => window.clearInterval(id);
+  }, [timeZone]);
 
-    let cancelled = false;
-    let unmount: (() => void) | undefined;
-
-    const cancelIdle = runAfterLoadWhenIdle(async () => {
-      const { mountHeroWaves } = await import("@/lib/heroWaves");
-      if (!cancelled) unmount = mountHeroWaves(container);
-    });
-
-    return () => {
-      cancelled = true;
-      cancelIdle();
-      unmount?.();
-    };
-  }, [wavesRef]);
-
-  const scrollIndicatorVariants = useMemo(
-    () => ({
-      animate: { y: [0, 10, 0] },
-      transition: { duration: 2, repeat: Number.POSITIVE_INFINITY },
-    }),
-    []
-  );
-
-  return { scrollIndicatorVariants };
+  return { clock };
 };

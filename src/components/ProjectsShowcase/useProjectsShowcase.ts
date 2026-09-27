@@ -83,28 +83,6 @@ export const useProjectsShowcase = () => {
         model: "subscription",
         subscribeUrl: `${URLS.links}/`,
       },
-      {
-        id: "4",
-        title: "Nomad Events",
-        url: URLS.hangoutAfter,
-        media: {
-          kind: "beforeAfter",
-          before: {
-            src: URLS.hangoutBefore,
-            posterDesktop: "/showcase/hangout-before-desktop.webp",
-            posterMobile: "/showcase/hangout-before-mobile.webp",
-          },
-          after: {
-            src: URLS.hangoutAfter,
-            posterDesktop: "/showcase/hangout-after-desktop.webp",
-            posterMobile: "/showcase/hangout-after-mobile.webp",
-          },
-        },
-        description:
-          "A community events platform for Da Nang, rebuilt from the client's original site: paid registration with QR check-in, galleries and an admin panel.",
-        descriptionExtra: "Drag the slider to compare the original and the redesign. Built with Next.js and Neon Postgres.",
-        model: "showcase",
-      },
     ],
     [],
   );

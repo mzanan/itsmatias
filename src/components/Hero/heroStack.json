@@ -1,0 +1,82 @@
+[
+  {
+    "id": "money",
+    "label": "Money Tracker",
+    "href": "https://money.itsmatias.com",
+    "media": {
+      "kind": "image",
+      "src": "/work/money-tracker-card.webp"
+    },
+    "className": "left-0 top-0 w-[min(calc(60cqh*16/9),78cqw)] aspect-video",
+    "float": 7,
+    "rotate": -10,
+    "spread": {
+      "x": -120,
+      "y": -52
+    }
+  },
+  {
+    "id": "landing",
+    "label": "Landing",
+    "href": "https://landing.itsmatias.com",
+    "media": {
+      "kind": "video",
+      "src": "/videos/landing.mp4"
+    },
+    "className": "right-0 top-0 w-[min(calc(60cqh*16/9),78cqw)] aspect-video",
+    "float": 8,
+    "rotate": 10,
+    "spread": {
+      "x": 120,
+      "y": -52
+    }
+  },
+  {
+    "id": "nomad",
+    "label": "Nomad Events",
+    "href": "https://events.itsmatias.com",
+    "media": {
+      "kind": "image",
+      "src": "/work/nomad-events-card.webp"
+    },
+    "className": "left-0 bottom-0 w-[min(calc(60cqh*16/9),78cqw)] aspect-video",
+    "float": 9,
+    "rotate": -6,
+    "spread": {
+      "x": -132,
+      "y": 48
+    }
+  },
+  {
+    "id": "links",
+    "label": "mySocials",
+    "href": "https://links.itsmatias.com",
+    "media": {
+      "kind": "video",
+      "src": "/videos/links.mp4"
+    },
+    "className": "right-0 bottom-0 w-[min(calc(60cqh*16/9),78cqw)] aspect-video",
+    "float": 8,
+    "rotate": 6,
+    "spread": {
+      "x": 132,
+      "y": 48
+    }
+  },
+  {
+    "id": "ecommerce",
+    "label": "E-commerce",
+    "href": "https://ecommerce.itsmatias.com",
+    "media": {
+      "kind": "video",
+      "src": "/videos/ecommerce.mp4"
+    },
+    "className": "left-[calc(50%-min(60cqh*16/9,78cqw)/2)] top-[20cqh] w-[min(calc(60cqh*16/9),78cqw)] aspect-video",
+    "float": 9,
+    "rotate": 0,
+    "spread": {
+      "x": 0,
+      "y": 0
+    }
+  }
+]

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const SECTION_IDS = ["home", "projects", "about", "contact"] as const;
+const SECTION_IDS = ["home", "work", "lab", "about", "contact"] as const;
 type SectionId = (typeof SECTION_IDS)[number];
 
 export const useHeader = () => {
