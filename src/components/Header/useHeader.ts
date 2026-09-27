@@ -50,9 +50,7 @@ export const useHeader = () => {
 
         const observer = new IntersectionObserver(
             (entries) => {
-                const visible = entries
-                    .filter((e) => e.isIntersecting)
-                    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+                const visible = entries.find((e) => e.isIntersecting);
                 if (!visible) return;
 
                 const id = visible.target.id as SectionId;
@@ -68,7 +66,8 @@ export const useHeader = () => {
             },
             {
                 root: mainElement,
-                threshold: [0.4, 0.6],
+                rootMargin: "-50% 0px -50% 0px",
+                threshold: 0,
             }
         );
 

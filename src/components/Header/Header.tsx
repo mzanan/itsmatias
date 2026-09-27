@@ -11,8 +11,9 @@ const NAV_ITEMS = [
   { label: "Lab", id: "lab", href: "/#lab" },
   { label: "About", id: "about", href: "/#about" },
   { label: "Contact", id: "contact", href: "/#contact" },
-  { label: "Templates", id: "templates", href: "/templates" },
 ] as const
+
+const SECONDARY_LINK = { label: "Templates", href: "/templates" } as const
 
 export const Header = () => {
   const { isScrolled, isInHero, activeSection, scrollToTop } = useHeader()
@@ -49,11 +50,10 @@ export const Header = () => {
                   key={id}
                   href={href}
                   aria-current={isActive ? "page" : undefined}
-                  className={`relative text-sm font-medium transition-all duration-300 hover:scale-105 ${
-                    isActive
-                      ? "text-white font-semibold drop-shadow-[0_0_8px_rgba(255,255,255,0.25)]"
-                      : `${baseColor} hover:text-white`
-                  }`}
+                  className={cn(
+                    "relative text-sm font-medium transition-colors duration-300",
+                    isActive ? "text-white" : cn(baseColor, "hover:text-white")
+                  )}
                 >
                   {label}
                   <span
@@ -64,6 +64,13 @@ export const Header = () => {
                 </Link>
               )
             })}
+            <span aria-hidden className="h-4 w-px bg-white/15" />
+            <Link
+              href={SECONDARY_LINK.href}
+              className="text-sm text-muted-foreground/70 transition-colors hover:text-white"
+            >
+              {SECONDARY_LINK.label}
+            </Link>
           </div>
           <div className="relative">
             <Share />
