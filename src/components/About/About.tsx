@@ -7,6 +7,8 @@ import { FaArrowRight } from "react-icons/fa"
 import Image from "next/image"
 import { Share } from "@/components/Share/Share"
 import { Title } from "@/components/Styles/Texts/Title/Title"
+import { mobileSlide } from "@/lib/slide"
+import { cn } from "@/lib/utils"
 
 export const About = () => {
   const {
@@ -22,8 +24,11 @@ export const About = () => {
     <section
       ref={ref}
       id="about"
-      data-snap-section
-      className="snap-start min-h-dvh flex items-center justify-center px-4 sm:px-6 lg:px-8 lg:py-24 overflow-hidden w-full"
+      data-slide
+      className={cn(
+        "snap-start min-h-dvh flex items-center justify-center px-4 sm:px-6 lg:px-8 lg:py-24 overflow-hidden w-full",
+        mobileSlide
+      )}
     >
       <motion.div
         variants={containerVariants}
