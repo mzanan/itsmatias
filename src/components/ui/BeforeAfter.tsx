@@ -58,17 +58,19 @@ const BeforeAfterSide = ({ side, clipped, pos, live, frameStyle }: BeforeAfterSi
           onLoad={() => setLoaded(true)}
         />
       )}
-      <Image
-        src={side.poster}
-        alt={side.alt}
-        fill
-        sizes={sizes}
-        className={cn(
-          "object-cover object-top select-none transition-opacity duration-300 ease-out",
-          loaded ? "pointer-events-none opacity-0" : "opacity-100",
-        )}
-        draggable={false}
-      />
+      {live && (
+        <Image
+          src={side.poster}
+          alt={side.alt}
+          fill
+          sizes={sizes}
+          className={cn(
+            "object-cover object-top select-none transition-opacity duration-300 ease-out",
+            loaded ? "pointer-events-none opacity-0" : "opacity-100",
+          )}
+          draggable={false}
+        />
+      )}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { getScrollParent } from "@/lib/scroll";
 
 const clamp = (n: number) => Math.min(100, Math.max(0, n));
 
@@ -30,7 +31,7 @@ export const useBeforeAfter = (initial: number, designWidth?: number) => {
           warmIo.disconnect();
         }
       },
-      { rootMargin: "100% 0px" },
+      { root: getScrollParent(el), rootMargin: "100% 0px" },
     );
     const viewIo = new IntersectionObserver(
       (entries) => {
