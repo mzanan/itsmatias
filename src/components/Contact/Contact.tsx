@@ -8,6 +8,8 @@ import { Pill } from "@/components/ui/Pill";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { FaArrowRight } from "react-icons/fa";
 import { fireConfetti } from "@/lib/confetti";
+import { mobileSlide } from "@/lib/slide";
+import { cn } from "@/lib/utils";
 
 export const Contact = () => {
   const {
@@ -38,7 +40,11 @@ export const Contact = () => {
     <section
       ref={ref}
       id="contact"
-      className="snap-start min-h-dvh flex items-center px-6 md:px-12 lg:px-20 pt-20 md:pt-24 pb-10 md:pb-16 relative overflow-hidden"
+      data-slide
+      className={cn(
+        "snap-start min-h-dvh flex items-center px-6 md:px-12 lg:px-20 pt-20 md:pt-24 pb-10 md:pb-16 relative overflow-hidden",
+        mobileSlide
+      )}
     >
       <motion.div
         variants={containerVariants}

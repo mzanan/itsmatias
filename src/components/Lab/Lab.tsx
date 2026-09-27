@@ -8,6 +8,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { LAB_REPO_URL } from "@/lib/labShaders";
 import { cn } from "@/lib/utils";
 import { surface } from "@/lib/surface";
+import { mobileSlide } from "@/lib/slide";
 import { useLab } from "./useLab";
 
 export const Lab = () => {
@@ -16,7 +17,11 @@ export const Lab = () => {
   return (
     <section
       id="lab"
-      className="flex min-h-dvh w-full snap-start flex-col px-6 pt-24 pb-8 md:px-10 md:pt-28 md:pb-12"
+      data-slide
+      className={cn(
+        "flex min-h-dvh w-full snap-start flex-col px-6 pt-24 pb-8 md:px-10 md:pt-28 md:pb-12",
+        mobileSlide
+      )}
     >
       <div className="mx-auto flex min-h-0 w-full max-w-6xl flex-1 flex-col gap-8 md:gap-10">
         <FadeIn className="shrink-0">

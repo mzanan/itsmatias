@@ -20,7 +20,8 @@ export const Hero = () => {
   return (
     <section
       id="home"
-      className="relative h-dvh w-full snap-start overflow-hidden"
+      data-slide
+      className="relative h-dvh w-full snap-start overflow-hidden max-md:snap-always"
     >
       <div ref={shaderRef} aria-hidden className="absolute inset-0 z-0" />
       <div

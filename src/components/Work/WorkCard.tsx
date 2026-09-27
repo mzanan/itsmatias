@@ -6,6 +6,7 @@ import { fadeInUp } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { Media } from "@/components/ui/Media";
 import { surface } from "@/lib/surface";
+import { mobileSlide } from "@/lib/slide";
 import type { WorkItem } from "./types";
 
 const frame = cn(
@@ -13,9 +14,9 @@ const frame = cn(
   "group relative block transition-colors duration-300 hover:border-white/25"
 );
 
-type Props = { item: WorkItem };
+type Props = { item: WorkItem; slide?: boolean };
 
-export const WorkCard = ({ item }: Props) => {
+export const WorkCard = ({ item, slide = true }: Props) => {
   const isComparison = item.media.kind === "beforeAfter";
   const sizes = item.featured
     ? "(max-width: 768px) 100vw, 1152px"
@@ -31,8 +32,10 @@ export const WorkCard = ({ item }: Props) => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.25 }}
+      data-slide={slide || undefined}
       className={cn(
         "flex flex-col gap-5",
+        slide && mobileSlide,
         item.featured &&
           "md:col-span-2 md:flex-row md:flex-wrap md:items-start md:gap-8"
       )}
