@@ -34,10 +34,10 @@ export const Hero = () => {
         animate="visible"
         className="relative z-10 mx-auto flex h-full max-w-6xl flex-col justify-center gap-10 px-6 pb-10 pt-20 md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] md:content-center md:items-center md:gap-12 md:px-10 md:pt-16 md:pb-0"
       >
-        <HeroStack className="order-first h-[34dvh] w-full md:order-last md:h-auto md:self-stretch" />
+        <HeroStack className="order-2 h-[34dvh] w-full md:order-last md:h-auto md:self-stretch" />
 
-        <div className="flex flex-col gap-8">
-          <div>
+        <div className="contents md:flex md:flex-col md:gap-8">
+          <div className="order-1">
             <motion.p
               variants={fadeInUp}
               className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground"
@@ -58,7 +58,7 @@ export const Hero = () => {
               and the production code behind them.
             </motion.p>
           </div>
-          <div>
+          <div className="order-3">
             <motion.div
               variants={fadeInUp}
               className="flex flex-wrap items-center gap-3"
