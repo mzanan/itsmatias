@@ -14,7 +14,7 @@ const NAV_ITEMS = [
 ] as const
 
 export const Header = () => {
-  const { isScrolled, isInHero, activeSection } = useHeader()
+  const { isScrolled, isInHero, activeSection, scrollToTop } = useHeader()
 
   return (
     <header
@@ -26,6 +26,7 @@ export const Header = () => {
       <nav className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
+          onClick={scrollToTop}
           className="text-lg font-bold gradient-text transition-all hover:opacity-80"
         >
           itsmatias

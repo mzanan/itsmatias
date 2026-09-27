@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, type MouseEvent } from "react";
+import { usePathname } from "next/navigation";
 
 const SECTION_IDS = ["home", "work", "lab", "about", "contact"] as const;
 type SectionId = (typeof SECTION_IDS)[number];
@@ -7,6 +8,15 @@ export const useHeader = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isInHero, setIsInHero] = useState(true);
     const [activeSection, setActiveSection] = useState<SectionId>("home");
+    const pathname = usePathname();
+
+    const scrollToTop = (event: MouseEvent<HTMLAnchorElement>) => {
+        if (pathname !== "/") return;
+        const mainElement = document.querySelector("main");
+        if (!mainElement) return;
+        event.preventDefault();
+        mainElement.scrollTo({ top: 0, behavior: "smooth" });
+    };
 
     useEffect(() => {
         const mainElement = document.querySelector("main");
@@ -66,5 +76,5 @@ export const useHeader = () => {
         return () => observer.disconnect();
     }, []);
 
-    return { isScrolled, isInHero, activeSection };
+    return { isScrolled, isInHero, activeSection, scrollToTop };
 };
