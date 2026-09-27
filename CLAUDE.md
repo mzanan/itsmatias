@@ -19,6 +19,7 @@ npm run lint   # eslint
 - `src/components/{Hero,Work,Lab,About,Contact,Share}/`; `ProjectsShowcase`/`ProjectShowcase` solo para `/templates`.
 - `src/components/ui/{Pill,GlassBadge}.tsx` — primitives.
 - `src/app/{opengraph-image,sitemap,robots,terms}.tsx` + `api/webhooks/polar/route.ts`.
+- OG image: solo el abanico de proyectos, sin texto (título y descripción ya los muestra la preview). Frames JPG en `src/app/_og/` leídos por `lib/og.ts` en build; mantener el PNG bajo ~600 KB para la preview grande de WhatsApp.
 - `src/app/globals.css` — paleta platinum (`--brand-from/via/to`), `shiny-text`, `shiny-border`.
 
 ## Convenciones
