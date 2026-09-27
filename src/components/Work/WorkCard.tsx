@@ -76,7 +76,13 @@ export const WorkCard = ({ item, fit, className }: Props) => {
         )}
       </div>
 
-      <div className="flex shrink-0 flex-col gap-3 md:flex-row md:items-start md:justify-between md:gap-10">
+      <div
+        className={cn(
+          "flex shrink-0 flex-col gap-3",
+          item.featured &&
+            "md:flex-row md:items-start md:justify-between md:gap-10"
+        )}
+      >
         <div className="flex max-w-xl flex-col gap-2">
           <h3 className="text-xl font-semibold tracking-tight">
             <a
@@ -96,7 +102,12 @@ export const WorkCard = ({ item, fit, className }: Props) => {
             {item.detail}
           </p>
         </div>
-        <dl className="grid shrink-0 grid-cols-[auto_1fr] gap-x-4 gap-y-1 font-mono text-xs text-muted-foreground md:min-w-56">
+        <dl
+          className={cn(
+            "grid shrink-0 grid-cols-[auto_1fr] gap-x-4 gap-y-1 font-mono text-xs text-muted-foreground",
+            item.featured && "md:min-w-56"
+          )}
+        >
           <dt className="text-foreground/40">Role</dt>
           <dd>{item.role}</dd>
           <dt className="text-foreground/40">Stack</dt>
