@@ -4,11 +4,14 @@ import { motion } from "motion/react";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { fadeInUp } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { WorkMedia } from "./WorkMedia";
+import { Media } from "@/components/ui/Media";
+import { surface } from "@/lib/surface";
 import type { WorkItem } from "./types";
 
-const frame =
-  "group relative block overflow-hidden rounded-2xl border border-white/10 bg-card shadow-2xl shadow-black/40 transition-colors duration-300 hover:border-white/25";
+const frame = cn(
+  surface(),
+  "group relative block transition-colors duration-300 hover:border-white/25"
+);
 
 export const WorkCard = ({ item }: { item: WorkItem }) => {
   const isComparison = item.media.kind === "beforeAfter";
@@ -30,7 +33,7 @@ export const WorkCard = ({ item }: { item: WorkItem }) => {
     >
       {isComparison ? (
         <div className={cn(frame, aspect)}>
-          <WorkMedia media={item.media} title={item.title} sizes={sizes} />
+          <Media media={item.media} title={item.title} sizes={sizes} />
         </div>
       ) : (
         <a
@@ -40,7 +43,7 @@ export const WorkCard = ({ item }: { item: WorkItem }) => {
           aria-label={`Open ${item.title}`}
           className={cn(frame, aspect)}
         >
-          <WorkMedia media={item.media} title={item.title} sizes={sizes} />
+          <Media media={item.media} title={item.title} sizes={sizes} />
         </a>
       )}
 

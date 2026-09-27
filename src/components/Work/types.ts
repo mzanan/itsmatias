@@ -1,7 +1,4 @@
-export type WorkMedia =
-  | { kind: "video"; src: string }
-  | { kind: "image"; src: string }
-  | { kind: "beforeAfter" };
+import type { MediaSource } from "@/types/media";
 
 export type WorkItem = {
   id: string;
@@ -12,5 +9,5 @@ export type WorkItem = {
   stack: string[];
   url: string;
   featured: boolean;
-  media: WorkMedia;
+  media: MediaSource;
 };

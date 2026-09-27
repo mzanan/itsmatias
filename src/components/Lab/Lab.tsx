@@ -4,8 +4,9 @@ import { AnimatePresence, motion } from "motion/react";
 import { FaGithub } from "react-icons/fa6";
 import { Pill } from "@/components/ui/Pill";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { LAB_REPO_URL } from "@/lib/shaders";
+import { LAB_REPO_URL } from "@/lib/labShaders";
 import { cn } from "@/lib/utils";
+import { surface } from "@/lib/surface";
 import { useLab } from "./useLab";
 
 export const Lab = () => {
@@ -24,7 +25,12 @@ export const Lab = () => {
           description="Small experiments I run to know what a technique costs before it reaches a real page. These four render live on your GPU; move your pointer over them."
         />
 
-        <div className="relative aspect-4/5 sm:aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-card shadow-2xl shadow-black/40">
+        <div
+          className={cn(
+            surface(),
+            "relative aspect-4/5 sm:aspect-video w-full"
+          )}
+        >
           <div
             key={active.id}
             ref={stageRef}

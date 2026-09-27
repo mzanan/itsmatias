@@ -2,8 +2,9 @@
 
 import { motion } from "motion/react";
 import { GlassBadge } from "@/components/ui/GlassBadge";
-import { WorkMedia } from "@/components/Work/WorkMedia";
-import type { WorkMedia as WorkMediaType } from "@/components/Work/types";
+import { Media } from "@/components/ui/Media";
+import { surface } from "@/lib/surface";
+import type { MediaSource } from "@/types/media";
 import { fadeInUp } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import stackData from "./heroStack.json";
@@ -13,7 +14,7 @@ type StackCard = {
   id: string;
   label: string;
   href: string;
-  media: WorkMediaType;
+  media: MediaSource;
   className: string;
   float: number;
   rotate: number;
@@ -57,9 +58,12 @@ export const HeroStack = ({ className }: { className?: string }) => {
               ease: "easeInOut",
               delay: i * 0.8,
             }}
-            className="relative h-full w-full overflow-hidden rounded-xl border border-white/15 bg-card shadow-2xl shadow-black/60"
+            className={cn(
+              surface({ tone: "floating" }),
+              "relative h-full w-full"
+            )}
           >
-            <WorkMedia
+            <Media
               media={card.media}
               title={card.label}
               sizes="(max-width: 768px) 60vw, 420px"

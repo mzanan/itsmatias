@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LAB_SHADERS, type LabShader } from "@/lib/shaders";
+import { LAB_SHADERS, type LabShader } from "@/lib/labShaders";
 import { useShaderCanvas } from "@/hooks/useShaderCanvas";
 
 export const useLab = () => {

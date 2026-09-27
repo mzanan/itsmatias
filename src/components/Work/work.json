@@ -8,7 +8,10 @@
     "stack": ["Next.js", "Neon Postgres", "Better Auth", "Stripe"],
     "url": "https://ecommerce.itsmatias.com",
     "featured": true,
-    "media": { "kind": "video", "src": "/videos/ecommerce.mp4" }
+    "media": {
+      "kind": "video",
+      "src": "/videos/ecommerce.mp4"
+    }
   },
   {
     "id": "mysocials",
@@ -19,7 +22,10 @@
     "stack": ["Next.js", "Turso", "Drizzle", "R2"],
     "url": "https://links.itsmatias.com",
     "featured": false,
-    "media": { "kind": "video", "src": "/videos/links.mp4" }
+    "media": {
+      "kind": "video",
+      "src": "/videos/links.mp4"
+    }
   },
   {
     "id": "money-tracker",
@@ -30,7 +36,10 @@
     "stack": ["Next.js", "Turso", "Drizzle", "PWA"],
     "url": "https://money.itsmatias.com",
     "featured": false,
-    "media": { "kind": "image", "src": "/work/money-tracker.webp" }
+    "media": {
+      "kind": "image",
+      "src": "/work/money-tracker.webp"
+    }
   },
   {
     "id": "nomad-events",
@@ -41,6 +50,19 @@
     "stack": ["Next.js", "Neon Postgres"],
     "url": "https://events.itsmatias.com",
     "featured": true,
-    "media": { "kind": "beforeAfter" }
+    "media": {
+      "kind": "beforeAfter",
+      "before": {
+        "src": "https://before.events.itsmatias.com",
+        "poster": "/showcase/hangout-before-desktop.webp",
+        "alt": "Nomad Events original design"
+      },
+      "after": {
+        "src": "https://events.itsmatias.com",
+        "poster": "/showcase/hangout-after-desktop.webp",
+        "alt": "Nomad Events redesign"
+      },
+      "designWidth": 1728
+    }
   }
 ]
