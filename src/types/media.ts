@@ -13,4 +13,5 @@ export type MediaSource =
       before: ComparisonSide;
       after: ComparisonSide;
       designWidth: number;
+      mobileVideo?: string;
     };
