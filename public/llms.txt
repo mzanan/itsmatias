@@ -1,0 +1,32 @@
+# itsmatias
+
+> Portfolio of Matias Zanan, a remote design engineer who designs and builds production websites end to end: design tokens, motion and the production code behind them. He also sells ready-to-deploy Next.js website templates.
+
+## Who it is for
+
+- Founders and small businesses that need a website or web app designed and built by one person, without agency handoffs.
+- Developers and businesses that want a production-ready Next.js template they deploy to their own Vercel in one click.
+
+## Work
+
+- [E-commerce & Admin](https://ecommerce.itsmatias.com): a storefront and its admin panel with catalog, real-time stock, orders and email notifications.
+- [mySocials](https://links.itsmatias.com): link-in-bio pages with a custom URL, themes and click analytics.
+- [Money Tracker](https://money.itsmatias.com): expenses across currencies for nomads and expats; every expense keeps the exchange rate of its day.
+- [Nomad Events](https://events.itsmatias.com): a community events platform with registration, QR check-in, galleries and an admin panel.
+
+## Templates and pricing
+
+- [Templates](https://itsmatias.com/templates): one-time purchase, deployed to the buyer's own Vercel account.
+- E-commerce & Admin Panel: USD 990 one-time.
+- Landing Page: USD 49.99 one-time.
+- [Terms & License](https://itsmatias.com/terms)
+
+## Stack
+
+Next.js, React, TypeScript, Tailwind CSS, Postgres, Turso, Vercel.
+
+## Contact
+
+- Email: hello@itsmatias.com
+- LinkedIn: https://linkedin.com/in/matiaszanan
+- Contact form: https://itsmatias.com/#contact

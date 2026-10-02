@@ -2,7 +2,15 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { MotionProvider } from "@/components/ui/MotionProvider";
+import { JsonLd } from "@/components/ui/JsonLd";
 import { URLS } from "@/lib/urls";
+import {
+  PERSON_NAME,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_TITLE,
+  siteJsonLd,
+} from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,39 +24,6 @@ const geistMono = Geist_Mono({
 });
 
 const SITE_URL = URLS.site;
-const SITE_NAME = "itsmatias";
-const SITE_TITLE = "Matias Zanan: Design Engineer";
-const SITE_DESCRIPTION =
-  "Design engineer. I design and build interfaces end to end: design tokens, motion and the production code behind them.";
-const PERSON_NAME = "Matias Zanan";
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Person",
-      "@id": `${SITE_URL}/#person`,
-      name: PERSON_NAME,
-      url: SITE_URL,
-      image: `${SITE_URL}/opengraph-image`,
-      jobTitle: "Design Engineer",
-      description: SITE_DESCRIPTION,
-      sameAs: [
-        "https://linkedin.com/in/matiaszanan",
-        "https://wa.me/5491157567049",
-      ],
-    },
-    {
-      "@type": "WebSite",
-      "@id": `${SITE_URL}/#website`,
-      url: SITE_URL,
-      name: SITE_NAME,
-      description: SITE_DESCRIPTION,
-      publisher: { "@id": `${SITE_URL}/#person` },
-      inLanguage: "en",
-    },
-  ],
-};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -90,9 +65,6 @@ export const metadata: Metadata = {
     icon: "/icon.svg",
     apple: "/icon.svg",
   },
-  alternates: {
-    canonical: SITE_URL,
-  },
   robots: {
     index: true,
     follow: true,
@@ -119,10 +91,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <JsonLd data={siteJsonLd} />
         <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
