@@ -27,7 +27,7 @@
     "motion": "^12.40.0",
     "next": "^16.0.3",
     "ogl": "^1.0.11",
-    "posthog-js": "^1.435.5",
+    "posthog-js": "^1.435.6",
     "qrcode.react": "^4.2.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",

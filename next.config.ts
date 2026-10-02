@@ -1,11 +1,14 @@
 import type { NextConfig } from "next";
-import { posthogRewrites } from "./src/lib/analytics";
+import { posthogRewrites, trailingSlashRedirect } from "./src/lib/analytics";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
   skipTrailingSlashRedirect: true,
   async rewrites() {
     return posthogRewrites;
+  },
+  async redirects() {
+    return [trailingSlashRedirect];
   },
   experimental: {
     optimizePackageImports: ["react-icons"],
