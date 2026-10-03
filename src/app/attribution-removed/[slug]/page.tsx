@@ -1,6 +1,13 @@
+import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { SalesPageShell } from "@/components/Sales/SalesPageShell"
 import { ConfirmationCard } from "@/components/Sales/ConfirmationCard"
+import { NO_INDEX } from "@/lib/seo"
+
+export const metadata: Metadata = {
+  title: "Attribution removed",
+  robots: NO_INDEX,
+}
 
 const PRODUCT_NAMES: Record<string, string> = {
   ecommerce: "Full Ecommerce",

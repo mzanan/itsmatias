@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Header } from "@/components/Header/Header";
 import { Hero } from "@/components/Hero/Hero";
 import { Work } from "@/components/Work/Work";
@@ -5,6 +6,10 @@ import { Lab } from "@/components/Lab/Lab";
 import { About } from "@/components/About/About";
 import { Contact } from "@/components/Contact/Contact";
 import { SlideStepper } from "@/components/ui/SlideStepper";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   return (
