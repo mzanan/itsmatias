@@ -24,3 +24,16 @@ export const trailingSlashRedirect = {
   destination: "/:path",
   permanent: true,
 };
+
+const NO_TRACK_KEY = "notrack";
+
+export function isTrackingDisabled(): boolean {
+  try {
+    const param = new URLSearchParams(window.location.search).get(NO_TRACK_KEY);
+    if (param === "1") window.localStorage.setItem(NO_TRACK_KEY, "1");
+    if (param === "0") window.localStorage.removeItem(NO_TRACK_KEY);
+    return window.localStorage.getItem(NO_TRACK_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
