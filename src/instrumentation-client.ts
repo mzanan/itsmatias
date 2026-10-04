@@ -12,5 +12,6 @@ if (token && process.env.NODE_ENV === "production" && !isTrackingDisabled()) {
     api_host: POSTHOG_PROXY_PATH,
     ui_host: POSTHOG_UI_HOST,
     defaults: "2026-05-30",
+    cookieless_mode: "always",
   });
 }
