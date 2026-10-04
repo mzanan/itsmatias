@@ -1,150 +1,84 @@
 # Portfolio Website
 
-A modern, premium portfolio website built with Next.js, featuring smooth animations, responsive design, and a clean, agency-level aesthetic.
+Personal portfolio of Matias Zanan, design engineer. Built with Next.js, with a WebGL hero, live project demos and a small template store.
+
+Live: [itsmatias.com](https://itsmatias.com)
 
 ## Features
 
-- **Modern Design**: Clean, minimal interface with premium aesthetics
-- **Interactive Background**: custom OGL (WebGL) fbm shader on the hero, mounted after page load so it never delays the first paint
-- **Project fan**: hero cards of live projects that spread on hover
-- **Lab**: four live GLSL shaders ported from the `labs` repo (p4-shader-page-cost)
-- **Templates**: the sellable websites live at `/templates` (Polar checkout)
-- **Smooth Animations**: Scroll-triggered animations using Motion
-- **Snap Scroll**: proximity snap on the home sections
-- **Responsive**: Fully responsive design for all devices
-- **Contact Form**: Integrated contact form using Formspree
-- **Performance Optimized**: Built with Next.js for optimal performance
+- **Interactive background**: custom OGL (WebGL) fbm shader on the hero, mounted after page load so it never delays the first paint
+- **Project fan**: hero cards of live projects that spread on hover (and play the sequence on their own on touch devices)
+- **Work**: selected projects with videos and before/after sliders
+- **Lab**: four live GLSL shaders ported from the `labs` repo
+- **Templates**: sellable websites at `/templates`, paid with Polar and delivered as a private repo plus deploy
+- **Mobile slides**: every home section is a full-screen slide with a section stepper; desktop uses proximity snap
+- **Contact form**: Formspree
+- **SEO, AEO and GEO**: sitemap, robots (AI crawlers allowed), JSON-LD and `llms.txt`
+- **Analytics**: PostHog EU in cookieless mode through a first-party `/relay` proxy; append `?notrack=1` to any URL to exclude your browser
 
 ## Tech Stack
 
-- **Framework**: Next.js 16
+- **Framework**: Next.js 16 (App Router), React 19
 - **Language**: TypeScript
-- **Styling**: Tailwind CSS
+- **Styling**: Tailwind CSS v4
 - **Animations**: Motion (`motion/react`)
-- **Background Effects**: OGL shaders (`src/lib/shaders.ts`, mounted by `src/lib/shaderCanvas.ts`)
-- **Icons**: React Icons
-- **UI Components**: ShadCN UI
-- **Form Handling**: Formspree
+- **Background effects**: OGL shaders (`src/lib/shaders.ts`, mounted by `src/lib/shaderCanvas.ts`)
+- **Payments and email**: Polar, Resend
+- **Forms**: Formspree
+- **Analytics**: PostHog EU
 
 ## Project Structure
 
 ```
 src/
-├── app/                    # Next.js app directory
-│   ├── globals.css         # Global styles
-│   ├── layout.tsx          # Root layout
-│   └── page.tsx            # Home page
-├── components/             # React components
-│   ├── About/              # About section (component + hook)
-│   ├── Contact/            # Contact section with form (component + hook)
-│   ├── Header/             # Navigation header (component + hook)
-│   ├── Hero/               # Hero with shader background, project fan and info column
-│   ├── Work/               # Selected work grid (data in work.json)
-│   ├── Lab/                # Live shader lab
+├── app/                    # Routes: home, /templates, /order, /terms, OG image, sitemap, robots
+│   └── api/                # buy, order status, Polar webhook, deploy cleanup cron
+├── components/             # One folder per section (component + hook)
+│   ├── Hero/  Work/  Lab/  About/  Contact/  Header/
 │   ├── ProjectShowcase/    # Template showcase used by /templates
 │   ├── ProjectsShowcase/   # Template list used by /templates
-│   └── ui/                 # UI components (ShadCN)
-├── types/                  # TypeScript type definitions
-│   └── vanta.d.ts          # Vanta.js type definitions
-└── lib/                    # Utility functions
-    └── utils.ts            # Helper functions
+│   └── ui/                 # Primitives (Pill, GlassBadge, BeforeAfter, SlideStepper...)
+├── hooks/                  # Cross-section hooks (useShaderCanvas, useMediaQuery)
+├── lib/                    # Pure helpers (motion, video, seo, analytics, sales/...)
+└── types/
 ```
 
 ## Getting Started
 
-### Prerequisites
+Requires Node.js 20+.
 
-- Node.js 18+ 
-- npm or yarn
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd portfolio
-```
-
-2. Install dependencies:
 ```bash
 npm install
-```
-
-3. Run the development server:
-```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+Opens on [http://localhost:3010](http://localhost:3010).
 
-## Configuration
+### Environment
 
-### Contact Form
+Secrets live in Infisical (`.infisical.json`); see `.env.example` for the full list. Everything is optional for local development:
 
-The contact form uses Formspree. To configure:
-
-1. Create an account at [Formspree](https://formspree.io)
-2. Create a new form and get your form endpoint
-3. Update the endpoint in `src/components/Contact/useContact.ts`:
-```typescript
-const response = await fetch("YOUR_FORMSPREE_ENDPOINT", {
-  // ...
-});
-```
+- Contact form: `NEXT_PUBLIC_FORMSPREE_FORM_ID`
+- Template sales: `POLAR_*`, `GITHUB_DEPLOYS_PAT`, `GITHUB_OWNER`, `GITHUB_DEPLOYS_ORG`, `CRON_SECRET`, `RESEND_API_KEY`, `RESEND_FROM_EMAIL`
+- Analytics: `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` (production only)
 
 ## Scripts
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
-- `npm run format` - Format code with Prettier
-- `npm run format:check` - Check code formatting
+- `npm run dev`: development server on port 3010
+- `npm run build`: production build
+- `npm run start`: serve the build
+- `npm run lint`: ESLint
+- `npm run format` / `npm run format:check`: Prettier
 
 ## Architecture
 
-### Component Structure
+Each section keeps UI and logic apart: the component file (`.tsx`) only renders, and a colocated hook (`useX.ts`) owns state, effects and data. Cross-section hooks live in `hooks/`, pure helpers in `lib/`.
 
-Each major component follows a pattern where:
-- **Component file** (`.tsx`): Contains only UI/rendering logic
-- **Hook file** (`.ts`): Contains all business logic, state management, and data fetching
-
-This separation ensures:
-- Clean, maintainable code
-- Easy testing
-- Reusable logic
-
-### Custom Hooks
-
-Each component has its own hook file located in the same directory:
-- `useHeader`: Manages header scroll state and navigation
-- `useShaderCanvas` (`hooks/`): mounts an OGL shader after load + idle (`lib/idle.ts`), used by Hero and Lab
-- `useHero`: live local clock for the hero info column
-- `useHeroStack`: hover state that spreads the project fan
-- `useLab`: selected lab shader
-- `useAbout`: Manages about section data, animations, and scroll
-- `useContact`: Handles contact form state and submission
-- `useProjectShowcase`: Manages project showcase entrance animations
-- `useLazyVideo`: Loads, plays and pauses videos by visibility, starting after load + idle
-- `useProjectsShowcase`: Provides template data for `/templates`
-
-## Styling
-
-The project uses Tailwind CSS with custom configuration. Key features:
-
-- Dark/light theme support (via CSS variables)
-- Custom gradient utilities
-- Responsive breakpoints
-- Custom animations
+Heavy client work (shaders, video loading) starts after `load` + idle (`lib/idle.ts`), and media pre-warming observes the scroll container rather than the viewport (`lib/scroll.ts`).
 
 ## Deployment
 
-The project is ready to deploy on Vercel:
-
-1. Push your code to GitHub
-2. Import the project in Vercel
-3. Configure environment variables if needed
-4. Deploy
+Deployed on Vercel. Vercel installs with pnpm, so keep `pnpm-lock.yaml` in sync with `package-lock.json` when dependencies change.
 
 ## License
 
