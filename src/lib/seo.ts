@@ -105,3 +105,32 @@ export const templatesJsonLd = {
     },
   })),
 };
+
+type CaseStudyPage = {
+  id: string;
+  title: string;
+  summary: string;
+  url: string;
+  stack: string[];
+};
+
+export const caseStudyUrl = (id: string) => `${URLS.site}/work/${id}`;
+
+export const caseStudyJsonLd = (page: CaseStudyPage) => ({
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "@id": `${caseStudyUrl(page.id)}#case-study`,
+  name: `${page.title} case study`,
+  headline: page.title,
+  description: page.summary,
+  url: caseStudyUrl(page.id),
+  author: { "@id": PERSON_ID },
+  inLanguage: "en",
+  keywords: page.stack.join(", "),
+  about: {
+    "@type": "WebApplication",
+    name: page.title,
+    url: page.url,
+    applicationCategory: "WebApplication",
+  },
+});

@@ -16,6 +16,30 @@
     "media": {
       "kind": "video",
       "src": "/videos/ecommerce.mp4"
+    },
+    "caseStudy": {
+      "problem": "A small store needs more than a storefront: someone has to manage the catalog, watch stock and process orders, and most templates stop at the pretty front page. The goal was a complete shop that a non-technical owner can run from day one, without a developer to set it up.",
+      "built": [
+        "Storefront with catalog, product pages, cart and Stripe checkout.",
+        "Admin panel for products, stock and orders, behind its own admin login.",
+        "Real-time stock, so the storefront never sells what is no longer there.",
+        "Order confirmation emails.",
+        "One-click deploy that provisions the database, storage and the first admin account."
+      ],
+      "decisions": [
+        {
+          "title": "One repository, two products",
+          "body": "The storefront and the admin share one Next.js app and one database schema, so a product edited in the admin is the same row the storefront reads. No sync jobs, no second API to keep in step."
+        },
+        {
+          "title": "Provisioning instead of instructions",
+          "body": "Buyers do not follow a setup guide. After payment, a private copy of the repo is created and deployed to their own Vercel account with the database, storage and admin login already wired."
+        },
+        {
+          "title": "Owned, portable stack",
+          "body": "Neon Postgres, Drizzle and Better Auth keep every piece on standard, exportable tools, so the owner can move hosting later without rewriting the app."
+        }
+      ]
     }
   },
   {
@@ -35,6 +59,31 @@
     "media": {
       "kind": "video",
       "src": "/videos/links.mp4"
+    },
+    "caseStudy": {
+      "problem": "Link-in-bio pages usually treat photos and videos as an afterthought. For creators the media is the page. The goal was a link-in-bio where a wall of real videos and photos loads fast, accepts whatever a phone records, and still looks premium.",
+      "built": [
+        "Dashboard editor for profile, tabs, media and links, with a live phone preview of the public page.",
+        "Tabs as photo grids or video walls, reordered by drag and drop.",
+        "Sixteen preset networks from an @handle, or fully custom links.",
+        "Instagram import to fill a page in one step.",
+        "Paid publishing with Polar; viewing a page is never gated.",
+        "Search controls: sitemap of published pages, structured data per profile, and a per-page switch to hide from search engines."
+      ],
+      "decisions": [
+        {
+          "title": "Video transcoded in the browser",
+          "body": "Videos are converted to H.264 MP4 up to 1080p on the user's device with WebCodecs, then uploaded straight to R2 with a presigned URL. That accepts any format a phone records and skips the 4.5 MB request limit of serverless functions."
+        },
+        {
+          "title": "Images normalized twice",
+          "body": "Images are compressed to WebP in the browser before upload and normalized on the server to 720 px. HEIC photos are decoded on the server, so no upload is rejected for its format."
+        },
+        {
+          "title": "A locked design system",
+          "body": "One accent color used only as a thread (links, focus, active states), never on buttons. Hierarchy comes from type, spacing and contrast, which keeps every user's page coherent whatever accent they pick."
+        }
+      ]
     }
   },
   {
@@ -54,6 +103,30 @@
     "media": {
       "kind": "video",
       "src": "/videos/money-tracker.mp4"
+    },
+    "caseStudy": {
+      "problem": "Living as a nomad means spending in one currency, earning in another and thinking in a third. Most expense trackers convert everything at today's rate, so last month's totals change every time the market moves. The goal was a tracker whose numbers stay true to the day the money was spent.",
+      "built": [
+        "Installable PWA, designed mobile-first at 375 px for daily use on the phone.",
+        "Totals in any base currency, with per-account tabs and monthly and daily views.",
+        "Automatic sync from Bybit, CSV import with a Wise preset, and import from a screenshot shared straight from the phone.",
+        "Cash account with withdrawals and exchanges, transfers between accounts, and reminders with a calendar feed.",
+        "An optional chat assistant that answers questions about your own data with your own AI key."
+      ],
+      "decisions": [
+        {
+          "title": "Every expense keeps its own exchange rate",
+          "body": "Each transaction stores a snapshot of the rates at the moment it is saved, and every total is computed from those snapshots. Changing the base currency or a new day of rates never rewrites the past."
+        },
+        {
+          "title": "Currency-aware money",
+          "body": "Rounding and formatting follow each currency's official decimals: zero for VND or JPY, two for USD. Dates are stored as plain calendar days, so changing timezone never moves an expense to another day."
+        },
+        {
+          "title": "Imports that never duplicate",
+          "body": "Every imported row carries a stable source id, and the database enforces one row per user, source and id. Re-importing the same CSV or re-running a sync is always safe."
+        }
+      ]
     }
   },
   {
@@ -84,6 +157,29 @@
       },
       "designWidth": 1728,
       "mobileVideo": "/videos/nomad-events.mp4"
+    },
+    "caseStudy": {
+      "problem": "A community events business in Da Nang and Ko Phangan ran on a site built with a Vite single-page app, an Express API and a hosted MySQL database the team did not control. It needed a redesign, and a stack the client actually owns on free tiers.",
+      "built": [
+        "The client-approved redesign, rebuilt on Next.js with Server Actions.",
+        "Event pages with online registration.",
+        "Photo galleries, city pages and partner pages.",
+        "An admin panel for events, registrations, partners, analytics and site settings, with a QR scanner for check-in at the door."
+      ],
+      "decisions": [
+        {
+          "title": "A full data migration",
+          "body": "139 events, 58 albums and 4,032 photos moved from the old host to Neon Postgres and Cloudflare R2, with an idempotent image pipeline that converts every photo to WebP and stores it under a content-addressed key."
+        },
+        {
+          "title": "One master per image",
+          "body": "Each photo is stored once at full quality and resized on demand by Next.js, instead of pre-generating sizes. Changing the image host later is a single database update."
+        },
+        {
+          "title": "Both versions live",
+          "body": "The original site stays online next to the redesign, so the before and after can be compared side by side with the slider on this portfolio."
+        }
+      ]
     }
   }
 ]

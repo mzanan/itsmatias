@@ -22,6 +22,7 @@ Vercel installs with pnpm: on dependency changes update both `package-lock.json`
 - `src/components/{Hero,Work,Lab,About,Contact,Header,Share}/`; `ProjectsShowcase`/`ProjectShowcase` only for `/templates`.
 - `src/components/ui/`: primitives (`Pill`, `GlassBadge`, `Eyebrow`, `SectionHeader`, `FadeIn`, `Media`, `BeforeAfter`, `SlideStepper` + `useActiveSlide`, `JsonLd`).
 - Sales: `src/app/templates`, `api/buy/[slug]`, `api/order/[checkoutId]`, `order/[checkoutId]`, `attribution-removed/[slug]`, `api/webhooks/polar`, `api/cron/cleanup-deploys`; logic in `src/lib/sales/` (Polar API, product map, ephemeral deploy repos, Resend emails).
+- Case studies: `src/app/work/[slug]` (static, one per `components/Work/work.json` entry, `caseStudy` field) rendered by `components/CaseStudy/`. Keep them in sync with the live sites: a user-visible change in ecommerce, mySocials, money-tracker or events updates its entry (and `public/llms.txt` if the summary changes).
 - SEO/AEO: `src/app/{sitemap,robots}.ts` (AI crawlers allowed), `lib/seo.ts` (site constants + JSON-LD), `public/llms.txt`.
 - Analytics: PostHog EU through the `/relay` rewrite (`lib/analytics.ts`, `src/instrumentation-client.ts`), production only, `cookieless_mode: "always"` (no cookie banner needed). `?notrack=1` opts a browser out (localStorage), `?notrack=0` opts back in.
 - OG image: only the project fan, no text (the preview already shows title and description). JPG frames in `src/app/_og/` read by `lib/og.ts` at build; keep the PNG under ~600 KB for the large WhatsApp preview.
