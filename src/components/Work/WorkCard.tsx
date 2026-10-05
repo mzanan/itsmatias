@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "motion/react";
-import { FaArrowUpRightFromSquare } from "react-icons/fa6";
+import { FaArrowRight, FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { fadeInUp } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { Media } from "@/components/ui/Media";
@@ -82,6 +83,13 @@ export const WorkCard = ({ item, slide = true }: Props) => {
             <p className="text-sm text-muted-foreground leading-relaxed text-pretty">
               {item.detail}
             </p>
+            <Link
+              href={`/work/${item.id}`}
+              className="group/cta inline-flex w-fit items-center gap-2 pt-1 text-sm font-medium text-foreground/90 transition-colors hover:text-foreground"
+            >
+              Read the case study
+              <FaArrowRight className="h-3 w-3 transition-transform group-hover/cta:translate-x-0.5" />
+            </Link>
           </div>
           <dl
             className={cn(

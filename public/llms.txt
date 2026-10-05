@@ -14,6 +14,13 @@
 - [Money Tracker](https://money.itsmatias.com): expenses across currencies for nomads and expats; every expense keeps the exchange rate of its day.
 - [Nomad Events](https://events.itsmatias.com): a community events platform with registration, QR check-in, galleries and an admin panel.
 
+## Case studies
+
+- [E-commerce & Admin case study](https://itsmatias.com/work/ecommerce): one-click provisioning of a storefront plus admin, on an owned and portable stack.
+- [mySocials case study](https://itsmatias.com/work/mysocials): in-browser video transcoding, direct-to-R2 uploads and a locked design system.
+- [Money Tracker case study](https://itsmatias.com/work/money-tracker): per-transaction exchange-rate snapshots, currency-aware rounding and idempotent imports.
+- [Nomad Events case study](https://itsmatias.com/work/nomad-events): a full migration of 139 events and 4,032 photos to an owned stack.
+
 ## Templates and pricing
 
 - [Templates](https://itsmatias.com/templates): one-time purchase, deployed to the buyer's own Vercel account.
