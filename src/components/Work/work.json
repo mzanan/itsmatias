@@ -20,10 +20,11 @@
     "caseStudy": {
       "problem": "A small store needs more than a storefront: someone has to manage the catalog, watch stock and process orders, and most templates stop at the pretty front page. The goal was a complete shop that a non-technical owner can run from day one, without a developer to set it up.",
       "built": [
-        "Storefront with catalog, product pages, cart and Stripe checkout.",
+        "Mobile-first storefront: each collection fills one screen with a swipeable gallery, and collection pages pair a sticky gallery with a product grid, size picker and quantity stepper.",
+        "Cart and Stripe checkout, with the charge created only when the buyer presses Pay.",
         "Admin panel for products, stock and orders, behind its own admin login.",
         "Real-time stock, so the storefront never sells what is no longer there.",
-        "Order confirmation emails.",
+        "Order emails for confirmed, shipped and delivered, each sent once per status change.",
         "One-click deploy that provisions the database, storage and the first admin account."
       ],
       "decisions": [
@@ -34,6 +35,10 @@
         {
           "title": "Provisioning instead of instructions",
           "body": "Buyers do not follow a setup guide. After payment, a private copy of the repo is created and deployed to their own Vercel account with the database, storage and admin login already wired."
+        },
+        {
+          "title": "The server decides the price",
+          "body": "The payment is created only when the buyer presses Pay, with the total recalculated on the server from the database. A tampered cart cannot change what gets charged, a price change is shown before paying, and abandoned checkouts leave no half-made payments behind."
         },
         {
           "title": "Owned, portable stack",
