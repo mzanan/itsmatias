@@ -130,6 +130,10 @@
         {
           "title": "Imports that never duplicate",
           "body": "Every imported row carries a stable source id, and the database enforces one row per user, source and id. Re-importing the same CSV or re-running a sync is always safe."
+        },
+        {
+          "title": "Private on a shared phone",
+          "body": "A hide-amounts toggle masks balances, totals, transaction rows and reminders through one shared helper. The service worker caches only static assets, so no signed-in page can be opened offline after signing out."
         }
       ]
     }
