@@ -30,7 +30,7 @@ Vercel installs with pnpm: on dependency changes update both `package-lock.json`
 
 ## Conventions
 
-Inherits the cross-repo standard from `personal/CLAUDE.md` (reuse/SRP/DRY/tokens/structure, English commits without co-author, no code comments). Repo-specific:
+Inherits the cross-repo standard from `personal/CLAUDE.md`. Repo-specific:
 
 - Videos in `/public/videos/` (mobile/desktop per project); `.webp` poster derived via `lib/video.ts` (`posterFor`).
 - Shared animation variants in `lib/motion.ts`.
