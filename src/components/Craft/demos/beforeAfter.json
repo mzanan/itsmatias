@@ -1,0 +1,10 @@
+{
+  "before": {
+    "poster": "/showcase/hangout-before-desktop.webp",
+    "alt": "Nomad Events original design"
+  },
+  "after": {
+    "poster": "/showcase/hangout-after-desktop.webp",
+    "alt": "Nomad Events redesign"
+  }
+}

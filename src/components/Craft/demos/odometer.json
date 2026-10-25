@@ -1,0 +1,21 @@
+{
+  "currency": "USD",
+  "balanceLabel": "Total balance",
+  "sets": [
+    [
+      { "label": "Jul 2026", "balance": 2940.15, "income": 3200, "expense": 1618.3 },
+      { "label": "Aug 2026", "balance": 3602.75, "income": 3350, "expense": 1522.9 },
+      { "label": "Sep 2026", "balance": 4218.4, "income": 3500, "expense": 1284.6 }
+    ],
+    [
+      { "label": "Oct 2026", "balance": 4876.2, "income": 3620, "expense": 1342.85 },
+      { "label": "Nov 2026", "balance": 5390.05, "income": 3410, "expense": 1596.4 },
+      { "label": "Dec 2026", "balance": 5712.9, "income": 3880, "expense": 2357.15 }
+    ],
+    [
+      { "label": "Jan 2027", "balance": 6105.35, "income": 3300, "expense": 1407.55 },
+      { "label": "Feb 2027", "balance": 6688.1, "income": 3450, "expense": 1267.25 },
+      { "label": "Mar 2027", "balance": 7341.6, "income": 3720, "expense": 1466.5 }
+    ]
+  ]
+}

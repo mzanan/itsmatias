@@ -1,0 +1,12 @@
+[
+  { "id": "p01", "src": "/craft/demo/album-reveal/photo-01.webp", "width": 400, "height": 500, "caption": "Rooftop social" },
+  { "id": "p02", "src": "/craft/demo/album-reveal/photo-02.webp", "width": 400, "height": 400, "caption": "Painting night" },
+  { "id": "p03", "src": "/craft/demo/album-reveal/photo-03.webp", "width": 400, "height": 534 },
+  { "id": "p04", "src": "/craft/demo/album-reveal/photo-04.webp", "width": 400, "height": 266, "caption": "Beach yoga" },
+  { "id": "p05", "src": "/craft/demo/album-reveal/photo-05.webp", "width": 400, "height": 500 },
+  { "id": "p06", "src": "/craft/demo/album-reveal/photo-06.webp", "width": 400, "height": 224, "caption": "Golden hour" },
+  { "id": "p07", "src": "/craft/demo/album-reveal/photo-07.webp", "width": 400, "height": 500 },
+  { "id": "p08", "src": "/craft/demo/album-reveal/photo-08.webp", "width": 400, "height": 266 },
+  { "id": "p09", "src": "/craft/demo/album-reveal/photo-09.webp", "width": 400, "height": 400, "caption": "Bonfire" },
+  { "id": "p10", "src": "/craft/demo/album-reveal/photo-10.webp", "width": 400, "height": 600 }
+]

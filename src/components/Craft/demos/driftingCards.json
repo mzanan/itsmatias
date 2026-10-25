@@ -1,0 +1,312 @@
+{
+  "columns": [
+    [
+      {
+        "name": "Mara Avalos",
+        "handle": "@maraavalos",
+        "avatar": "/craft/demo/drifting-cards/p07.webp",
+        "links": [
+          {
+            "network": "instagram",
+            "label": "@maraavalos"
+          },
+          {
+            "network": "youtube",
+            "label": "YouTube"
+          }
+        ]
+      },
+      {
+        "name": "Leo Fields",
+        "handle": "@leofilms",
+        "avatar": "/craft/demo/drifting-cards/p21.webp",
+        "links": [
+          {
+            "network": "tiktok",
+            "label": "TikTok"
+          },
+          {
+            "network": "spotify",
+            "label": "Latest drop"
+          }
+        ]
+      },
+      {
+        "name": "Nina Cole",
+        "handle": "@ninacole",
+        "avatar": "/craft/demo/drifting-cards/p33.webp",
+        "links": [
+          {
+            "network": "instagram",
+            "label": "@ninacole"
+          },
+          {
+            "network": "twitch",
+            "label": "Live now"
+          }
+        ]
+      },
+      {
+        "name": "Hugo Lima",
+        "handle": "@hugolima",
+        "avatar": "/craft/demo/drifting-cards/p09.webp",
+        "links": [
+          {
+            "network": "youtube",
+            "label": "Tutorials"
+          },
+          {
+            "network": "github",
+            "label": "Code"
+          }
+        ]
+      },
+      {
+        "name": "Vera Nilsson",
+        "handle": "@veranilsson",
+        "avatar": "/craft/demo/drifting-cards/p52.webp",
+        "links": [
+          {
+            "network": "spotify",
+            "label": "Mixtape"
+          },
+          {
+            "network": "instagram",
+            "label": "Studio"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "name": "Theo Park",
+        "handle": "@theopark",
+        "avatar": "/craft/demo/drifting-cards/p12.webp",
+        "links": [
+          {
+            "network": "youtube",
+            "label": "Channel"
+          },
+          {
+            "network": "github",
+            "label": "Projects"
+          }
+        ]
+      },
+      {
+        "name": "Aria Sol",
+        "handle": "@ariasol",
+        "avatar": "/craft/demo/drifting-cards/p41.webp",
+        "links": [
+          {
+            "network": "spotify",
+            "label": "New single"
+          },
+          {
+            "network": "instagram",
+            "label": "@ariasol"
+          }
+        ]
+      },
+      {
+        "name": "Dev Mehta",
+        "handle": "@devmehta",
+        "avatar": "/craft/demo/drifting-cards/p18.webp",
+        "links": [
+          {
+            "network": "linkedin",
+            "label": "LinkedIn"
+          },
+          {
+            "network": "twitter",
+            "label": "Follow"
+          }
+        ]
+      },
+      {
+        "name": "Iris Wong",
+        "handle": "@iriswong",
+        "avatar": "/craft/demo/drifting-cards/p24.webp",
+        "links": [
+          {
+            "network": "tiktok",
+            "label": "Daily"
+          },
+          {
+            "network": "youtube",
+            "label": "Shorts"
+          }
+        ]
+      },
+      {
+        "name": "Marco Bianchi",
+        "handle": "@marcobianchi",
+        "avatar": "/craft/demo/drifting-cards/p38.webp",
+        "links": [
+          {
+            "network": "instagram",
+            "label": "Gallery"
+          },
+          {
+            "network": "spotify",
+            "label": "Sets"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "name": "Sofia Ren",
+        "handle": "@sofiaren",
+        "avatar": "/craft/demo/drifting-cards/p27.webp",
+        "links": [
+          {
+            "network": "tiktok",
+            "label": "TikTok"
+          },
+          {
+            "network": "instagram",
+            "label": "Photos"
+          }
+        ]
+      },
+      {
+        "name": "Kai Storm",
+        "handle": "@kaistorm",
+        "avatar": "/craft/demo/drifting-cards/p45.webp",
+        "links": [
+          {
+            "network": "twitch",
+            "label": "Stream"
+          },
+          {
+            "network": "youtube",
+            "label": "Clips"
+          }
+        ]
+      },
+      {
+        "name": "Lucia Mar",
+        "handle": "@luciamar",
+        "avatar": "/craft/demo/drifting-cards/p03.webp",
+        "links": [
+          {
+            "network": "instagram",
+            "label": "@luciamar"
+          },
+          {
+            "network": "spotify",
+            "label": "Playlist"
+          }
+        ]
+      },
+      {
+        "name": "Noah Reed",
+        "handle": "@noahreed",
+        "avatar": "/craft/demo/drifting-cards/p30.webp",
+        "links": [
+          {
+            "network": "youtube",
+            "label": "Films"
+          },
+          {
+            "network": "twitter",
+            "label": "Notes"
+          }
+        ]
+      },
+      {
+        "name": "Elena Cruz",
+        "handle": "@elenacruz",
+        "avatar": "/craft/demo/drifting-cards/p48.webp",
+        "links": [
+          {
+            "network": "tiktok",
+            "label": "Recipes"
+          },
+          {
+            "network": "instagram",
+            "label": "Food"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "name": "Omar Vidal",
+        "handle": "@omarvidal",
+        "avatar": "/craft/demo/drifting-cards/p50.webp",
+        "links": [
+          {
+            "network": "youtube",
+            "label": "Films"
+          },
+          {
+            "network": "instagram",
+            "label": "Behind"
+          }
+        ]
+      },
+      {
+        "name": "Yui Tanaka",
+        "handle": "@yuitanaka",
+        "avatar": "/craft/demo/drifting-cards/p36.webp",
+        "links": [
+          {
+            "network": "tiktok",
+            "label": "Dance"
+          },
+          {
+            "network": "spotify",
+            "label": "Sounds"
+          }
+        ]
+      },
+      {
+        "name": "Bea Costa",
+        "handle": "@beacosta",
+        "avatar": "/craft/demo/drifting-cards/p14.webp",
+        "links": [
+          {
+            "network": "instagram",
+            "label": "Travel"
+          },
+          {
+            "network": "youtube",
+            "label": "Vlogs"
+          }
+        ]
+      },
+      {
+        "name": "Sam Okafor",
+        "handle": "@samokafor",
+        "avatar": "/craft/demo/drifting-cards/p05.webp",
+        "links": [
+          {
+            "network": "twitch",
+            "label": "Gaming"
+          },
+          {
+            "network": "youtube",
+            "label": "Highlights"
+          }
+        ]
+      },
+      {
+        "name": "Clara Roy",
+        "handle": "@clararoy",
+        "avatar": "/craft/demo/drifting-cards/p43.webp",
+        "links": [
+          {
+            "network": "linkedin",
+            "label": "Work"
+          },
+          {
+            "network": "instagram",
+            "label": "Sketch"
+          }
+        ]
+      }
+    ]
+  ]
+}
