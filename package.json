@@ -23,6 +23,8 @@
     "canvas-confetti": "^1.9.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "embla-carousel-react": "^8.6.0",
+    "embla-carousel-wheel-gestures": "^8.1.0",
     "lottie-react": "^2.4.1",
     "motion": "^12.40.0",
     "next": "^16.0.3",

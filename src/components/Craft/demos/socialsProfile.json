@@ -1,0 +1,110 @@
+{
+  "name": "Matias",
+  "bio": "Developer. Travel, food and code.",
+  "photos": [
+    "/craft/demo/photo-wall/p01.webp",
+    "/craft/demo/photo-wall/p02.webp",
+    "/craft/demo/photo-wall/p03.webp",
+    "/craft/demo/photo-wall/p04.webp",
+    "/craft/demo/photo-wall/p05.webp",
+    "/craft/demo/photo-wall/p06.webp",
+    "/craft/demo/photo-wall/p07.webp",
+    "/craft/demo/photo-wall/p08.webp",
+    "/craft/demo/photo-wall/p09.webp",
+    "/craft/demo/photo-wall/p10.webp",
+    "/craft/demo/photo-wall/p11.webp",
+    "/craft/demo/photo-wall/p12.webp",
+    "/craft/demo/photo-wall/p13.webp",
+    "/craft/demo/photo-wall/p14.webp",
+    "/craft/demo/photo-wall/p15.webp",
+    "/craft/demo/photo-wall/p16.webp",
+    "/craft/demo/photo-wall/p17.webp",
+    "/craft/demo/photo-wall/p18.webp",
+    "/craft/demo/photo-wall/p19.webp",
+    "/craft/demo/photo-wall/p20.webp"
+  ],
+  "stills": [
+    {
+      "src": "/craft/demo/video-wall/v01.webp",
+      "width": 400,
+      "height": 225
+    },
+    {
+      "src": "/craft/demo/video-wall/v05.webp",
+      "width": 280,
+      "height": 374
+    },
+    {
+      "src": "/craft/demo/video-wall/v02.webp",
+      "width": 400,
+      "height": 226
+    },
+    {
+      "src": "/craft/demo/video-wall/v06.webp",
+      "width": 280,
+      "height": 374
+    },
+    {
+      "src": "/craft/demo/video-wall/v08.webp",
+      "width": 280,
+      "height": 280
+    },
+    {
+      "src": "/craft/demo/video-wall/v03.webp",
+      "width": 400,
+      "height": 226
+    },
+    {
+      "src": "/craft/demo/video-wall/v07.webp",
+      "width": 280,
+      "height": 374
+    },
+    {
+      "src": "/craft/demo/video-wall/v04.webp",
+      "width": 400,
+      "height": 225
+    }
+  ],
+  "links": [
+    {
+      "network": "instagram",
+      "title": "Instagram"
+    },
+    {
+      "network": "youtube",
+      "title": "YouTube"
+    }
+  ],
+  "tabs": [
+    {
+      "id": "photos",
+      "label": "Photos",
+      "type": "photo",
+      "links": [
+        {
+          "network": "instagram",
+          "title": "Instagram"
+        },
+        {
+          "network": "github",
+          "title": "GitHub"
+        }
+      ]
+    },
+    {
+      "id": "videos",
+      "label": "Videos",
+      "type": "video",
+      "links": [
+        {
+          "network": "youtube",
+          "title": "YouTube"
+        },
+        {
+          "network": "twitch",
+          "title": "Live streams"
+        }
+      ]
+    }
+  ]
+}

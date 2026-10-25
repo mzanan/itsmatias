@@ -1,0 +1,27 @@
+{
+  "title": "Today",
+  "openLabel": "Open drawer",
+  "moreLabel": "Show all",
+  "lessLabel": "Show less",
+  "visibleRows": 2,
+  "rows": [
+    { "id": "invoice", "source": "Wise", "note": "Client invoice", "amount": "+$2,400.00", "step": "source" },
+    { "id": "pho", "source": "Cash", "note": "Pho and iced coffee", "amount": "-$3.64", "step": "cash" },
+    { "id": "cowork", "source": "Revolut", "note": "Coworking pass", "amount": "-$45.98", "step": "source" },
+    { "id": "flight", "source": "Bybit", "note": "Flight to Bangkok", "amount": "-$93.20", "step": "cash" }
+  ],
+  "steps": {
+    "source": {
+      "title": "Change source",
+      "description": "Pick the account this movement came from",
+      "options": ["Wise", "Revolut", "Bybit", "Cash"],
+      "submitLabel": "Save"
+    },
+    "cash": {
+      "title": "Move to cash",
+      "description": "Withdraw part of it as cash",
+      "options": [],
+      "submitLabel": "Move"
+    }
+  }
+}

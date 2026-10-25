@@ -1,0 +1,196 @@
+[
+  {
+    "id": "portfolio",
+    "name": "Portfolio",
+    "url": "https://itsmatias.com",
+    "items": [
+      {
+        "id": "hero-shader",
+        "title": "Pointer-reactive WebGL background",
+        "description": "A dark noise field fills the hero, fades in after load and drifts toward the pointer with smoothed easing.",
+        "how": "OGL fragment shader · lerped mouse uniform · paused off-screen and under reduced motion",
+        "href": "https://itsmatias.com",
+        "kind": "micro"
+      },
+      {
+        "id": "hero-stack",
+        "title": "Project stack fan-out",
+        "description": "Hovering the floating project cards spreads and tilts them, and the card under the cursor straightens and scales up in front.",
+        "how": "motion springs · per-card spread offsets · whileHover",
+        "href": "https://itsmatias.com",
+        "kind": "micro"
+      },
+      {
+        "id": "shader-lab",
+        "title": "Live shader lab",
+        "description": "Four live GPU shaders react to the pointer, and a sliding pill switches between them.",
+        "how": "OGL · shared layoutId tab indicator · AnimatePresence captions",
+        "href": "https://itsmatias.com/#lab",
+        "kind": "micro"
+      },
+      {
+        "id": "before-after",
+        "title": "Before/after slider over live sites",
+        "description": "A draggable handle wipes between the old and new Nomad Events sites, rendered as live scaled iframes. When it scrolls into view, the divider wiggles and a pulsing hint sits on the handle until you touch it.",
+        "how": "clip-path inset · scaled iframes · role=slider · damped oscillation nudge",
+        "href": "https://itsmatias.com/work/nomad-events",
+        "kind": "micro"
+      },
+      {
+        "id": "madlibs-form",
+        "title": "Sentence-style contact form",
+        "description": "The contact form reads as one sentence, and its blank fields widen as you type.",
+        "how": "CSS field-sizing: content · inline-grid sizer",
+        "href": "https://itsmatias.com/#contact",
+        "kind": "micro"
+      },
+      {
+        "id": "about-shuffle",
+        "title": "Photo grid auto-shuffle",
+        "description": "The About photos reshuffle every two seconds and glide into their new positions.",
+        "how": "motion layout animation · runs only while in view",
+        "href": "https://itsmatias.com/#about",
+        "kind": "motion"
+      }
+    ]
+  },
+  {
+    "id": "ecommerce",
+    "name": "E-commerce",
+    "url": "https://ecommerce.itsmatias.com",
+    "items": [
+      {
+        "id": "split-screen",
+        "title": "Diagonal Day/Night selector",
+        "description": "A full-screen split with a diagonal edge that leans toward the side you hover, then sweeps across the screen when you pick Day or Night. A soft spotlight follows the cursor across each word.",
+        "how": "CSS clip-path polygon · CSS transition · background-clip: text spotlight",
+        "href": "https://ecommerce.itsmatias.com",
+        "kind": "micro"
+      }
+    ]
+  },
+  {
+    "id": "mysocials",
+    "name": "mySocials",
+    "url": "https://links.itsmatias.com",
+    "items": [
+      {
+        "id": "card-reveal",
+        "title": "Profile scene reveal",
+        "description": "The photo grid pops in tile by tile, and only once it has loaded does the profile card rise into place. Switching tabs swaps the background and replays the entrance, and the photos keep rotating.",
+        "how": "onReady choreography with timeout fallback · loaded-prefix stagger · render-phase reset on tab change",
+        "href": "https://links.itsmatias.com/itsmatias",
+        "kind": "motion"
+      },
+      {
+        "id": "video-wall",
+        "title": "Video wall entrance",
+        "description": "Video tiles fade in while settling from a slight zoom, cascading across a justified layout on desktop and a masonry on mobile.",
+        "how": "motion · custom justified-row algorithm",
+        "href": "https://links.itsmatias.com/itsmatias",
+        "kind": "motion"
+      },
+      {
+        "id": "accent-glow",
+        "title": "Accent-colored link glow",
+        "description": "Hovering a link tints it with a soft glow in the creator's own accent color, while a chevron slides in.",
+        "how": "per-profile CSS variable · color-mix(in oklab)",
+        "href": "https://links.itsmatias.com/itsmatias",
+        "kind": "micro"
+      },
+      {
+        "id": "drifting-cards",
+        "title": "Drifting profile columns",
+        "description": "Behind the sign-in form, columns of sample profile cards drift up and down in alternating directions and fade at the edges.",
+        "how": "CSS keyframes · staggered durations · mask-image",
+        "href": "https://links.itsmatias.com",
+        "kind": "motion"
+      },
+      {
+        "id": "payment-celebration",
+        "title": "Payment success celebration",
+        "description": "After checkout, a party-popper icon spring-pops in with a twist while confetti bursts from both sides of the screen.",
+        "how": "polling with timeout · motion spring · canvas-confetti",
+        "href": "https://links.itsmatias.com",
+        "kind": "micro"
+      }
+    ]
+  },
+  {
+    "id": "money-tracker",
+    "name": "Money Tracker",
+    "url": "https://money.itsmatias.com",
+    "items": [
+      {
+        "id": "odometer",
+        "title": "Odometer number ticker",
+        "description": "In the landing preview, the month, balance and totals roll together like an odometer through three months.",
+        "how": "pure CSS keyframes · shared timing across tickers",
+        "href": "https://money.itsmatias.com",
+        "kind": "motion"
+      },
+      {
+        "id": "auto-height-drawer",
+        "title": "Auto-height drawer with steps",
+        "description": "The drawer resizes to fit its content, swaps to a new step in place, and the phone's back button steps back before closing it.",
+        "how": "ResizeObserver · interpolate-size · history integration",
+        "href": "https://money.itsmatias.com",
+        "kind": "micro"
+      }
+    ]
+  },
+  {
+    "id": "fit-coach",
+    "name": "Fit Coach",
+    "url": "https://coach.itsmatias.com",
+    "items": [
+      {
+        "id": "hero-choreography",
+        "title": "Choreographed hero entrance",
+        "description": "The hero rises in order, then the macro card slides up, its kcal ring sweeps closed and the macro bars fill one after another.",
+        "how": "CSS stagger tokens · stroke-dashoffset ring",
+        "href": "https://coach.itsmatias.com",
+        "kind": "motion"
+      },
+      {
+        "id": "scroll-reveals",
+        "title": "Scroll-driven reveals",
+        "description": "As you scroll, each feature's text rises into place and its preview card follows a little later.",
+        "how": "CSS animation-timeline: view() · no JavaScript",
+        "href": "https://coach.itsmatias.com",
+        "kind": "motion"
+      }
+    ]
+  },
+  {
+    "id": "nomad-events",
+    "name": "Nomad Events",
+    "url": "https://events.itsmatias.com",
+    "items": [
+      {
+        "id": "hero-video",
+        "title": "Hero video crossfade",
+        "description": "The hero opens on a still photo and the looping video fades in once it can play; it pauses when scrolled away.",
+        "how": "canplay gate · IntersectionObserver playback",
+        "href": "https://events.itsmatias.com",
+        "kind": "motion"
+      },
+      {
+        "id": "vibe-carousel",
+        "title": "Auto-rotating carousel",
+        "description": "A full-bleed slider advances on its own, can be dragged or swiped with the trackpad, and the active dot stretches into a pill.",
+        "how": "Embla · wheel gestures · pause on interaction",
+        "href": "https://events.itsmatias.com",
+        "kind": "micro"
+      },
+      {
+        "id": "album-reveal",
+        "title": "Blur-to-sharp album reveal",
+        "description": "Each photo rises and goes from blurred to sharp as it scrolls into view, on a balanced masonry grid.",
+        "how": "motion blur variant · shortest-column masonry",
+        "href": "https://events.itsmatias.com/gallery",
+        "kind": "motion"
+      }
+    ]
+  }
+]
