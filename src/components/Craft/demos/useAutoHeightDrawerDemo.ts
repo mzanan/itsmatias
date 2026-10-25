@@ -3,6 +3,7 @@ import {
   useEffect,
   useRef,
   useState,
+  type CSSProperties,
   type KeyboardEvent,
   type TransitionEvent,
 } from "react";
@@ -117,7 +118,7 @@ export const useAutoHeightDrawerDemo = () => {
     innerRef,
     mounted,
     open,
-    heightVars: drawerHeightVars(drawerHeight),
+    heightVars: drawerHeightVars(drawerHeight) as CSSProperties | undefined,
     hasStep: activeEntry !== null,
     activeEntry,
     activeStep: activeEntry ? drawer.steps[activeEntry.step] : null,
