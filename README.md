@@ -45,11 +45,11 @@ src/
 
 ## Getting Started
 
-Requires Node.js 20+.
+Requires Node.js 20+ and pnpm.
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 Opens on [http://localhost:3010](http://localhost:3010).
@@ -78,7 +78,7 @@ Heavy client work (shaders, video loading) starts after `load` + idle (`lib/idle
 
 ## Deployment
 
-Deployed on Vercel. Vercel installs with pnpm, so keep `pnpm-lock.yaml` in sync with `package-lock.json` when dependencies change.
+Deployed on Vercel, which installs with pnpm from `pnpm-lock.yaml`. Add dependencies with `pnpm add`, never `npm install`, so the lockfile stays in sync.
 
 ## License
 
