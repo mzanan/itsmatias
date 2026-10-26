@@ -14,11 +14,13 @@ const NAV_ITEMS = [
   { label: "Contact", id: "contact", href: "/#contact" },
 ] as const
 
-const SECONDARY_LINK = { label: "Templates", href: "/templates" } as const
+const SECONDARY_LINKS = [
+  { label: "Craft", href: "/craft" },
+  { label: "Templates", href: "/templates" },
+] as const
 
 export const Header = () => {
   const { isScrolled, isInHero, activeSection, scrollToTop, pathname } = useHeader()
-  const isSecondaryActive = pathname === SECONDARY_LINK.href
 
   return (
     <header
@@ -57,12 +59,15 @@ export const Header = () => {
               />
             ))}
             <span aria-hidden className="h-4 w-px bg-white/15" />
-            <NavLink
-              href={SECONDARY_LINK.href}
-              label={SECONDARY_LINK.label}
-              isActive={isSecondaryActive}
-              idleClassName="text-muted-foreground/70"
-            />
+            {SECONDARY_LINKS.map(({ label, href }) => (
+              <NavLink
+                key={href}
+                href={href}
+                label={label}
+                isActive={pathname === href}
+                idleClassName="text-muted-foreground/70"
+              />
+            ))}
           </div>
           <div className="relative">
             <Share />
