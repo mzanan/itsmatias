@@ -3,7 +3,7 @@ import { CONTACT_EMAIL, URLS } from "@/lib/urls";
 export const SITE_NAME = "itsmatias";
 export const SITE_TITLE = "Matias Zanan: Design Engineer";
 export const SITE_DESCRIPTION =
-  "Design engineer. I design and build interfaces end to end: design tokens, motion and the production code behind them.";
+  "Design engineer. I design and build web interfaces, and I pay close attention to how they feel to use.";
 export const PERSON_NAME = "Matias Zanan";
 
 export const AI_CRAWLERS = [

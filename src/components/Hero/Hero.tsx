@@ -55,8 +55,8 @@ export const Hero = () => {
               variants={fadeInUp}
               className="mt-5 max-w-xl text-subtitle text-foreground/70 leading-snug text-pretty"
             >
-              I design and build interfaces end to end: design tokens, motion
-              and the production code behind them.
+              I design and build web interfaces, and I pay close attention to
+              how they feel to use.
             </motion.p>
           </div>
           <div className="order-3">
