@@ -6,6 +6,7 @@ import { Media } from "@/components/ui/Media";
 import { surface } from "@/lib/surface";
 import type { MediaSource } from "@/types/media";
 import { fadeInUp } from "@/lib/motion";
+import { stackCardTarget } from "@/lib/heroStack";
 import { cn } from "@/lib/utils";
 import stackData from "./heroStack.json";
 import { useHeroStack } from "./useHeroStack";
@@ -24,7 +25,7 @@ type StackCard = {
 const cards = stackData as StackCard[];
 
 export const HeroStack = ({ className }: { className?: string }) => {
-  const { ref, open, focus, onHoverStart, onHoverEnd } = useHeroStack(
+  const { ref, open, focus, compact, onHoverStart, onHoverEnd } = useHeroStack(
     cards.length
   );
 
@@ -44,23 +45,11 @@ export const HeroStack = ({ className }: { className?: string }) => {
           rel="noopener noreferrer"
           aria-label={`Open ${card.label}`}
           initial={{ rotate: card.rotate }}
-          animate={
-            focus === i
-              ? {
-                  rotate: 0,
-                  scale: 1.2,
-                  zIndex: 20,
-                  x: card.spread.x,
-                  y: card.spread.y,
-                }
-              : {
-                  rotate: open ? card.rotate * 1.6 : card.rotate,
-                  scale: 1,
-                  zIndex: 0,
-                  x: open ? card.spread.x : 0,
-                  y: open ? card.spread.y : 0,
-                }
-          }
+          animate={stackCardTarget(card, {
+            focused: focus === i,
+            open,
+            compact,
+          })}
           transition={{ type: "spring", stiffness: 260, damping: 24 }}
           whileHover={{ scale: 1.2, rotate: 0, zIndex: 20 }}
           className={cn(

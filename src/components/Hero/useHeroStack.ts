@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useInView, useReducedMotion } from "motion/react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { stackPhase } from "@/lib/heroStack";
+import { STACK_STEP_MS, stackPhase } from "@/lib/heroStack";
 
 const TOUCH_QUERY = "(hover: none)";
-const STEP_MS = 1800;
 
 export const useHeroStack = (count: number) => {
   const [hovered, setHovered] = useState(false);
@@ -17,7 +16,7 @@ export const useHeroStack = (count: number) => {
 
   useEffect(() => {
     if (!autoplay) return;
-    const id = window.setInterval(() => setStep((s) => s + 1), STEP_MS);
+    const id = window.setInterval(() => setStep((s) => s + 1), STACK_STEP_MS);
     return () => window.clearInterval(id);
   }, [autoplay]);
 
@@ -27,6 +26,7 @@ export const useHeroStack = (count: number) => {
     ref,
     open: phase ? phase.open : hovered,
     focus: phase ? phase.focus : null,
+    compact: isTouch,
     onHoverStart: () => setHovered(true),
     onHoverEnd: () => setHovered(false),
   };
