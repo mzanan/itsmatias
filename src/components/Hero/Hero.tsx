@@ -12,6 +12,7 @@ import { useHero } from "./useHero";
 const STACK = ["Next.js", "React", "TypeScript", "Tailwind", "WebGL"];
 const LOCATION = { city: "Da Nang, Vietnam", timeZone: "Asia/Ho_Chi_Minh" };
 const CURRENTLY = { label: "Money Tracker", href: URLS.money };
+const AVAILABILITY = "Remote or relocation";
 
 export const Hero = () => {
   const shaderRef = useShaderCanvas("hero");
@@ -92,6 +93,8 @@ export const Hero = () => {
                   {clock ?? "--:--"}
                 </span>
               </dd>
+              <dt className="text-foreground/40">Open to</dt>
+              <dd className="text-muted-foreground">{AVAILABILITY}</dd>
               <dt className="text-foreground/40">Building</dt>
               <dd>
                 <a

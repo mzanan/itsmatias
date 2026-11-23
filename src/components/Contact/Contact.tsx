@@ -88,7 +88,7 @@ export const Contact = () => {
               </div>
               <div>
                 <label htmlFor="message-m" className="block text-sm text-muted-foreground mb-1">
-                  I&apos;d like help with
+                  I&apos;d like to talk about
                 </label>
                 <input
                   type="text"
@@ -97,7 +97,7 @@ export const Contact = () => {
                   required
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="a landing, an ecommerce, an app…"
+                  placeholder="a role, a project…"
                   className={`${inputBase} block w-full text-xl`}
                 />
                 <ValidationError prefix="Message" field="message" errors={state.errors} className="text-red-400 text-sm mt-1" />
@@ -190,11 +190,11 @@ export const Contact = () => {
                   placeholder="your name"
                   className={`${inputBase} ${growable} inline-block align-baseline min-w-[12rem] mx-2 text-2xl lg:text-3xl`}
                 />
-                <span> and I&apos;d like help with </span>
-                <label htmlFor="message-d" className="sr-only">What I need help with</label>
+                <span> and I&apos;d like to talk about </span>
+                <label htmlFor="message-d" className="sr-only">What I want to talk about</label>
                 <span className="inline-grid align-baseline mx-2 max-w-full">
                   <span aria-hidden className="col-start-1 row-start-1 invisible whitespace-pre text-2xl lg:text-3xl px-1">
-                    {formData.message || "a landing, an ecommerce…"}
+                    {formData.message || "a role, a project…"}
                   </span>
                   <input
                     type="text"
@@ -203,7 +203,7 @@ export const Contact = () => {
                     required
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="a landing, an ecommerce…"
+                    placeholder="a role, a project…"
                     className={`${inputBase} col-start-1 row-start-1 w-full text-2xl lg:text-3xl px-1`}
                   />
                 </span>

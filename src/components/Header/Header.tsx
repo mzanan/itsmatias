@@ -16,7 +16,6 @@ const NAV_ITEMS = [
 
 const SECONDARY_LINKS = [
   { label: "Craft", href: "/craft" },
-  { label: "Templates", href: "/templates" },
 ] as const
 
 export const Header = () => {

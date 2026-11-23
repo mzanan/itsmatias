@@ -23,7 +23,7 @@ export const AboutShuffleDemo = () => {
           >
             <Image
               src={image}
-              alt="Matias Zanan, web developer"
+              alt="Matias Zanan, design engineer"
               fill
               sizes="120px"
               className="object-cover"

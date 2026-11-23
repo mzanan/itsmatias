@@ -40,9 +40,9 @@ export const useAbout = () => {
   const about: AboutData = useMemo(
     () => ({
       description:
-        "Hi, I'm Matias.\n\nI work remotely while traveling, building production websites end-to-end: design, code, deploy. No agencies, no handoffs, just code that ships.\n\nEvery project here was made by me, with care and attention to detail.",
+        "Hi, I'm Matias.\n\nI've been building for the web since 2020, and these days I work remotely while I travel. I design the interfaces and write the code behind them, from the first sketch to production.\n\nEvery project here was designed and built by me, with close attention to the details.",
       descriptionMobile:
-        "Hi, I'm Matias.\n\nI build production websites end-to-end: design, code, deploy.\n\nRemote, traveling, made with care.",
+        "Hi, I'm Matias.\n\nI design and build web interfaces, from the first sketch to production.\n\nRemote, traveling, careful with the details.",
       techStack: [
         "Next.js",
         "TypeScript",

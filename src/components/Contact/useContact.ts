@@ -2,7 +2,7 @@ import { useState, useRef, useMemo, useEffect, startTransition, type ComponentTy
 import { useInView } from "motion/react";
 import { staggerContainer, fadeInUp } from "@/lib/motion";
 import { useForm, ValidationError } from "@formspree/react";
-import { FaWhatsapp, FaLinkedin } from "react-icons/fa";
+import { FaWhatsapp, FaLinkedin, FaGithub } from "react-icons/fa";
 import { HiMail } from "react-icons/hi";
 
 type ContactData = {
@@ -39,9 +39,9 @@ export const useContact = () => {
   const contact: ContactData = useMemo(
     () => ({
       description:
-        "Have a project in mind or just want to explore ideas?\nShare a few details below and I'll get back to you shortly.",
+        "Hiring, or have a project in mind?\nTell me a bit about it and I'll get back to you soon.",
       descriptionMobile:
-        "Have a project in mind? Share a few details and I'll get back to you shortly.",
+        "Hiring, or have a project in mind? Tell me a bit about it and I'll get back to you soon.",
     }),
     []
   );
@@ -50,6 +50,7 @@ export const useContact = () => {
     () => [
       { label: "WhatsApp", href: "https://wa.me/5491157567049", Icon: FaWhatsapp },
       { label: "LinkedIn", href: "https://linkedin.com/in/matiaszanan", Icon: FaLinkedin },
+      { label: "GitHub", href: "https://github.com/mzanan", Icon: FaGithub },
       { label: "matiaszanan@gmail.com", href: "mailto:matiaszanan@gmail.com", Icon: HiMail },
     ],
     []
