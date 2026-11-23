@@ -44,7 +44,7 @@ export const Hero = () => {
               variants={fadeInUp}
               className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground"
             >
-              Design Engineer
+              Frontend Engineer · UI &amp; Motion
             </motion.p>
             <motion.h1
               variants={fadeInUp}

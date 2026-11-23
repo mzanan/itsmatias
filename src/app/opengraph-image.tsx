@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { readOgImage } from "@/lib/og";
 
-export const alt = "Matias Zanan: Design Engineer";
+export const alt = "Matias Zanan: Frontend Engineer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

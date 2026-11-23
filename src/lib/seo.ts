@@ -1,9 +1,9 @@
 import { CONTACT_EMAIL, URLS } from "@/lib/urls";
 
 export const SITE_NAME = "itsmatias";
-export const SITE_TITLE = "Matias Zanan: Design Engineer";
+export const SITE_TITLE = "Matias Zanan: Frontend Engineer";
 export const SITE_DESCRIPTION =
-  "Design engineer. I design and build web interfaces, and I pay close attention to how they feel to use.";
+  "Frontend engineer, UI and motion. I design and build web interfaces, and I pay close attention to how they feel to use.";
 export const PERSON_NAME = "Matias Zanan";
 
 export const AI_CRAWLERS = [
@@ -52,7 +52,7 @@ export const siteJsonLd = {
       url: URLS.site,
       image: `${URLS.site}/opengraph-image`,
       email: CONTACT_EMAIL,
-      jobTitle: "Design Engineer",
+      jobTitle: "Frontend Engineer",
       description: SITE_DESCRIPTION,
       knowsAbout: [
         "Design engineering",

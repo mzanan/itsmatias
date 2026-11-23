@@ -55,7 +55,7 @@ export const About = () => {
                 >
                   <Image
                     src={image}
-                    alt="Matias Zanan, design engineer"
+                    alt="Matias Zanan, frontend engineer"
                     fill
                     sizes="(max-width: 1024px) 50vw, 25vw"
                     className="object-cover"
@@ -111,7 +111,7 @@ export const About = () => {
               >
                 <Image
                   src={image}
-                  alt="Matias Zanan, design engineer"
+                  alt="Matias Zanan, frontend engineer"
                   fill
                   sizes="(max-width: 1024px) 50vw, 25vw"
                   className="object-cover"

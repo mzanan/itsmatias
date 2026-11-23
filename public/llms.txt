@@ -1,6 +1,6 @@
 # itsmatias
 
-> Portfolio of Matias Zanan, a remote design engineer who designs and builds web interfaces and pays close attention to how they feel to use. He also sells ready-to-deploy Next.js website templates.
+> Portfolio of Matias Zanan, a remote frontend engineer focused on UI and motion who designs and builds web interfaces and pays close attention to how they feel to use. He also sells ready-to-deploy Next.js website templates.
 
 ## Who it is for
 
